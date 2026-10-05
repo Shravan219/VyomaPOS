@@ -1,0 +1,537 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: "Cormorant Garamond", "Times New Roman", Times, Georgia, serif;
+  --font-serif: "Cormorant Garamond", "Times New Roman", Times, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+
+  --color-card: #0A0A0E;
+  --color-card-foreground: #FFFFFF;
+
+  --color-popover: #0D0E14;
+  --color-popover-foreground: #FFFFFF;
+
+  --color-primary: #C5A059;
+  --color-primary-foreground: #000000;
+
+  --color-secondary: #14161F;
+  --color-secondary-foreground: #F3F4F6;
+
+  --color-muted: #14161F;
+  --color-muted-foreground: rgba(255, 255, 255, 0.65);
+
+  --color-accent: rgba(197, 160, 89, 0.12);
+  --color-accent-foreground: #C5A059;
+
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-input: rgba(255, 255, 255, 0.08);
+  --color-ring: rgba(197, 160, 89, 0.4);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-pulse-subtle: pulse-subtle 2.5s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scale-in: scale-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-wiggle: chime 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  --animate-chime: chime 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  --animate-glow-pulse: glow-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+
+  @keyframes chime {
+    0%, 100%, 30% {
+      transform: rotate(0deg);
+      transform-origin: top center;
+    }
+    4% {
+      transform: rotate(9deg);
+    }
+    8% {
+      transform: rotate(-7deg);
+    }
+    12% {
+      transform: rotate(5deg);
+    }
+    16% {
+      transform: rotate(-3deg);
+    }
+    20% {
+      transform: rotate(1.5deg);
+    }
+    24% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.88;
+      transform: scale(0.992);
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  
+  :root {
+    --p-scale: 1;
+    --sat: env(safe-area-inset-top, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+  }
+
+  html {
+    color-scheme: dark;
+    font-size: calc(16px * var(--p-scale, 1));
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(197, 160, 89, 0.35);
+    color: #FFFFFF;
+  }
+
+  input, textarea {
+    caret-color: var(--color-primary, #C5A059);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "rlig" 1, "calt" 1, "kern" 1;
+    letter-spacing: 0.005em; /* Dark-substrate perceptual compensation: prevents light glyph bleed on obsidian black */
+    background-image: 
+      radial-gradient(at 50% 0%, rgba(197, 160, 89, 0.04) 0, transparent 65%),
+      radial-gradient(at 100% 100%, rgba(197, 160, 89, 0.02) 0, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100dvh;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Telemetry Font Feature Settings (Numbers never jitter or shift during updates) */
+  .font-mono, [class*="font-mono"] {
+    font-feature-settings: "tnum" 1, "zero" 1;
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+
+  /* Classical Display Serif Refinement */
+  .font-serif, .font-heading, [class*="font-serif"] {
+    font-feature-settings: "kern" 1, "liga" 1;
+    letter-spacing: -0.015em;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  button:not(:disabled), a, [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(197, 160, 89, 0.75);
+    outline-offset: 2px;
+  }
+
+  /* Touch Ergonomics: Ensure coarse pointers get comfortable minimum 44px hit targets (WCAG 2.5.5 / 2.5.8) */
+  @media (pointer: coarse) {
+    button, a, input, select, textarea, [role="button"], [role="tab"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}
+
+/* Touch Hit-Area Expansion (Ensures 44x44px minimum touch target without inflating compact visual bounds) */
+.touch-target {
+  position: relative;
+}
+.touch-target::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 44px;
+  min-height: 44px;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+ 
+/* Systematic Micro-Scale Typography Classes (Operate & Telemetry) */
+.text-pico {
+  font-size: calc(0.5rem * var(--p-scale, 1));
+  line-height: calc(0.75rem * var(--p-scale, 1));
+}
+.text-nano {
+  font-size: calc(0.5625rem * var(--p-scale, 1));
+  line-height: calc(0.8125rem * var(--p-scale, 1));
+}
+.text-micro {
+  font-size: calc(0.625rem * var(--p-scale, 1));
+  line-height: calc(0.875rem * var(--p-scale, 1));
+}
+.text-caption {
+  font-size: calc(0.6875rem * var(--p-scale, 1));
+  line-height: calc(1rem * var(--p-scale, 1));
+}
+
+/* Glassmorphism & High-End Visual Utilities */
+.glass-panel {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(10, 10, 14, 0.72) 40%,
+    rgba(10, 10, 14, 0.82) 100%
+  );
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.glass-card {
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.055) 0%,
+    rgba(13, 14, 20, 0.78) 45%,
+    rgba(13, 14, 20, 0.88) 100%
+  );
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 6px 28px -6px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-tile {
+  background: radial-gradient(
+    circle at 100% 0%,
+    rgba(197, 160, 89, 0.08) 0%,
+    transparent 55%
+  ),
+  linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(13, 14, 21, 0.72) 50%, rgba(13, 14, 21, 0.85) 100%);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-tile:hover {
+  border-color: rgba(197, 160, 89, 0.3);
+  box-shadow: 0 8px 32px -6px rgba(0, 0, 0, 0.65), 0 0 20px rgba(197, 160, 89, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.glass-input:focus-within,
+.glass-input:focus-visible {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(197, 160, 89, 0.4);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1), 0 0 24px rgba(197, 160, 89, 0.08);
+}
+
+.glass-nav-item {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-header {
+  background: linear-gradient(180deg, rgba(7, 8, 12, 0.82) 0%, rgba(7, 8, 12, 0.68) 100%);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Ambient background aurora for glass surfaces to refract */
+.glass-aurora {
+  position: relative;
+  isolation: isolate;
+}
+
+.glass-aurora::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 50% 40% at 15% 10%, rgba(197, 160, 89, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 45% at 85% 85%, rgba(197, 160, 89, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 30% at 70% 20%, rgba(120, 100, 180, 0.04) 0%, transparent 50%);
+}
+
+/* Stop backdrop-filter compositing from ghosting text on cards */
+[data-slot="card"],
+.luxury-card,
+.luxury-stat-tile,
+.glass-card,
+.glass-tile {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+[data-slot="card"] h1,
+[data-slot="card"] h2,
+[data-slot="card"] h3,
+[data-slot="card"] h4,
+[data-slot="card"] h5,
+[data-slot="card"] h6,
+[data-slot="card"] span,
+[data-slot="card"] p {
+  text-shadow: none;
+}
+
+.luxury-card {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(16, 17, 24, 0.88) 35%,
+    rgba(9, 10, 14, 0.94) 100%
+  );
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.luxury-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-hover:hover {
+  border-color: rgba(197, 160, 89, 0.35);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.7), 0 0 24px rgba(197, 160, 89, 0.08);
+  transform: translateY(-1px);
+}
+
+.gold-accent-text {
+  color: #C5A059;
+}
+
+.gold-glow {
+  box-shadow: 0 0 20px rgba(197, 160, 89, 0.18);
+}
+
+.gold-border-glow {
+  box-shadow: 0 0 0 1px rgba(197, 160, 89, 0.35), 0 0 18px rgba(197, 160, 89, 0.15);
+}
+
+.luxury-stat-tile {
+  background: radial-gradient(circle at 100% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 60%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05) 0%, rgba(13, 14, 21, 0.75) 50%, rgba(13, 14, 21, 0.88) 100%);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.luxury-stat-tile:hover {
+  border-color: rgba(197, 160, 89, 0.3);
+  box-shadow: 0 8px 32px -6px rgba(0, 0, 0, 0.65), 0 0 20px rgba(197, 160, 89, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transform: translateY(-1px);
+}
+
+/* Custom scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.25);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.5);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1A1D27;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A059;
+}
+
+/* Accessible Reduced Motion: eliminates disorienting spatial movement, large slides, and infinite loops while preserving gentle opacity & color transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+
+  /* Retain gentle, non-disorienting visual feedback for interactive state confirmations */
+  button, input, select, textarea, [role="button"], [role="tab"], .transition-all, .transition-colors, .transition-opacity {
+    transition: opacity 150ms ease, background-color 150ms ease, border-color 150ms ease !important;
+    transform: none !important;
+  }
+}
+
+/* Thermal Receipt Print Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* Rendering Performance: Offscreen content virtualization */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 120px;
+}
+
+/* Native Mobile & Tablet Safe-Area & Touch Adaptations */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+body {
+  padding-top: var(--sat);
+  padding-bottom: var(--sab);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent text selection on interactive kiosk/POS surfaces while allowing on inputs */
+button, [role="button"], .select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
