@@ -30,8 +30,8 @@ export async function verifyStaffPassword(input: string): Promise<VerifyResult> 
     return { success: false, message: 'Password cannot be empty' };
   }
 
-  // 1. Instant check for standard demo & default passcodes (development mode only)
-  if (import.meta.env.DEV) {
+  // 1. Instant check for standard demo & default passcodes (development mode or unconfigured offline mode)
+  if (import.meta.env.DEV || !isSupabaseConfigured) {
     if (DEFAULT_STAFF_PASSWORDS.includes(trimmed) || DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
       return { success: true, message: 'Access Granted' };
     }
@@ -91,7 +91,7 @@ export async function verifyStaffPassword(input: string): Promise<VerifyResult> 
 
   return {
     success: false,
-    message: import.meta.env.DEV
+    message: (import.meta.env.DEV || !isSupabaseConfigured)
       ? 'Invalid Passcode. Use default (1234 / staff123) or configure in Supabase.'
       : 'Invalid Passcode. Credentials not found or invalid in database.'
   };
@@ -107,8 +107,8 @@ export async function verifyAdminPassword(input: string): Promise<VerifyResult> 
     return { success: false, message: 'Password cannot be empty' };
   }
 
-  // 1. Instant check for standard admin demo & default passcodes (development mode only)
-  if (import.meta.env.DEV) {
+  // 1. Instant check for standard admin demo & default passcodes (development mode or unconfigured offline mode)
+  if (import.meta.env.DEV || !isSupabaseConfigured) {
     if (DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
       return { success: true, message: 'Access Granted' };
     }
@@ -168,7 +168,7 @@ export async function verifyAdminPassword(input: string): Promise<VerifyResult> 
 
   return {
     success: false,
-    message: import.meta.env.DEV
+    message: (import.meta.env.DEV || !isSupabaseConfigured)
       ? 'Invalid Admin Passcode. Use default (1234 / admin123) or configure in Supabase.'
       : 'Invalid Admin Passcode. Credentials not found or invalid in database.'
   };

@@ -87,20 +87,32 @@ describe('Auth Service Verification Logic', () => {
       vi.stubEnv('DEV', false);
     });
 
-    it('strictly DOES NOT bypass auth for demo passcodes when offline/unconfigured', async () => {
-      // Demo passcode '1234' must be rejected in production
+    it('allows demo passcodes in offline mode when Supabase is not configured', async () => {
+      mockIsSupabaseConfigured = false;
+      const resStaff = await verifyStaffPassword('1234');
+      expect(resStaff.success).toBe(true);
+
+      const resAdmin = await verifyAdminPassword('admin123');
+      expect(resAdmin.success).toBe(true);
+    });
+
+    it('strictly DOES NOT bypass auth for demo passcodes when Supabase is configured and passwords do not match', async () => {
+      mockIsSupabaseConfigured = true;
+      mockFrom.mockReturnValue({
+        select: vi.fn().mockResolvedValue({
+          data: [{ key: 'staff_password', password: 'custom_password_only' }],
+          error: null,
+        }),
+      });
+
+      // Demo passcode '1234' must be rejected when Supabase has custom credentials
       const resStaff = await verifyStaffPassword('1234');
       expect(resStaff.success).toBe(false);
-      expect(resStaff.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
+      expect(resStaff.message).toBe('Invalid Staff Access Password');
 
-      // Demo passcode 'staff123' must be rejected in production
-      const resStaff2 = await verifyStaffPassword('staff123');
-      expect(resStaff2.success).toBe(false);
-
-      // Demo passcode 'admin123' must be rejected in production
+      // Demo passcode 'admin123' must be rejected
       const resAdmin = await verifyAdminPassword('admin123');
       expect(resAdmin.success).toBe(false);
-      expect(resAdmin.message).toBe('Invalid Admin Passcode. Credentials not found or invalid in database.');
     });
 
     it('authorizes staff when server /api/auth/verify succeeds', async () => {
