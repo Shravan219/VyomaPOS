@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Vyoma ScanServe | 16-Chapter Keynote Film</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@500;700&family=Karla:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050505;
+        font-family: 'Karla', sans-serif;
+        color: #ffffff;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: radial-gradient(circle at 50% 40%, #15120a 0%, #050505 85%);
+      }
+      .clip {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        opacity: 0;
+      }
+
+      /* Chapter Top Badge */
+      .chapter-badge {
+        position: absolute;
+        top: 48px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        background: rgba(197, 160, 89, 0.12);
+        border: 1px solid rgba(223, 194, 125, 0.45);
+        padding: 8px 24px;
+        border-radius: 9999px;
+      }
+      .ch-num {
+        color: #dfc27d;
+      }
+      .ch-divider {
+        color: #dfc27d;
+      }
+      .ch-name {
+        color: #ffffff;
+      }
+
+      /* Typography */
+      .gold-serif-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+        text-align: center;
+        color: #ffffff;
+      }
+      .gold-serif-sub {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 54px;
+        font-weight: 600;
+        font-style: italic;
+        color: #dfc27d;
+        text-align: center;
+        margin-top: 10px;
+      }
+      .hairline-gold {
+        width: 200px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #dfc27d, transparent);
+        margin: 24px 0;
+      }
+      .luxury-body {
+        font-size: 23px;
+        letter-spacing: 0.04em;
+        color: #cccccc;
+        text-align: center;
+        max-width: 1080px;
+        line-height: 1.5;
+      }
+
+      /* Glassmorphism Cards */
+      .glass-card {
+        background: rgba(18, 18, 18, 0.9);
+        border: 1px solid rgba(223, 194, 125, 0.38);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        backdrop-filter: blur(16px);
+      }
+
+      /* Card Grid Layouts */
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        width: 1400px;
+        margin-top: 24px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        width: 1380px;
+        margin-top: 24px;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        width: 1320px;
+        margin-top: 24px;
+      }
+      .info-box {
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: left;
+      }
+      .info-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        font-weight: 700;
+        color: #dfc27d;
+      }
+      .info-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+      }
+      .info-desc {
+        font-size: 16px;
+        color: #cccccc;
+        line-height: 1.45;
+      }
+
+      /* Specific UI Elements */
+      .order-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+      }
+      .row-title {
+        font-size: 19px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .row-sub {
+        font-size: 14px;
+        color: #cccccc;
+        margin-top: 2px;
+      }
+      .row-amt {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 19px;
+        font-weight: 700;
+        color: #dfc27d;
+      }
+      .fire-cta {
+        background: linear-gradient(135deg, #dfc27d 0%, #b89345 100%);
+        color: #000000;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 18px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(197, 160, 89, 0.35);
+      }
+      .badge-pill {
+        display: inline-block;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="160"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Audio Layer -->
+      <audio
+        id="bgm"
+        src="assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3"
+        data-start="0"
+        data-duration="160"
+        data-volume="0.55"
+      ></audio>
+      <audio
+        id="sfx-click"
+        src="assets/sfx/interface/click_001.ogg"
+        data-start="73.5"
+        data-duration="0.10"
+        data-volume="0.75"
+      ></audio>
+      <audio
+        id="sfx-bell"
+        src="assets/sfx/impact/impactBell_heavy_000.ogg"
+        data-start="81.0"
+        data-duration="1.48"
+        data-volume="0.80"
+      ></audio>
+      <audio
+        id="sfx-wa"
+        src="assets/sfx/interface/switch_001.ogg"
+        data-start="112.0"
+        data-duration="0.62"
+        data-volume="0.75"
+      ></audio>
+      <audio
+        id="sfx-drop"
+        src="assets/sfx/interface/drop_001.ogg"
+        data-start="132.0"
+        data-duration="0.11"
+        data-volume="0.75"
+      ></audio>
+      <audio
+        id="sfx-glass"
+        src="assets/sfx/impact/impactGlass_medium_000.ogg"
+        data-start="153.0"
+        data-duration="0.55"
+        data-volume="0.85"
+      ></audio>
+
+      <!-- CHAPTER 01: The Luxury Standard (0.0s – 10.0s) -->
+      <div id="scene-1" class="clip" data-start="0" data-duration="10.0" data-track-index="0">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 01 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">THE LUXURY STANDARD</span>
+        </div>
+        <h1 class="gold-serif-title">FINE DINING VELOCITY.</h1>
+        <h2 class="gold-serif-sub">Flawless Floor &amp; Kitchen Synchrony.</h2>
+        <div class="hairline-gold"></div>
+        <p class="luxury-body">
+          High-tempo luxury restaurants operate with zero margin for friction. In peak service, traditional POS systems bottleneck kitchens and compromise guest poise.
+        </p>
+      </div>
+
+      <!-- CHAPTER 02: The Unified Architecture (10.0s – 20.0s) -->
+      <div id="scene-2" class="clip" data-start="10.0" data-duration="10.0" data-track-index="1">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 02 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">UNIFIED OPERATING ARCHITECTURE</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ENGINEERED AS ONE SYSTEM</h1>
+        <div class="grid-4">
+          <div class="glass-card info-box">
+            <span class="info-num">LAYER 01</span>
+            <div class="info-title">Floor Handhelds</div>
+            <div class="info-desc">Tactile Android &amp; iPad terminals with instant table coursing.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">LAYER 02</span>
+            <div class="info-title">Kitchen KDS</div>
+            <div class="info-desc">Station routing across Grill, Sauté, Pastry, and Pass.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">LAYER 03</span>
+            <div class="info-title">WhatsApp Billing</div>
+            <div class="info-desc">Automated GST digital invoicing with zero paper receipt waste.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">LAYER 04</span>
+            <div class="info-title">Hybrid Engine</div>
+            <div class="info-desc">Local in-memory ring buffer with Supabase cloud replication.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 03: Dynamic Floor Plan (20.0s – 30.0s) -->
+      <div id="scene-3" class="clip" data-start="20.0" data-duration="10.0" data-track-index="2">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 03 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">DYNAMIC FLOOR ORCHESTRATION</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">LIVE FLOOR PLAN AT A GLANCE</h1>
+        <div class="grid-3">
+          <div class="glass-card info-box" style="border-color: #dfc27d;">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: #dfc27d; color: #000000;">TABLE 14</span>
+              <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">ACTIVE &bull; 4 GUESTS</span>
+            </div>
+            <div class="info-title" style="margin-top: 10px;">Private Dining Room</div>
+            <div class="info-desc">Course 1 Served &bull; Course 2 Fired &bull; Captain: Matteo</div>
+          </div>
+          <div class="glass-card info-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: rgba(255, 255, 255, 0.1); color: #ffffff;">TABLE 15</span>
+              <span class="badge-pill" style="background: rgba(59, 130, 246, 0.2); color: #93c5fd;">DINING &bull; 2 GUESTS</span>
+            </div>
+            <div class="info-title" style="margin-top: 10px;">Main Veranda</div>
+            <div class="info-desc">Course 2 Plating &bull; Sommelier Pairing Active</div>
+          </div>
+          <div class="glass-card info-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: rgba(255, 255, 255, 0.1); color: #ffffff;">TABLE 18</span>
+              <span class="badge-pill" style="background: rgba(234, 179, 8, 0.2); color: #fde047;">CHECK REQUESTED</span>
+            </div>
+            <div class="info-title" style="margin-top: 10px;">Chef's Counter</div>
+            <div class="info-desc">WhatsApp Invoice Generated &bull; Awaiting Payment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 04: Tactile Handheld Interface (30.0s – 40.0s) -->
+      <div id="scene-4" class="clip" data-start="30.0" data-duration="10.0" data-track-index="3">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 04 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">TACTILE 48PX HANDHELD INTERFACE</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ENGINEERED FOR HIGH TEMPO</h1>
+        <div class="grid-2">
+          <div class="glass-card info-box">
+            <span class="info-num">HAPTIC ACCURACY</span>
+            <div class="info-title">48px Hit Targets</div>
+            <div class="info-desc">
+              Designed for candlelit rooms and rapid floor movements. Buttons have generous spacing to eliminate accidental item selections during dinner rush.
+            </div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">HARDWARE AGNOSTIC</span>
+            <div class="info-title">Universal Tablet Support</div>
+            <div class="info-desc">
+              Runs natively on consumer iPads, Samsung Galaxy Tabs, or dedicated rugged handhelds. Zero proprietary hardware lock-in.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 05: VIP Patron Recognition (40.0s – 50.0s) -->
+      <div id="scene-5" class="clip" data-start="40.0" data-duration="10.0" data-track-index="4">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 05 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">VIP RECOGNITION &amp; CRM</span>
+        </div>
+        <div class="glass-card" style="width: 1080px; padding: 40px; margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 16px;">
+            <div>
+              <span class="badge-pill" style="background: #dfc27d; color: #000000;">VIP PATRON PROFILE</span>
+              <div style="font-size: 32px; font-weight: 700; color: #ffffff; margin-top: 8px;">Alexander Vance</div>
+            </div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: #dfc27d;">12th Visit &bull; Total Spend: &#8377;3,84,000</div>
+          </div>
+          <div class="grid-3" style="width: 100%; margin-top: 20px;">
+            <div>
+              <div style="font-size: 14px; color: #aaaaaa;">SEATING PREFERENCE</div>
+              <div style="font-size: 18px; font-weight: 600; color: #ffffff; margin-top: 4px;">Corner Booth (T14)</div>
+            </div>
+            <div>
+              <div style="font-size: 14px; color: #aaaaaa;">SOMMELIER FAVORITE</div>
+              <div style="font-size: 18px; font-weight: 600; color: #ffffff; margin-top: 4px;">2015 Bordeaux Grand Cru</div>
+            </div>
+            <div>
+              <div style="font-size: 14px; color: #aaaaaa;">LOYALTY TIER</div>
+              <div style="font-size: 18px; font-weight: 600; color: #dfc27d; margin-top: 4px;">Michelin Connoisseur</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 06: Dietary & Allergen Safeguards (50.0s – 60.0s) -->
+      <div id="scene-6" class="clip" data-start="50.0" data-duration="10.0" data-track-index="5">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 06 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">DIETARY &amp; ALLERGEN SAFEGUARDS</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ZERO ROOM FOR ALLERGY ERRORS</h1>
+        <div class="grid-2">
+          <div class="glass-card info-box" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="badge-pill" style="background: #ef4444; color: #ffffff;">CRITICAL SAFETY ALERT</span>
+            </div>
+            <div class="info-title" style="color: #fca5a5;">Shellfish Allergy Verified</div>
+            <div class="info-desc">
+              Seat 2 is tagged with strict cross-contamination protocols. Kitchen KDS alerts prep cook to sanitize pans before firing.
+            </div>
+          </div>
+          <div class="glass-card info-box" style="border-color: #dfc27d;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="badge-pill" style="background: rgba(223, 194, 125, 0.2); color: #dfc27d;">DIETARY PREFERENCE</span>
+            </div>
+            <div class="info-title" style="color: #dfc27d;">Celiac Gluten-Free</div>
+            <div class="info-desc">
+              Pasta substitution automatically confirmed with hand-rolled gluten-free tagliolini without captain manual re-entry.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 07: Precision Multi-Course Allocation (60.0s – 70.0s) -->
+      <div id="scene-7" class="clip" data-start="60.0" data-duration="10.0" data-track-index="6">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 07 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">PRECISION MULTI-COURSE ALLOCATION</span>
+        </div>
+        <div class="glass-card" style="width: 1100px; padding: 36px; margin-top: 24px;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: #dfc27d; margin-bottom: 16px;">
+            TABLE 14 &bull; COURSED DINING SEQUENCE
+          </div>
+          <div class="order-row" style="margin-bottom: 12px;">
+            <div>
+              <div class="row-title">Course 1: Winter Truffle Tagliolini</div>
+              <div class="row-sub">Hand-rolled Tajarin &bull; 36-Month Parmigiano Reggiano</div>
+            </div>
+            <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">FIRING NOW</span>
+          </div>
+          <div class="order-row" style="margin-bottom: 12px;">
+            <div>
+              <div class="row-title">Course 2: A5 Miyazaki Wagyu Ribeye</div>
+              <div class="row-sub">350g &bull; Medium-Rare &bull; Bone Marrow Glaze</div>
+            </div>
+            <span class="badge-pill" style="background: rgba(234, 179, 8, 0.2); color: #fde047;">HELD ON DESK</span>
+          </div>
+          <div class="order-row">
+            <div>
+              <div class="row-title">Course 3: Valrhona Chocolate Fondant</div>
+              <div class="row-sub">Smoked Madagascar Vanilla Bean Gelato</div>
+            </div>
+            <span class="badge-pill" style="background: rgba(255, 255, 255, 0.1); color: #cccccc;">QUEUED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 08: Instant 0.04s Order Dispatch (70.0s – 80.0s) -->
+      <div id="scene-8" class="clip" data-start="70.0" data-duration="10.0" data-track-index="7">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 08 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">INSTANT 0.04S ORDER DISPATCH</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ZERO SPINNER. ZERO LATENCY.</h1>
+        <div class="glass-card" style="width: 860px; padding: 40px; margin-top: 24px; text-align: center;">
+          <p class="luxury-body" style="margin-bottom: 24px;">
+            Floor captain confirms table order. Supabase real-time engine replicates across the local network and cloud in milliseconds.
+          </p>
+          <div id="ch8-btn" class="fire-cta">
+            &#128293; FIRE TABLE 14 ORDER TO KITCHEN &bull; 0.04s HANDSHAKE
+          </div>
+          <div style="margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #6ee7b7;">
+            &#10003; 40ms Handshake Verified &bull; Broadcast to 3 Kitchen Stations
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 09: Multi-Station KDS Routing (80.0s – 90.0s) -->
+      <div id="scene-9" class="clip" data-start="80.0" data-duration="10.0" data-track-index="8">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 09 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">MULTI-STATION KITCHEN KDS SPLITTING</span>
+        </div>
+        <div class="grid-3">
+          <div class="glass-card info-box" style="border-color: #ef4444;">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5;">GRILL STATION</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">04:12</span>
+            </div>
+            <div class="info-title">A5 Wagyu Ribeye</div>
+            <div class="info-desc">Seat 1 &bull; Medium-Rare &bull; Wood Fire Searing</div>
+          </div>
+          <div class="glass-card info-box" style="border-color: #10b981;">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">EXPO PASS</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #6ee7b7;">01:45</span>
+            </div>
+            <div class="info-title">Truffle Tagliolini</div>
+            <div class="info-desc">Seat 2 &bull; Tableside Truffle Shaver Ready</div>
+          </div>
+          <div class="glass-card info-box" style="border-color: #a855f7;">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="badge-pill" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">SOMMELIER BAR</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #d8b4fe;">00:30</span>
+            </div>
+            <div class="info-title">Ch&#226;teau Margaux</div>
+            <div class="info-desc">Bottle Decanted &bull; Crystal Stemware Staged</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 10: Chromatic Ticket Aging & Expo Pass (90.0s – 100.0s) -->
+      <div id="scene-10" class="clip" data-start="90.0" data-duration="10.0" data-track-index="9">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 10 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">CHROMATIC AGING &amp; SYNCHRONIZED PASS</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ALL PLATES HIT THE PASS TOGETHER</h1>
+        <div class="grid-3">
+          <div class="glass-card info-box">
+            <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">0 - 5 MINS (GREEN)</span>
+            <div class="info-title">Paced Active</div>
+            <div class="info-desc">Kitchen stations work smoothly within standard prep window.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="badge-pill" style="background: rgba(234, 179, 8, 0.2); color: #fde047;">5 - 8 MINS (AMBER)</span>
+            <div class="info-title">Firing Urgency</div>
+            <div class="info-desc">Border pulses amber alerting chef to coordinate plating.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="badge-pill" style="background: rgba(239, 68, 68, 0.2); color: #fca5a5;">8+ MINS (RED)</span>
+            <div class="info-title">Expedite Priority</div>
+            <div class="info-desc">Sous chef intervenes to guarantee guest wait threshold is respected.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 11: Omnichannel Aggregator Hub (100.0s – 110.0s) -->
+      <div id="scene-11" class="clip" data-start="100.0" data-duration="10.0" data-track-index="10">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 11 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">OMNICHANNEL AGGREGATOR HUB</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ONE SCREEN. ZERO DOCK CLUTTER.</h1>
+        <div class="grid-3">
+          <div class="glass-card info-box">
+            <div style="font-size: 20px; font-weight: 700; color: #f97316;">Swiggy Gourmet</div>
+            <div class="info-desc">Direct cloud API ingestion with automated item availability sync.</div>
+            <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px;">AUTO-ROUTED</span>
+          </div>
+          <div class="glass-card info-box">
+            <div style="font-size: 20px; font-weight: 700; color: #ef4444;">Zomato Legend</div>
+            <div class="info-desc">Real-time driver arrival synchronization and packaging tags.</div>
+            <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px;">AUTO-ROUTED</span>
+          </div>
+          <div class="glass-card info-box">
+            <div style="font-size: 20px; font-weight: 700; color: #3b82f6;">Magicpin / QR</div>
+            <div class="info-desc">Omnichannel tableside QR ordering mapped directly to floor zones.</div>
+            <span class="badge-pill" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; margin-top: 10px;">AUTO-ROUTED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 12: Automated WhatsApp Invoicing (110.0s – 120.0s) -->
+      <div id="scene-12" class="clip" data-start="110.0" data-duration="10.0" data-track-index="11">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 12 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">AUTOMATED WHATSAPP TAX INVOICING</span>
+        </div>
+        <div class="glass-card" style="width: 920px; padding: 36px; margin-top: 24px;">
+          <div style="display: flex; align-items: center; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 14px;">
+            <div style="width: 44px; height: 44px; background: #10b981; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000000;">&#10003;</div>
+            <div>
+              <div style="font-size: 22px; font-weight: 700;">Vyoma ScanServe Verified WhatsApp</div>
+              <div style="font-size: 13px; color: #10b981; font-family: 'JetBrains Mono', monospace;">Official GST Tax Receipt Delivery</div>
+            </div>
+          </div>
+          <div style="margin-top: 16px; font-size: 18px; color: #ffffff; line-height: 1.4;">
+            Dear Mr. Vance, thank you for dining with us tonight. Here is your official GST tax receipt:
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(223, 194, 125, 0.35); padding: 18px 24px; border-radius: 14px; margin-top: 14px;">
+            <div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: #dfc27d; font-weight: 700;">
+                &#128196; TAX_INVOICE_T14_VYOMA.pdf
+              </div>
+              <div style="font-size: 13px; color: #aaaaaa; margin-top: 4px;">GSTIN: 29AABCS1429B1ZB &bull; 100% Tax Compliant</div>
+            </div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 700; color: #ffffff;">
+              &#8377;34,750
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 13: Zero Paper Waste & Instant UPI (120.0s – 130.0s) -->
+      <div id="scene-13" class="clip" data-start="120.0" data-duration="10.0" data-track-index="12">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 13 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">ZERO THERMAL ROLLS &amp; INSTANT UPI</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">ELIMINATE THERMAL PAPER WASTE</h1>
+        <div class="grid-3">
+          <div class="glass-card info-box">
+            <span class="info-num">ECO METRIC</span>
+            <div class="info-title">1,420 Rolls / Month</div>
+            <div class="info-desc">Saved per high-tempo restaurant. Eliminates BPA-coated toxic thermal paper receipts.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">SPEED</span>
+            <div class="info-title">Instant Payment</div>
+            <div class="info-desc">Dynamic UPI QR code and card links embedded right in the WhatsApp chat for zero wait at the table.</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">RECONCILIATION</span>
+            <div class="info-title">Automatic Ledger</div>
+            <div class="info-desc">Payment status reconciles immediately to table status, freeing the table for next seating.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 14: Hybrid Local Ring Buffer (130.0s – 140.0s) -->
+      <div id="scene-14" class="clip" data-start="130.0" data-duration="10.0" data-track-index="13">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 14 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">HYBRID OFFLINE RING-BUFFER RESILIENCE</span>
+        </div>
+        <h1 class="gold-serif-title" style="font-size: 64px;">COOK THROUGH BROADBAND CUTS</h1>
+        <div class="grid-2">
+          <div class="glass-card info-box" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+            <span class="badge-pill" style="background: #ef4444; color: #ffffff;">OFFLINE STRESS TEST</span>
+            <div class="info-title" style="color: #fca5a5;">Internet Completely Cut</div>
+            <div class="info-desc">
+              Local in-memory ring buffer keeps floor tablets and kitchen ticket printers operating over LAN without internet.
+            </div>
+          </div>
+          <div class="glass-card info-box" style="border-color: #10b981; background: rgba(16, 185, 129, 0.08);">
+            <span class="badge-pill" style="background: #10b981; color: #000000;">AUTO CLOUD RESYNC</span>
+            <div class="info-title" style="color: #6ee7b7;">Zero Lost Transactions</div>
+            <div class="info-desc">
+              The moment connectivity returns, all offline bills and ticket logs automatically sync to the Supabase cloud ledger.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 15: Executive Telemetry & Margins (140.0s – 150.0s) -->
+      <div id="scene-15" class="clip" data-start="140.0" data-duration="10.0" data-track-index="14">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 15 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">EXECUTIVE TELEMETRY &amp; MARGINS</span>
+        </div>
+        <div class="grid-4">
+          <div class="glass-card info-box">
+            <span class="info-num">DAILY REVENUE</span>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: #dfc27d;">&#8377;8,42,500</div>
+            <div class="info-desc">+18.4% vs Luxury Benchmark</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">TURNAROUND</span>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: #ffffff;">48 mins</div>
+            <div class="info-desc">Optimized from 72 mins</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">DISPATCH LATENCY</span>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: #6ee7b7;">&lt; 40ms</div>
+            <div class="info-desc">Instant Kitchen Sync</div>
+          </div>
+          <div class="glass-card info-box">
+            <span class="info-num">FOOD MARGINS</span>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: #dfc27d;">68.2%</div>
+            <div class="info-desc">Menu Cost Engineering</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAPTER 16: Transparent Pricing & Brand Lock (150.0s – 160.0s) -->
+      <div id="scene-16" class="clip" data-start="150.0" data-duration="10.0" data-track-index="15">
+        <div class="chapter-badge">
+          <span class="ch-num">CHAPTER 16 / 16</span>
+          <span class="ch-divider">&bull;</span>
+          <span class="ch-name">PREDICTABLE PRICING &amp; FINALE</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 10px;">
+          <img src="assets/vyoma_logo.jpg" alt="Vyoma Logo" style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid #dfc27d; box-shadow: 0 0 40px rgba(223, 194, 125, 0.4); object-fit: cover; margin-bottom: 12px;" />
+          <h1 class="gold-serif-title" style="font-size: 64px;">VYOMA SCANSERVE</h1>
+          <h2 class="gold-serif-sub" style="font-size: 32px; margin-top: 4px;">The Operating System for Michelin-Grade Dining</h2>
+
+          <div class="grid-3" style="margin-top: 18px;">
+            <div class="glass-card info-box" style="padding: 20px; text-align: center;">
+              <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: #dfc27d;">Bistro &amp; Cafe</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; margin: 4px 0;">&#8377;2,999<span style="font-size: 13px; color: #aaaaaa;"> / mo</span></div>
+              <div style="font-size: 13px; color: #cccccc;">2 Handhelds, 1 KDS, QR Dining</div>
+            </div>
+            <div class="glass-card info-box" style="padding: 20px; text-align: center; border-color: #dfc27d; background: rgba(197, 160, 89, 0.12);">
+              <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: #ffffff;">Grand Brasserie</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; margin: 4px 0;">&#8377;6,999<span style="font-size: 13px; color: #aaaaaa;"> / mo</span></div>
+              <div style="font-size: 13px; color: #cccccc;">Unlimited Tablets, KDS, VIP CRM</div>
+            </div>
+            <div class="glass-card info-box" style="padding: 20px; text-align: center;">
+              <div style="font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: #dfc27d;">Enterprise Group</div>
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; margin: 4px 0;">&#8377;14,999<span style="font-size: 13px; color: #aaaaaa;"> / mo</span></div>
+              <div style="font-size: 13px; color: #cccccc;">Multi-Outlet Centralized &bull; SAP SLA</div>
+            </div>
+          </div>
+
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: #000000; background: #dfc27d; padding: 12px 38px; border-radius: 9999px; margin-top: 18px;">
+            vyomadashboard.vercel.app
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Animate 16 chapters sequentially (10.0s each)
+      for (let i = 1; i <= 16; i++) {
+        const start = (i - 1) * 10.0;
+        const sceneId = `#scene-${i}`;
+        tl.fromTo(sceneId, { opacity: 0 }, { opacity: 1, duration: 0.5 }, start)
+          .fromTo(`${sceneId} > *`, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15 }, start + 0.2);
+
+        if (i < 16) {
+          tl.to(sceneId, { opacity: 0, duration: 0.5 }, start + 9.5);
+        } else {
+          tl.to(sceneId, { opacity: 1, duration: 0.5 }, start + 9.5);
+        }
+      }
+
+      // Chapter 8: Button tap highlight
+      tl.fromTo("#ch8-btn", { scale: 0.96 }, { scale: 1.04, duration: 0.4, yoyo: true, repeat: 2 }, 73.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
