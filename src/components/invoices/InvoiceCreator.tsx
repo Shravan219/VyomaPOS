@@ -23,6 +23,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 import { InvoiceReceiptModal, SavedInvoiceData } from './InvoiceReceiptModal';
+import { resolveApiUrl } from '@/src/lib/apiConfig';
 
 export interface InvoiceItemLine {
   id: string;
@@ -272,7 +273,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
 
     try {
       // 1. Send POST request to /api/invoices
-      const res = await fetch('/api/invoices', {
+      const res = await fetch(resolveApiUrl('/api/invoices'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -289,8 +290,13 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
         data = { message: resText };
       }
 
-      if (!res.ok || data.success === false) {
-        console.warn('[Invoice API Response Notice]', data);
+      if (!res.ok || data.success === false || data.success === '0') {
+        const errorMsg = data?.message || data?.error || (res.status ? `Server responded with status ${res.status}` : 'Could not persist invoice to database.');
+        console.error('[Invoice API Error]:', data);
+        toast.error('Invoice Creation Failed', {
+          description: errorMsg || 'Could not persist invoice to database.'
+        });
+        return;
       }
 
       // Success

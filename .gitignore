@@ -3,8 +3,13 @@ build/
 dist/
 exe setup file/
 coverage/
+.nyc_output/
+.vitest/
+test-results/
 .DS_Store
 *.log
+*.tmp
+tmp/
 .env*
 !.env.example
 __pycache__/
@@ -20,6 +25,11 @@ android/build/
 android/app/build/
 android/capacitor-cordova-android-plugins/build/
 android/local.properties
+*.apk
+
+# Spreadsheets & Leads
+*.xlsx
+*.xls
 
 # Graphify cache
 graphify-out/cache/

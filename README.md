@@ -25,6 +25,7 @@ Staff authenticate with a secure access password, then manage orders, menus, cus
   - [Windows Desktop (.exe)](#windows-desktop-exe)
   - [Android (APK)](#android-apk)
 - [Integrations](#integrations)
+  - [Google Sheets Sync (Expense Ledger)](#google-sheets-sync-expense-ledger)
 - [Crawlers & robots.txt](#crawlers--robotstxt)
 - [Troubleshooting](#troubleshooting)
 
@@ -141,6 +142,10 @@ Copy `.env.example` to `.env` and fill in values:
 | `DYNO_API_URL` | optional | Defaults to `https://dynoapis.com/api/v1/orders/status` |
 | `TESTER_CALLBACK_URL` | optional | Debug callback for outbound webhooks |
 | `VITE_TESTER_CALLBACK_URL` | optional | Client-side tester callback |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | optional | Google Service Account email for syncing expenses to Google Sheets |
+| `GOOGLE_PRIVATE_KEY` | optional | Google Service Account RSA private key (with escaped `\n` or raw PEM) |
+| `SPREADSHEET_ID` | optional | Target Google Sheets spreadsheet ID |
+| `SHEET_RANGE` | optional | Google Sheets target tab/cell range (defaults to `Sheet1!A:E`) |
 
 > Never commit `.env`. It is git-ignored.
 
@@ -279,12 +284,43 @@ Exact handlers live in `server/routes/` and `api/`.
 
 ## Database
 
-Schema is provided in [`supabase_schema.sql`](./supabase_schema.sql).
+A turnkey, consolidated database schema is provided in [`supabase_schema.sql`](./supabase_schema.sql). Running this script in a clean Supabase project configures all required tables, indexes, triggers, storage buckets, and Row Level Security (RLS) policies.
 
-1. Create a Supabase project
-2. Run the SQL file in the Supabase SQL editor
-3. Create staff/admin password rows expected by `authService`
-4. Copy URL + keys into `.env`
+### Consolidated Objects
+
+| Object | Type | Purpose |
+|--------|------|---------|
+| `public.customers` | Table | CRM & loyalty profiles (order count, VIP status, GSTIN, phone-based primary key) |
+| `public.menu_items` | Table | Digital menu catalog with categories, pricing, discounts, and stock status |
+| `public.orders` | Table | Live dining, takeaway, and aggregator order pipeline |
+| `public.app_passwords` | Table | Role-based terminal credentials (`staff_password`, `admin_password`) with RLS |
+| `public.expenses` | Table | Daily petty cash and outlet expense ledger with category indexes and RLS |
+| `receipts` | Storage Bucket | Public storage bucket for expense receipt photos with full CRUD RLS policies |
+| `trg_sync_customer_from_order` | Trigger | Automatically updates customer CRM profiles upon order creation/status update |
+
+### Setup Instructions
+
+1. Create a project in [Supabase](https://supabase.com).
+2. Open the **SQL Editor** in your Supabase Dashboard.
+3. Paste the contents of [`supabase_schema.sql`](./supabase_schema.sql) and click **Run**.
+4. The schema seeds default development credentials in `public.app_passwords`:
+   - Staff Passcode: `1234`
+   - Admin Passcode: `admin123`
+5. Copy your project URL, anon key, and service role key into `.env`.
+
+### Production Passcode Rotation
+
+In production environments, immediately rotate the seeded default passcodes by running:
+
+```sql
+UPDATE public.app_passwords 
+SET password = 'your_new_staff_password', updated_at = now() 
+WHERE key = 'staff_password';
+
+UPDATE public.app_passwords 
+SET password = 'your_new_admin_password', updated_at = now() 
+WHERE key = 'admin_password';
+```
 
 ---
 
@@ -345,6 +381,29 @@ Requires Android Studio SDK + JDK. Uses Capacitor 8.
 | **Generic aggregator** | Inbound webhook | Catch-all payload adapter |
 | **WhatsApp (Baileys)** | Outbound | Receipt delivery; QR pairing endpoints |
 | **Local POS terminal** | Peer | Dashboard can proxy API calls to a LAN POS via `apiConfig` |
+| **Google Sheets** | Outbound | Real-time expense ledger sync via Supabase Edge Function |
+
+### Google Sheets Sync (Expense Ledger)
+
+The application supports automated real-time syncing of daily outlet expenses to a central Google Spreadsheet via the `sync-expense-to-sheets` Supabase Edge Function (`supabase/functions/sync-expense-to-sheets/index.ts`).
+
+#### Configuration & Deployment
+
+1. **Google Cloud Service Account**: Enable the Google Sheets API v4 in Google Cloud Console, create a Service Account, and generate a JSON key.
+2. **Sheet Access**: Share the target Google Spreadsheet with the service account email (`GOOGLE_SERVICE_ACCOUNT_EMAIL`) with **Editor** role.
+3. **Configure Supabase Secrets**:
+   ```bash
+   supabase secrets set \
+     GOOGLE_SERVICE_ACCOUNT_EMAIL="your-service-account@your-project.iam.gserviceaccount.com" \
+     GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n" \
+     SPREADSHEET_ID="your-google-spreadsheet-id" \
+     SHEET_RANGE="Sheet1!A:E"
+   ```
+4. **Deploy Edge Function**:
+   ```bash
+   supabase functions deploy sync-expense-to-sheets
+   ```
+5. **Database Webhook Trigger**: In the Supabase Dashboard under **Database -> Webhooks**, create an `INSERT` webhook on `public.expenses` targeting the `sync-expense-to-sheets` edge function. Whenever front-of-house staff records an expense in the POS, a new row `[Date/Time, Amount, Category, Notes, Receipt URL]` is automatically appended to the spreadsheet.
 
 ---
 

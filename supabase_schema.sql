@@ -27,6 +27,7 @@
 
 -- 1. EXTENSIONS & UTILITIES
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- 2. CUSTOMERS TABLE (Loyalty Profiles & CRM)
 CREATE TABLE IF NOT EXISTS public.customers (
@@ -172,3 +173,117 @@ CREATE POLICY "Allow staff update access to orders"
 ON public.orders FOR UPDATE
 USING (true)
 WITH CHECK (true);
+
+
+-- ====================================================================
+-- 5. APP PASSWORDS TABLE (Role-Based Terminal Access Control)
+-- Queried by src/lib/authService.ts and server/routes/auth.ts
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS public.app_passwords (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    key TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Index for key lookups
+CREATE INDEX IF NOT EXISTS idx_app_passwords_key ON public.app_passwords (lower(key));
+
+-- Enable RLS
+ALTER TABLE public.app_passwords ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access so client terminals can verify input passcodes
+DROP POLICY IF EXISTS "Allow public read access to app_passwords" ON public.app_passwords;
+CREATE POLICY "Allow public read access to app_passwords"
+ON public.app_passwords FOR SELECT
+USING (true);
+
+-- Default Seed Credentials
+-- Staff default passcode: 1234
+-- Admin default passcode: admin123
+-- NOTE: In production, rotate these passcodes immediately via:
+-- UPDATE public.app_passwords SET password = 'your_new_staff_password', updated_at = now() WHERE key = 'staff_password';
+-- UPDATE public.app_passwords SET password = 'your_new_admin_password', updated_at = now() WHERE key = 'admin_password';
+INSERT INTO public.app_passwords (key, password)
+VALUES 
+    ('staff_password', '1234'),
+    ('admin_password', 'admin123')
+ON CONFLICT (key) DO NOTHING;
+
+
+-- ====================================================================
+-- 6. EXPENSES TABLE (Outlet Ledger & Petty Cash Tracking)
+-- Queried by src/components/expenses/ExpensesView.tsx
+-- ====================================================================
+CREATE TABLE IF NOT EXISTS public.expenses (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMPTZ DEFAULT now() NOT NULL,
+    amount NUMERIC(10, 2) NOT NULL CHECK (amount >= 0),
+    category TEXT NOT NULL,
+    notes TEXT,
+    receipt_url TEXT NOT NULL DEFAULT ''
+);
+
+-- Indexes for date range sorting and category analytics
+CREATE INDEX IF NOT EXISTS idx_expenses_created_at_desc ON public.expenses (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_expenses_category ON public.expenses (category);
+
+-- Enable RLS
+ALTER TABLE public.expenses ENABLE ROW LEVEL SECURITY;
+
+-- RLS Policies for Expenses (Full POS client CRUD)
+DROP POLICY IF EXISTS "Allow public read access to expenses" ON public.expenses;
+CREATE POLICY "Allow public read access to expenses"
+ON public.expenses FOR SELECT
+USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert to expenses" ON public.expenses;
+CREATE POLICY "Allow public insert to expenses"
+ON public.expenses FOR INSERT
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public update access to expenses" ON public.expenses;
+CREATE POLICY "Allow public update access to expenses"
+ON public.expenses FOR UPDATE
+USING (true)
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public delete access to expenses" ON public.expenses;
+CREATE POLICY "Allow public delete access to expenses"
+ON public.expenses FOR DELETE
+USING (true);
+
+
+-- ====================================================================
+-- 7. STORAGE: RECEIPTS BUCKET & POLICIES
+-- Used by AddExpenseModal.tsx for receipt photo uploads
+-- ====================================================================
+
+-- Create public 'receipts' storage bucket
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('receipts', 'receipts', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- Storage RLS policies for receipts objects
+DROP POLICY IF EXISTS "Allow public read access to receipts objects" ON storage.objects;
+CREATE POLICY "Allow public read access to receipts objects"
+ON storage.objects FOR SELECT
+USING (bucket_id = 'receipts');
+
+DROP POLICY IF EXISTS "Allow public insert to receipts bucket" ON storage.objects;
+CREATE POLICY "Allow public insert to receipts bucket"
+ON storage.objects FOR INSERT
+WITH CHECK (bucket_id = 'receipts');
+
+DROP POLICY IF EXISTS "Allow public update access to receipts bucket" ON storage.objects;
+CREATE POLICY "Allow public update access to receipts bucket"
+ON storage.objects FOR UPDATE
+USING (bucket_id = 'receipts')
+WITH CHECK (bucket_id = 'receipts');
+
+DROP POLICY IF EXISTS "Allow public delete access to receipts bucket" ON storage.objects;
+CREATE POLICY "Allow public delete access to receipts bucket"
+ON storage.objects FOR DELETE
+USING (bucket_id = 'receipts');
+

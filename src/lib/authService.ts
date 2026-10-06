@@ -1,6 +1,6 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { Capacitor } from '@capacitor/core';
-import { getApiBaseUrl } from './apiConfig';
+import { getApiBaseUrl, resolveApiUrl } from './apiConfig';
 
 export interface VerifyResult {
   success: boolean;
@@ -30,9 +30,11 @@ export async function verifyStaffPassword(input: string): Promise<VerifyResult> 
     return { success: false, message: 'Password cannot be empty' };
   }
 
-  // 1. Instant check for standard demo & default passcodes (0ms latency)
-  if (DEFAULT_STAFF_PASSWORDS.includes(trimmed) || DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
-    return { success: true, message: 'Access Granted' };
+  // 1. Instant check for standard demo & default passcodes (development mode only)
+  if (import.meta.env.DEV) {
+    if (DEFAULT_STAFF_PASSWORDS.includes(trimmed) || DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
+      return { success: true, message: 'Access Granted' };
+    }
   }
 
   // 2. Try server verification route only if web or remote POS server is configured
@@ -42,7 +44,7 @@ export async function verifyStaffPassword(input: string): Promise<VerifyResult> 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-      const apiRes = await fetch('/api/auth/verify', {
+      const apiRes = await fetch(resolveApiUrl('/api/auth/verify'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'staff', password: trimmed }),
@@ -87,7 +89,12 @@ export async function verifyStaffPassword(input: string): Promise<VerifyResult> 
     }
   }
 
-  return { success: false, message: 'Invalid Passcode. Use default (1234 / staff123) or configure in Supabase.' };
+  return {
+    success: false,
+    message: import.meta.env.DEV
+      ? 'Invalid Passcode. Use default (1234 / staff123) or configure in Supabase.'
+      : 'Invalid Passcode. Credentials not found or invalid in database.'
+  };
 }
 
 /**
@@ -100,9 +107,11 @@ export async function verifyAdminPassword(input: string): Promise<VerifyResult> 
     return { success: false, message: 'Password cannot be empty' };
   }
 
-  // 1. Instant check for standard admin demo & default passcodes (0ms latency)
-  if (DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
-    return { success: true, message: 'Access Granted' };
+  // 1. Instant check for standard admin demo & default passcodes (development mode only)
+  if (import.meta.env.DEV) {
+    if (DEFAULT_ADMIN_PASSWORDS.includes(trimmed)) {
+      return { success: true, message: 'Access Granted' };
+    }
   }
 
   // 2. Try server verification route only if web or remote POS server is configured
@@ -112,7 +121,7 @@ export async function verifyAdminPassword(input: string): Promise<VerifyResult> 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-      const apiRes = await fetch('/api/auth/verify', {
+      const apiRes = await fetch(resolveApiUrl('/api/auth/verify'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'admin', password: trimmed }),
@@ -157,6 +166,11 @@ export async function verifyAdminPassword(input: string): Promise<VerifyResult> 
     }
   }
 
-  return { success: false, message: 'Invalid Admin Passcode. Use default (1234 / admin123) or configure in Supabase.' };
+  return {
+    success: false,
+    message: import.meta.env.DEV
+      ? 'Invalid Admin Passcode. Use default (1234 / admin123) or configure in Supabase.'
+      : 'Invalid Admin Passcode. Credentials not found or invalid in database.'
+  };
 }
 
