@@ -112,19 +112,19 @@ Thank you for dining with Vyoma!`;
       if (result.success) {
         toast.success('✅ Receipt PDF sent directly to customer WhatsApp!', { id: toastId });
       } else {
-        // Bot offline – fallback to wa.me direct link
+        // Bot offline - fallback to wa.me direct link
         const shareResult = sendWhatsAppReceiptWithPDF(invoice, phone);
         if (shareResult.success) {
-          toast.warning('Bot offline – opened WhatsApp directly. ' + (result.message || ''), { id: toastId });
+          toast.warning('Bot offline - opened WhatsApp directly. ' + (result.message || ''), { id: toastId });
         } else {
           toast.error(shareResult.error || 'Could not format customer phone number');
         }
       }
     } catch (_err) {
-      // Server unreachable – fallback to wa.me direct link
+      // Server unreachable - fallback to wa.me direct link
       const shareResult = sendWhatsAppReceiptWithPDF(invoice, phone);
       if (shareResult.success) {
-        toast.warning('Server unreachable – opened WhatsApp directly as fallback', { id: toastId });
+        toast.warning('Server unreachable - opened WhatsApp directly as fallback', { id: toastId });
       } else {
         toast.error(shareResult.error || 'Could not format customer phone number');
       }

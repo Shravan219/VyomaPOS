@@ -112,7 +112,7 @@ export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpen
 
       if (insertError) throw new Error(insertError.message);
 
-      toast.success('Expense recorded — syncing to Google Sheet');
+      toast.success('Expense recorded - syncing to Google Sheet');
       onExpenseAdded?.(data as Expense);
       resetForm();
       onOpenChange(false);
@@ -189,7 +189,7 @@ export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpen
             <Input
               id="expense-notes"
               type="text"
-              placeholder="e.g. Sharma Vegetables — tomatoes 10kg"
+              placeholder="e.g. Sharma Vegetables - tomatoes 10kg"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               disabled={isSaving}

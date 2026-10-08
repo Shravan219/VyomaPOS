@@ -236,17 +236,17 @@ export function TableStatusGrid({
                 exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.15 } }}
                 transition={{ duration: 0.25, delay: Math.min(idx * 0.02, 0.15), ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -2 }}
-                className={`group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-all duration-300 shadow-xl overflow-hidden ${
+                className={`group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-all duration-300 shadow-[0_6px_24px_-6px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden ${
                 hasReadyFood
                   ? 'border-amber-400/80 bg-gradient-to-b from-[#22190B] to-[#100F15] shadow-[0_0_30px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/60'
                   : isOccupied
-                  ? 'border-amber-500/30 bg-[#100F15] hover:border-amber-500/60 shadow-[0_0_20px_rgba(245,158,11,0.06)]'
+                  ? 'border-amber-500/30 bg-[#100F15] hover:border-amber-500/60'
                   : table.status === 'available'
-                  ? 'border-emerald-500/25 bg-[#09100D] hover:border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.05)]'
+                  ? 'border-emerald-500/25 bg-[#09100D] hover:border-emerald-500/50'
                   : table.status === 'reserved'
-                  ? 'border-violet-500/30 bg-[#120F1D] hover:border-violet-500/60 shadow-[0_0_20px_rgba(139,92,246,0.06)]'
+                  ? 'border-violet-500/30 bg-[#120F1D] hover:border-violet-500/60'
                   : table.status === 'cleaning'
-                  ? 'border-cyan-500/30 bg-[#0A1218] hover:border-cyan-500/60 shadow-[0_0_20px_rgba(6,182,212,0.06)]'
+                  ? 'border-cyan-500/30 bg-[#0A1218] hover:border-cyan-500/60'
                   : 'border-white/10 bg-[#0E0F16] hover:border-white/20'
               }`}
             >

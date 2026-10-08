@@ -481,6 +481,26 @@
   }
 }
 
+/* Accessible Reduced Transparency: provides high-contrast solid surfaces when users disable backdrop blur (Section 5 & Appendix C) */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel,
+  .glass-card,
+  .glass-tile,
+  .glass-header,
+  .luxury-card,
+  .luxury-stat-tile {
+    background: #0D0E14 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .glass-input {
+    background: #141620 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
 /* Thermal Receipt Print Styles */
 @media print {
   body {

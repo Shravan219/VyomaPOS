@@ -1148,7 +1148,7 @@ export default function App() {
 
   if (!isAuthenticated) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-black text-white p-6 glass-aurora">
+      <div className="flex min-h-[100dvh] h-dvh w-full items-center justify-center bg-black text-white p-6 glass-aurora">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1159,7 +1159,7 @@ export default function App() {
               <Lock size={32} strokeWidth={1.5} className="text-primary" />
             </div>
             <div>
-              <h1 className="text-4xl font-serif tracking-tight mb-2">Staff <span className="italic opacity-60 text-primary">Access</span></h1>
+              <h1 className="text-4xl font-serif tracking-tight leading-[1.1] pb-1 mb-2">Staff <span className="italic opacity-60 text-primary">Access</span></h1>
               <p className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold">Secure Dashboard Entry</p>
             </div>
             
@@ -1198,17 +1198,17 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-full items-center justify-center bg-black text-white">
+      <div className="flex min-h-[100dvh] h-dvh w-full items-center justify-center bg-black text-white">
         <div className="flex flex-col items-center gap-6">
           <RefreshCcw className="h-10 w-10 animate-spin text-primary opacity-20" />
-          <p className="font-serif text-2xl tracking-tight text-primary">Vy<span className="italic opacity-60">oma</span></p>
+          <p className="font-serif text-2xl tracking-tight leading-[1.15] pb-1 text-primary">Vy<span className="italic opacity-60">oma</span></p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans select-none glass-aurora">
+    <div className="flex min-h-[100dvh] h-dvh w-full bg-black text-white overflow-hidden font-sans select-none glass-aurora">
       {/* Sidebar Navigation */}
       <aside className="hidden md:flex md:w-56 lg:w-60 flex-col justify-between border-r border-white/10 glass-panel p-4 py-6 z-20 shrink-0">
         <div className="flex flex-col gap-6">
@@ -1217,7 +1217,7 @@ export default function App() {
               <Coffee size={20} className="text-primary" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-tight text-white leading-none">
+              <span className="font-serif text-lg font-bold tracking-tight text-white leading-[1.15] pb-0.5">
                 Vy<span className="italic text-primary opacity-80">oma</span>
               </span>
               <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/50 mt-1">POS & KDS</span>
@@ -2055,21 +2055,21 @@ export default function App() {
               </div>
 
               {/* Loyalty Discount Option Panel */}
-              <div className="bg-[#0D0E15] border border-white/10 rounded-2xl p-5 md:p-6 shadow-xl animate-fade-in flex-shrink-0">
+              <div className="bg-[#0D0E15] border border-white/10 rounded-2xl p-5 md:p-6 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.06)] animate-fade-in flex-shrink-0">
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-                  <div className="space-y-2 lg:max-w-xl">
-                    <div className="flex items-center gap-2">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary">
-                        <Sparkles size={12} />
+                  <div className="space-y-1.5 lg:max-w-xl">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary/10 border border-primary/25 text-primary shadow-[inset_0_1px_0_rgba(197,160,89,0.2)]">
+                        <Sparkles size={13} />
                       </div>
-                      <span className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-primary">Automated VIP Checkout Discount</span>
-                    </div>
-                    <div>
                       <h3 className="text-lg font-serif font-bold tracking-tight text-white">Loyalty Reward Program</h3>
-                      <p className="text-xs text-white/70 leading-relaxed">
-                        Recognize recurring diners by granting an automated discount at payment settlement once their visit count reaches threshold.
-                      </p>
+                      <span className="rounded-full bg-primary/10 border border-primary/25 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary font-mono">
+                        Auto VIP Checkout
+                      </span>
                     </div>
+                    <p className="text-xs text-white/70 leading-relaxed max-w-[62ch]">
+                      Recognize recurring diners by granting an automated discount at payment settlement once their visit count reaches threshold.
+                    </p>
                   </div>
                   
                   <div className="flex flex-wrap sm:flex-nowrap items-end gap-4 lg:self-center shrink-0">

@@ -287,12 +287,12 @@ export function CaptainDashboard({
     <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 p-3 sm:p-6 md:p-10 max-w-7xl mx-auto w-full">
       
       {/* Captain Top Header Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 rounded-2xl sm:rounded-3xl border border-white/10 bg-[#0F1016] p-4 sm:p-6 md:p-8 shadow-2xl relative overflow-hidden backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 rounded-2xl border border-white/10 bg-[#0F1016] p-4 sm:p-6 md:p-8 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.06)] relative overflow-hidden backdrop-blur-md">
         {/* Background Ambient Glow */}
         <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
         <div className="flex items-center gap-3 sm:gap-5 z-10">
-          <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/25 text-primary shadow-[0_0_25px_rgba(197,160,89,0.15)] shrink-0">
+          <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/25 text-primary shadow-[inset_0_1px_0_rgba(197,160,89,0.25)] shrink-0">
             <Utensils size={24} className="sm:w-7 sm:h-7" />
           </div>
 

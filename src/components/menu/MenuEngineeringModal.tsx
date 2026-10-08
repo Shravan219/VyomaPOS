@@ -107,7 +107,7 @@ export function MenuEngineeringModal({ menuItems, orders }: MenuEngineeringModal
         actionRecommendation = 'Crown Jewel. Maintain recipe quality & feature prominently on QR menu front page.';
       } else if (isHighVolume && !isHighRevenue) {
         quadrant = 'plowhorses';
-        actionRecommendation = 'High Volume Magnet. Increase price by ₹20–₹50 or bundle with high-margin beverages.';
+        actionRecommendation = 'High Volume Magnet. Increase price by ₹20-₹50 or bundle with high-margin beverages.';
       } else if (!isHighVolume && isHighRevenue) {
         quadrant = 'puzzles';
         actionRecommendation = 'Hidden High-Margin Gem. Train floor captains to verbally recommend to diners.';
