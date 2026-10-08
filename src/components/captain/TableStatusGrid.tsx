@@ -119,10 +119,10 @@ export function TableStatusGrid({
   return (
     <div className="flex flex-col gap-6">
       {/* Filter Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-white/10 bg-[#0D0E14] p-3.5 sm:p-4 shadow-lg backdrop-blur-md">
-        {/* Section Filters - Scrollable on mobile with smooth touch handling */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3.5 sm:gap-4 rounded-2xl border border-white/10 bg-[#0D0E14] p-3.5 sm:p-4 shadow-lg backdrop-blur-md">
+        {/* Section Filters - Scrollable with smooth touch handling */}
         <div 
-          className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 sm:pb-0 min-w-0 touch-pan-x"
+          className="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-1 xl:pb-0 min-w-0 flex-1 touch-pan-x"
           style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
         >
           <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mr-1 shrink-0">Sections:</span>
@@ -165,8 +165,8 @@ export function TableStatusGrid({
         </div>
 
         {/* Status Filters, Database Indicator & Refresh */}
-        <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
-          <div className="hidden lg:flex items-center gap-1.5 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[10px] font-bold text-emerald-400 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 w-full xl:w-auto shrink-0">
+          <div className="hidden 2xl:flex items-center gap-1.5 rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[10px] font-bold text-emerald-400 shrink-0">
             <Database size={12} className="text-emerald-400 animate-pulse" />
             <span>Supabase DB Synced ({tables.length} Tables)</span>
           </div>
@@ -175,7 +175,7 @@ export function TableStatusGrid({
             value={filterStatus}
             aria-label="Filter tables by status"
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="flex-1 sm:w-auto rounded-xl bg-[#141620] border border-white/10 px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-primary/50 min-h-[44px] cursor-pointer touch-manipulation shrink-0"
+            className="flex-1 sm:flex-initial rounded-xl bg-[#141620] border border-white/10 px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-primary/50 min-h-[42px] cursor-pointer touch-manipulation shrink-0"
           >
             <option value="all">All Statuses</option>
             <option value="available">Available Only</option>
@@ -189,7 +189,7 @@ export function TableStatusGrid({
               type="button"
               onClick={onSeedSupabaseTables}
               disabled={isSyncing}
-              className="flex items-center gap-1.5 rounded-xl border border-primary/30 bg-primary/10 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary hover:text-black transition-all cursor-pointer disabled:opacity-50 min-h-[44px] shadow-sm active:scale-95 touch-manipulation shrink-0 whitespace-nowrap"
+              className="flex items-center gap-1.5 rounded-xl border border-primary/30 bg-primary/10 px-3 sm:px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary hover:text-black transition-all cursor-pointer disabled:opacity-50 min-h-[42px] shadow-sm active:scale-95 touch-manipulation shrink-0 whitespace-nowrap"
               title="Ensure all dining tables are initialized in database"
             >
               <Database size={14} className={isSyncing ? 'animate-spin' : ''} />
@@ -204,7 +204,7 @@ export function TableStatusGrid({
             <button
               type="button"
               onClick={onRefreshTables}
-              className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white transition-all cursor-pointer shrink-0 active:scale-95 touch-manipulation"
+              className="flex h-[42px] w-[42px] min-h-[42px] min-w-[42px] items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white transition-all cursor-pointer shrink-0 active:scale-95 touch-manipulation"
               title="Refresh Table States from DB"
               aria-label="Refresh Table States from DB"
             >
@@ -215,7 +215,7 @@ export function TableStatusGrid({
       </div>
 
       {/* Table Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
         <AnimatePresence mode="popLayout">
           {filteredTables.map((table, idx) => {
             const isOccupied = table.status === 'occupied';
@@ -236,7 +236,7 @@ export function TableStatusGrid({
                 exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.15 } }}
                 transition={{ duration: 0.25, delay: Math.min(idx * 0.02, 0.15), ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -2 }}
-                className={`group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-all duration-300 shadow-xl ${
+                className={`group relative flex flex-col justify-between rounded-2xl border p-4 sm:p-5 transition-all duration-300 shadow-xl overflow-hidden ${
                 hasReadyFood
                   ? 'border-amber-400/80 bg-gradient-to-b from-[#22190B] to-[#100F15] shadow-[0_0_30px_rgba(245,158,11,0.25)] ring-1 ring-amber-400/60'
                   : isOccupied
@@ -263,20 +263,20 @@ export function TableStatusGrid({
                 </div>
               )}
 
-              {/* Header: Number & Capacity (Seats) Adjustment */}
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="text-xl font-serif font-bold text-white tracking-tight">{table.table_number}</h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 block mt-0.5">{table.section || 'Main Dining'}</span>
-                </div>
+              {/* Header: Number & Status Dropdown */}
+              <div className="flex flex-col gap-2.5">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="text-lg sm:text-xl font-serif font-bold text-white tracking-tight whitespace-nowrap truncate">{table.table_number}</h3>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 block mt-0.5 truncate">{table.section || 'Main Dining'}</span>
+                  </div>
 
-                <div className="flex flex-col items-end gap-2">
                   {/* Status Dropdown selector for live DB updates */}
                   <select
                     value={table.status}
                     aria-label={`Table status for ${table.table_number}`}
                     onChange={(e) => onTableStatusChange(table.id, e.target.value as TableStatus)}
-                    className={`min-h-[44px] rounded-xl bg-black/70 border px-3 py-2 text-xs font-extrabold uppercase tracking-wider text-white focus:outline-none focus:border-primary/50 cursor-pointer shadow-inner touch-manipulation ${
+                    className={`min-h-[38px] rounded-xl bg-black/70 border px-2.5 py-1.5 text-[11px] font-extrabold uppercase tracking-wider text-white focus:outline-none focus:border-primary/50 cursor-pointer shadow-inner touch-manipulation shrink-0 ${
                       table.status === 'available' ? 'border-emerald-500/40 text-emerald-400' :
                       table.status === 'occupied' ? 'border-amber-500/40 text-amber-400' :
                       table.status === 'reserved' ? 'border-violet-500/40 text-violet-400' :
@@ -288,36 +288,38 @@ export function TableStatusGrid({
                     <option value="reserved" className="bg-[#141620] text-violet-400">Reserved</option>
                     <option value="cleaning" className="bg-[#141620] text-cyan-400">Cleaning</option>
                   </select>
+                </div>
 
-                  {/* Seats / Capacity adjustment control directly synced to Supabase */}
-                  <div className="flex items-center gap-1.5 bg-black/60 border border-white/10 rounded-xl px-2.5 py-1 mt-0.5 shadow-inner">
+                {/* Seats / Capacity adjustment control directly synced to Supabase */}
+                <div className="flex items-center justify-between gap-2 bg-black/60 border border-white/10 rounded-xl px-3 py-1.5 shadow-inner w-full">
+                  <div className="flex items-center gap-1.5 min-w-0">
                     <Users size={13} className="text-primary shrink-0" />
-                    <span className="text-[11px] font-bold text-white font-mono">{table.capacity} Seats</span>
-                    {onTableCapacityChange && (
-                      <div className="flex items-center gap-1 ml-2 border-l border-white/10 pl-2">
-                        <button
-                          type="button"
-                          onClick={() => onTableCapacityChange(table.id, Math.max(1, table.capacity - 1))}
-                          disabled={table.capacity <= 1}
-                          className="h-8 w-8 min-h-[36px] min-w-[36px] sm:h-7 sm:w-7 touch-target flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer active:scale-90 touch-manipulation disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
-                          title="Decrease seats"
-                          aria-label={`Decrease seats for ${table.table_number}`}
-                        >
-                          <Minus size={13} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onTableCapacityChange(table.id, Math.min(50, table.capacity + 1))}
-                          disabled={table.capacity >= 50}
-                          className="h-8 w-8 min-h-[36px] min-w-[36px] sm:h-7 sm:w-7 touch-target flex items-center justify-center rounded-lg bg-primary/20 hover:bg-primary text-primary hover:text-black transition-all cursor-pointer active:scale-90 font-bold touch-manipulation disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
-                          title="Increase seats"
-                          aria-label={`Increase seats for ${table.table_number}`}
-                        >
-                          <Plus size={13} />
-                        </button>
-                      </div>
-                    )}
+                    <span className="text-[11px] font-bold text-white font-mono whitespace-nowrap">{table.capacity} Seats</span>
                   </div>
+                  {onTableCapacityChange && (
+                    <div className="flex items-center gap-1.5 border-l border-white/10 pl-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => onTableCapacityChange(table.id, Math.max(1, table.capacity - 1))}
+                        disabled={table.capacity <= 1}
+                        className="h-7 w-7 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer active:scale-90 touch-manipulation disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
+                        title="Decrease seats"
+                        aria-label={`Decrease seats for ${table.table_number}`}
+                      >
+                        <Minus size={12} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onTableCapacityChange(table.id, Math.min(50, table.capacity + 1))}
+                        disabled={table.capacity >= 50}
+                        className="h-7 w-7 flex items-center justify-center rounded-lg bg-primary/20 hover:bg-primary text-primary hover:text-black transition-all cursor-pointer active:scale-90 font-bold touch-manipulation disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none"
+                        title="Increase seats"
+                        aria-label={`Increase seats for ${table.table_number}`}
+                      >
+                        <Plus size={12} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -376,16 +378,16 @@ export function TableStatusGrid({
                   <button
                     type="button"
                     onClick={() => onNewOrderClick(table)}
-                    className="flex-1 min-h-[44px] flex items-center justify-center gap-2 rounded-xl bg-primary/10 border border-primary/30 px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary hover:text-black transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(197,160,89,0.1)] touch-manipulation"
+                    className="flex-1 min-h-[42px] flex items-center justify-center gap-1.5 rounded-xl bg-primary/10 border border-primary/30 px-3 py-2 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary hover:text-black transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(197,160,89,0.1)] touch-manipulation whitespace-nowrap"
                   >
-                    <PlusCircle size={15} />
+                    <PlusCircle size={14} className="shrink-0" />
                     <span>Take Order</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => onTableStatusChange(table.id, isOccupied ? 'available' : 'occupied')}
-                    className={`min-h-[44px] min-w-[70px] flex px-3.5 items-center justify-center rounded-xl border text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer active:scale-95 touch-manipulation ${
+                    className={`min-h-[42px] min-w-[68px] flex px-3 items-center justify-center rounded-xl border text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer active:scale-95 touch-manipulation whitespace-nowrap shrink-0 ${
                       isOccupied
                         ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20'
                         : 'border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'

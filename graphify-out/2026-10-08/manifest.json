@@ -180,8 +180,8 @@
     "semantic_hash": "ad82761ac2f19700fef07e592545a0f1"
   },
   "android/app/capacitor.build.gradle": {
-    "mtime": 1791280769.8134937,
-    "seen": 1791481698.918081,
+    "mtime": 1789609774.3702364,
+    "seen": 1789780154.2241614,
     "ast_hash": "e130b3048f2ce015bc661df8f774548d",
     "semantic_hash": "e130b3048f2ce015bc661df8f774548d"
   },
@@ -210,8 +210,8 @@
     "semantic_hash": "ca5f0fa0ea4c3997363777d8a2b6467b"
   },
   "android/capacitor.settings.gradle": {
-    "mtime": 1791280769.8126972,
-    "seen": 1791481698.9192836,
+    "mtime": 1789609774.3702364,
+    "seen": 1789780154.2241695,
     "ast_hash": "9da2f4c2dabbc37c4aec294dc2b48778",
     "semantic_hash": "9da2f4c2dabbc37c4aec294dc2b48778"
   },
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "server/app.ts": {
-    "mtime": 1791300471.489693,
-    "seen": 1791481698.9292877,
-    "ast_hash": "f29d7149d9d3a07928e0278db6ec8e02",
+    "mtime": 1789824220.15396,
+    "seen": 1789824442.65515,
+    "ast_hash": "9cee06ac796a95cfb6ece7e8ae0a7f14",
     "semantic_hash": ""
   },
   "server/orderStore.ts": {
@@ -438,10 +438,10 @@
     "semantic_hash": "e93ae57be24528c7cc6323b6fef77d65"
   },
   "server/routes/orders.ts": {
-    "mtime": 1791300471.4937024,
-    "seen": 1791481698.9308884,
-    "ast_hash": "9060b0a4d130c2f787be9e2280ba5502",
-    "semantic_hash": ""
+    "mtime": 1788257591.723761,
+    "seen": 1789780154.2242367,
+    "ast_hash": "12dbb3b5d2d00f5c8467c74fedc1e568",
+    "semantic_hash": "12dbb3b5d2d00f5c8467c74fedc1e568"
   },
   "server/routes/webhooks.ts": {
     "mtime": 1788257591.7314794,
@@ -510,9 +510,9 @@
     "semantic_hash": "43412616de6ee8432c2ed48c8f3a2fc2"
   },
   "src/components/captain/TableStatusGrid.tsx": {
-    "mtime": 1791481563.8310747,
-    "seen": 1791481698.93477,
-    "ast_hash": "4ac6eeffb698019888145cae55d09c66",
+    "mtime": 1789908218.15896,
+    "seen": 1789908356.5509427,
+    "ast_hash": "3c22ab1017d2ae10ea780009247f1b56",
     "semantic_hash": ""
   },
   "src/components/invoices/InvoiceCreator.tsx": {
@@ -552,9 +552,9 @@
     "semantic_hash": "4a275060156f33ea18a3c456a11ebd37"
   },
   "src/lib/authService.ts": {
-    "mtime": 1791300481.4654942,
-    "seen": 1791481698.9373777,
-    "ast_hash": "2be62a07e20f060cd89ec6dc05a8b41d",
+    "mtime": 1791262379.1126091,
+    "seen": 1791262484.5623698,
+    "ast_hash": "a882854076df458c5c637279457f6939",
     "semantic_hash": ""
   },
   "src/lib/capacitorSetup.ts": {
@@ -4553,9 +4553,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/BRIEFING.md": {
-    "mtime": 1791265457.4220698,
-    "seen": 1791481698.995727,
-    "ast_hash": "95e4e315d150849c19be4585f6cffd49",
+    "mtime": 1791261109.282395,
+    "seen": 1791261994.1525958,
+    "ast_hash": "e19e7e6b605a7e196aed63a50807c9eb",
     "semantic_hash": ""
   },
   ".agents/teamwork/ORIGINAL_REQUEST.md": {
@@ -4655,9 +4655,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/BRIEFING.md": {
-    "mtime": 1791263805.487496,
-    "seen": 1791481699.003621,
-    "ast_hash": "d06d5f39900f0ba5f1b71fc59684db31",
+    "mtime": 1791263215.2470243,
+    "seen": 1791263671.8767486,
+    "ast_hash": "2d149f1f9a58000e64fec62483099337",
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/DISPATCH.md": {
@@ -4667,15 +4667,15 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/PROJECT.md": {
-    "mtime": 1791263797.0451684,
-    "seen": 1791481699.0039685,
-    "ast_hash": "38a2cf87543ab6285d3429cbc2e07e90",
+    "mtime": 1791262582.9587562,
+    "seen": 1791263071.051685,
+    "ast_hash": "884f816dce273cf4b09f112b4543ba3f",
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/progress.md": {
-    "mtime": 1791263844.778985,
-    "seen": 1791481699.004266,
-    "ast_hash": "c14ea15e94e53b967bbeccab87051b6b",
+    "mtime": 1791263431.6630914,
+    "seen": 1791263671.8770654,
+    "ast_hash": "227a0a64e31c7425da7cab5e157a093c",
     "semantic_hash": ""
   },
   ".agents/teamwork/worker_m1/BRIEFING.md": {
@@ -4793,9 +4793,9 @@
     "semantic_hash": ""
   },
   "src/__tests__/authService.test.ts": {
-    "mtime": 1791300481.4594598,
-    "seen": 1791481698.9316947,
-    "ast_hash": "458c14c33234fbdcecf3b57436df78d5",
+    "mtime": 1791262974.4565873,
+    "seen": 1791263070.9943392,
+    "ast_hash": "22b94aa35bf13569cab6192fa2f28992",
     "semantic_hash": ""
   },
   "src/__tests__/gst.test.ts": {
@@ -4871,9 +4871,9 @@
     "semantic_hash": ""
   },
   "src/__tests__/stress.test.ts": {
-    "mtime": 1791300481.4625926,
-    "seen": 1791481698.932835,
-    "ast_hash": "6e0887b765998785d33b37037f1eceb0",
+    "mtime": 1791263438.3647344,
+    "seen": 1791263671.820096,
+    "ast_hash": "f020e1c5da6e82eb13e87c69d21654f9",
     "semantic_hash": ""
   },
   ".agents/teamwork/auditor_1/BRIEFING.md": {
@@ -4961,9 +4961,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/GATE_STATUS.md": {
-    "mtime": 1791263790.127277,
-    "seen": 1791481699.0039651,
-    "ast_hash": "d1b5aeefa68a6e58ddae58c5567bbf42",
+    "mtime": 1791263184.263812,
+    "seen": 1791263671.876904,
+    "ast_hash": "8abcea8d4cb2d93922e0ce83382bca6a",
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator_1/TEST_READY.md": {
@@ -5003,9 +5003,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/reviewer_2/BRIEFING.md": {
-    "mtime": 1791263766.5909362,
-    "seen": 1791481699.0056384,
-    "ast_hash": "51cf67fc86bce45e00eea6c800102993",
+    "mtime": 1791263225.3500452,
+    "seen": 1791263671.8772254,
+    "ast_hash": "928af0b8af2c3ca1c1e0faefc4017612",
     "semantic_hash": ""
   },
   ".agents/teamwork/reviewer_2/DISPATCH.md": {
@@ -5015,9 +5015,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/reviewer_2/progress.md": {
-    "mtime": 1791263771.1167376,
-    "seen": 1791481699.0059304,
-    "ast_hash": "2804d51dbfe73057158719eafb3b28d3",
+    "mtime": 1791263230.1550097,
+    "seen": 1791263671.8772311,
+    "ast_hash": "b2fa1536b8a8bb8c9facc9b19e6e370a",
     "semantic_hash": ""
   },
   ".agents/teamwork/worker_m5/changes.md": {
@@ -5030,102 +5030,6 @@
     "mtime": 1791263122.2332218,
     "seen": 1791263671.881638,
     "ast_hash": "ef4a4703ce71959f23d71b5ae13aeabe",
-    "semantic_hash": ""
-  },
-  "lib/dyno-inbound-status.ts": {
-    "mtime": 1791300471.4861188,
-    "seen": 1791481698.9258945,
-    "ast_hash": "b85c4341cd06e4264e0c88553f92828d",
-    "semantic_hash": ""
-  },
-  "lib/dyno-outbound-client.ts": {
-    "mtime": 1791300471.4866233,
-    "seen": 1791481698.9258966,
-    "ast_hash": "ae861748c8fb4d842858828d9609c6bc",
-    "semantic_hash": ""
-  },
-  "scripts/dyno-verify.cjs": {
-    "mtime": 1791300471.4871495,
-    "seen": 1791481698.9286025,
-    "ast_hash": "15b44161f44a0b035933acf351c61bdb",
-    "semantic_hash": ""
-  },
-  "server/routes/dynoStatus.ts": {
-    "mtime": 1791300471.4906943,
-    "seen": 1791481698.930885,
-    "ast_hash": "0b7c779a579efcd1b2d66cc831bbaf4d",
-    "semantic_hash": ""
-  },
-  "src/__tests__/dyno-integration.test.ts": {
-    "mtime": 1791300471.4947054,
-    "seen": 1791481698.931698,
-    "ast_hash": "d9bd7ded6d605294c6fd2f92e402f64c",
-    "semantic_hash": ""
-  },
-  "src/lib/dyno-inbound-status.ts": {
-    "mtime": 1791300471.495206,
-    "seen": 1791481698.9385023,
-    "ast_hash": "0a2299d30ed6b2103081d7cf108ab170",
-    "semantic_hash": ""
-  },
-  "src/lib/dyno-outbound-client.ts": {
-    "mtime": 1791300471.4962087,
-    "seen": 1791481698.9385066,
-    "ast_hash": "fecbe48f75355078fa725a4a017ffd65",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/handoff.md": {
-    "mtime": 1791265468.6815426,
-    "seen": 1791481699.0036137,
-    "ast_hash": "80784815ff38dd5ec85bdcf22bf3c38b",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/orchestrator_1/handoff.md": {
-    "mtime": 1791263855.7355843,
-    "seen": 1791481699.004262,
-    "ast_hash": "be98d4a274470103c18bcc80242043c6",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/reviewer_2/handoff.md": {
-    "mtime": 1791263759.050809,
-    "seen": 1791481699.0059261,
-    "ast_hash": "b0abdbdaf7af40bef7ea0eb187fcf1df",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/reviewer_2/review.md": {
-    "mtime": 1791263741.915879,
-    "seen": 1791481699.0059335,
-    "ast_hash": "a8a248d92c44b7d50fda947f1d15e21f",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/victory_auditor_1/BRIEFING.md": {
-    "mtime": 1791265347.332432,
-    "seen": 1791481699.0059369,
-    "ast_hash": "5b8bdfece60df74adc0894755146a468",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/victory_auditor_1/DISPATCH.md": {
-    "mtime": 1791265003.2723048,
-    "seen": 1791481699.0059392,
-    "ast_hash": "e0e81e0601f0b25606241f855932ce61",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/victory_auditor_1/handoff.md": {
-    "mtime": 1791265369.9506989,
-    "seen": 1791481699.0059414,
-    "ast_hash": "0735fea9c5efea7e6843c70467a98f7a",
-    "semantic_hash": ""
-  },
-  ".agents/teamwork/victory_auditor_1/progress.md": {
-    "mtime": 1791265352.6927848,
-    "seen": 1791481699.005944,
-    "ast_hash": "fceece72e916e7fd2baf7807ca7fc37a",
-    "semantic_hash": ""
-  },
-  "AGENTS.md": {
-    "mtime": 1791342958.2681365,
-    "seen": 1791481699.0121708,
-    "ast_hash": "36b6b6d1116f1ff31846c5aad7f5b011",
     "semantic_hash": ""
   }
 }

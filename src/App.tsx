@@ -2072,10 +2072,10 @@ export default function App() {
                     </div>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 lg:self-center">
-                    <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-wrap sm:flex-nowrap items-end gap-4 lg:self-center shrink-0">
+                    <div className="flex items-end gap-3.5">
                       <div className="flex flex-col gap-1.5">
-                        <label htmlFor="min-orders-needed" className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/70 ml-1">Min Orders</label>
+                        <label htmlFor="min-orders-needed" className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/70 ml-1 whitespace-nowrap">Min Orders</label>
                         <Input 
                           id="min-orders-needed"
                           type="number"
@@ -2087,7 +2087,7 @@ export default function App() {
                         />
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <label htmlFor="discount-pct-input" className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/70 ml-1">Discount (%)</label>
+                        <label htmlFor="discount-pct-input" className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/70 ml-1 whitespace-nowrap">Discount (%)</label>
                         <Input 
                           id="discount-pct-input"
                           type="number"
@@ -2116,7 +2116,7 @@ export default function App() {
                           toggleFrequentDiscount();
                         }
                       }}
-                      className="flex items-center gap-3 bg-black/80 hover:bg-black border border-white/15 rounded-xl px-5 py-2.5 h-10 self-center sm:self-auto cursor-pointer select-none transition-all focus-visible:ring-2 focus-visible:ring-primary/50 outline-none"
+                      className="flex items-center gap-3 bg-black/80 hover:bg-black border border-white/15 rounded-xl px-5 py-2.5 h-10 cursor-pointer select-none transition-all focus-visible:ring-2 focus-visible:ring-primary/50 outline-none shrink-0 whitespace-nowrap"
                     >
                       <span className={cn(
                         "text-[9px] font-extrabold uppercase tracking-[0.2em]",
