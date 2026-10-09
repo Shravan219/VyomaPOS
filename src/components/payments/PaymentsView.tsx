@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Order, OrderStatus, OrderItem } from '@/src/types';
+import { Order, OrderStatus, OrderItem, normalizeOrderItems } from '@/src/types';
 import { 
   CreditCard, 
   CheckCircle2, 
@@ -66,41 +66,36 @@ interface SettledInvoiceRecord {
  */
 export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[] {
   // Filter out orders that are already COMPLETED or PAID
-  const unpaid = orders.filter(o => {
-    const st = (o.status || '').toLowerCase().trim();
-    const paySt = (((o as unknown as { payment_status?: string }).payment_status) || '').toLowerCase().trim();
+  const unpaid = (orders || []).filter(o => {
+    if (!o) return false;
+    const st = String(o.status || '').toLowerCase().trim();
+    const paySt = String((((o as unknown as { payment_status?: string })?.payment_status) || '')).toLowerCase().trim();
     return st !== 'completed' && st !== 'paid' && paySt !== 'paid' && st !== 'cancelled';
   });
 
   const groups = new Map<string, GroupedInvoice>();
 
   unpaid.forEach(order => {
-    const rawCustomerIdentity = order.customer_phone || order.customer_name || 'walk-in';
+    const rawCustomerIdentity = String(order.customer_phone || order.customer_name || 'walk-in');
     const groupKey = `${order.table_id || 'TAKEAWAY'}_${rawCustomerIdentity.toLowerCase().trim()}`;
 
-    // Safely clone items to prevent mutation
-    const orderItems: OrderItem[] = (order.items || []).map(item => ({
-      id: item.id || crypto.randomUUID(),
-      name: item.name,
-      quantity: Number(item.quantity) || 1,
-      price: Number(item.price) || 0,
-      item_notes: item.item_notes
-    }));
+    // Safely normalize items to prevent missing names and mutations
+    const orderItems: OrderItem[] = normalizeOrderItems(order.items);
 
     const rawSubtotal = (order as unknown as { subtotal?: number }).subtotal;
     const rawTax = (order as unknown as { tax_amount?: number }).tax_amount;
 
     const orderSubtotal = Number(rawSubtotal) || 
-      orderItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
+      orderItems.reduce((acc, it) => acc + ((Number(it.price) || 0) * (Number(it.quantity) || 1)), 0);
     const orderTax = Number(rawTax) || 0;
     const orderTotal = Number(order.total) || (orderSubtotal + orderTax);
-    const orderToken = order.token ? String(order.token) : (order.id ? order.id.slice(-4) : '0000');
+    const orderToken = order.token ? String(order.token) : (order.id ? String(order.id).slice(-4) : '0000');
 
     const existing = groups.get(groupKey);
 
     if (existing) {
       // 1. Collect order ID into array
-      if (!existing.order_ids.includes(order.id)) {
+      if (order.id && !existing.order_ids.includes(order.id)) {
         existing.order_ids.push(order.id);
       }
 
@@ -109,15 +104,21 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
         existing.tokens.push(orderToken);
       }
 
-      // 2. Aggregate item quantities
+      // 2. Aggregate item quantities safely
       orderItems.forEach(newItem => {
+        const newItemName = String(newItem?.name || 'Item').toLowerCase().trim();
         const match = existing.items.find(
-          existingItem => existingItem.name.toLowerCase().trim() === newItem.name.toLowerCase().trim()
+          existingItem => String(existingItem?.name || 'Item').toLowerCase().trim() === newItemName
         );
         if (match) {
-          match.quantity += newItem.quantity;
+          match.quantity += (Number(newItem.quantity) || 1);
         } else {
-          existing.items.push({ ...newItem });
+          existing.items.push({ 
+            ...newItem,
+            name: newItem.name || 'Item',
+            quantity: Number(newItem.quantity) || 1,
+            price: Number(newItem.price) || 0
+          });
         }
       });
 
@@ -129,7 +130,9 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
       // 4. Retain customer information
       if (
         order.customer_name && 
-        (!existing.customer_name || existing.customer_name.toLowerCase() === 'guest' || existing.customer_name.toLowerCase() === 'walk-in')
+        (!existing.customer_name || 
+         String(existing.customer_name).toLowerCase().trim() === 'guest' || 
+         String(existing.customer_name).toLowerCase().trim() === 'walk-in')
       ) {
         existing.customer_name = order.customer_name;
       }
@@ -154,19 +157,25 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
     } else {
       const aggregatedItems: OrderItem[] = [];
       orderItems.forEach(newItem => {
+        const newItemName = String(newItem?.name || 'Item').toLowerCase().trim();
         const match = aggregatedItems.find(
-          it => it.name.toLowerCase().trim() === newItem.name.toLowerCase().trim()
+          it => String(it?.name || 'Item').toLowerCase().trim() === newItemName
         );
         if (match) {
-          match.quantity += newItem.quantity;
+          match.quantity += (Number(newItem.quantity) || 1);
         } else {
-          aggregatedItems.push({ ...newItem });
+          aggregatedItems.push({ 
+            ...newItem,
+            name: newItem.name || 'Item',
+            quantity: Number(newItem.quantity) || 1,
+            price: Number(newItem.price) || 0
+          });
         }
       });
 
       groups.set(groupKey, {
         groupKey,
-        order_ids: [order.id],
+        order_ids: [order.id || crypto.randomUUID()],
         tokens: [orderToken],
         customer_name: order.customer_name,
         customer_phone: order.customer_phone,
@@ -176,7 +185,7 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
         grand_total: orderTotal,
         items: aggregatedItems,
         mergedCount: 1,
-        created_at: order.created_at,
+        created_at: order.created_at || new Date().toISOString(),
         gstin: order.gstin,
         notes: order.notes
       });
@@ -202,9 +211,10 @@ export function PaymentsView({
 
   const pendingPaymentOrders = useMemo(() => {
     const map = new Map<string, Order>();
-    [...orders, ...allOrders].forEach(o => {
-      const st = (o.status || '').toLowerCase().trim();
-      const paySt = (((o as unknown as { payment_status?: string }).payment_status) || '').toLowerCase().trim();
+    [...(orders || []), ...(allOrders || [])].forEach(o => {
+      if (!o) return;
+      const st = String(o.status || '').toLowerCase().trim();
+      const paySt = String((((o as unknown as { payment_status?: string })?.payment_status) || '')).toLowerCase().trim();
       
       const isPending = 
         st === 'waiting for payment' || 
@@ -212,12 +222,12 @@ export function PaymentsView({
         (st !== 'completed' && st !== 'paid' && st !== 'cancelled' && paySt !== 'paid');
 
       if (isPending) {
-        map.set(o.id || o.token, o);
+        map.set(String(o.id || o.token || Math.random()), o);
       }
     });
 
     return Array.from(map.values()).sort((a, b) => {
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
     });
   }, [orders, allOrders]);
 
@@ -227,12 +237,13 @@ export function PaymentsView({
 
   const filteredInvoices = useMemo(() => {
     return groupedInvoices.filter(invoice => {
-      const q = searchQuery.toLowerCase().trim();
-      const name = (invoice.customer_name || '').toLowerCase();
-      const phone = (invoice.customer_phone || '').toLowerCase();
-      const tokens = invoice.tokens.join(' ').toLowerCase();
-      const table = invoice.table_id ? `table ${invoice.table_id}`.toLowerCase() : 'takeaway';
-      const gstin = (invoice.gstin || '').toLowerCase();
+      if (!invoice) return false;
+      const q = String(searchQuery || '').toLowerCase().trim();
+      const name = String(invoice.customer_name || '').toLowerCase();
+      const phone = String(invoice.customer_phone || '').toLowerCase();
+      const tokens = (invoice.tokens || []).map(t => String(t ?? '')).join(' ').toLowerCase();
+      const table = invoice.table_id ? `table ${String(invoice.table_id)}`.toLowerCase() : 'takeaway';
+      const gstin = String(invoice.gstin || '').toLowerCase();
 
       const matchesSearch = !q || 
         name.includes(q) || 
@@ -276,13 +287,13 @@ export function PaymentsView({
 
   const settledTodayCount = useMemo(() => {
     const today = new Date().toDateString();
-    return allOrders.filter(o => o.status === 'completed' && new Date(o.created_at).toDateString() === today).length;
+    return (allOrders || []).filter(o => o && String(o.status || '').toLowerCase() === 'completed' && new Date(o.created_at || 0).toDateString() === today).length;
   }, [allOrders]);
 
   const settledTodayAmount = useMemo(() => {
     const today = new Date().toDateString();
-    return allOrders
-      .filter(o => o.status === 'completed' && new Date(o.created_at).toDateString() === today)
+    return (allOrders || [])
+      .filter(o => o && String(o.status || '').toLowerCase() === 'completed' && new Date(o.created_at || 0).toDateString() === today)
       .reduce((sum, o) => sum + (Number(o.total) || 0), 0);
   }, [allOrders]);
 
@@ -290,7 +301,7 @@ export function PaymentsView({
     return {
       id: invoice.order_ids[0] || 'ORD-001',
       order_ids: invoice.order_ids,
-      token: invoice.tokens[0],
+      token: invoice.tokens[0] || '0000',
       tokens: invoice.tokens,
       customer_name: invoice.customer_name,
       customer_phone: customerPhoneInputs[invoice.groupKey] || invoice.customer_phone,
@@ -298,7 +309,7 @@ export function PaymentsView({
       subtotal: invoice.subtotal,
       tax_amount: invoice.tax,
       total: invoice.grand_total,
-      payment_mode: paymentMode.toUpperCase(),
+      payment_mode: String(paymentMode || 'UPI').toUpperCase(),
       table_id: invoice.table_id,
       created_at: invoice.created_at,
       gstin: invoice.gstin,
@@ -445,7 +456,7 @@ export function PaymentsView({
         : `#${invoice.tokens[0]}`;
 
       if (targetPhone) {
-        toast.success(`Payment Done: ₹${invoice.grand_total.toFixed(2)} (${method.toUpperCase()})`, {
+        toast.success(`Payment Done: ₹${invoice.grand_total.toFixed(2)} (${String(method || 'upi').toUpperCase()})`, {
           description: `Consolidated bill for ${tokenDisplay} settled. Send WhatsApp receipt to ${formatPhoneNumber(targetPhone, true)}?`,
           action: {
             label: 'Send WhatsApp',
@@ -454,7 +465,7 @@ export function PaymentsView({
           duration: 9000
         });
       } else {
-        toast.success(`Payment Done: ₹${invoice.grand_total.toFixed(2)} (${method.toUpperCase()})`, {
+        toast.success(`Payment Done: ₹${invoice.grand_total.toFixed(2)} (${String(method || 'upi').toUpperCase()})`, {
           description: `Consolidated bill for ${tokenDisplay} settled (${invoice.mergedCount > 1 ? `${invoice.mergedCount} orders merged` : '1 order'}).`,
           duration: 6000
         });

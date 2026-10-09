@@ -1102,7 +1102,7 @@ export default function App() {
   const filteredOrders = useMemo(() => {
     let base = dineInOrders;
     if (searchToken) {
-      base = base.filter(o => o.token.toLowerCase().includes(searchToken.toLowerCase()));
+      base = base.filter(o => String(o.token || '').toLowerCase().includes(String(searchToken || '').toLowerCase()));
     }
     // Deduplicate by ID and Token to guarantee unique order cards in UI
     const seen = new Set<string>();
@@ -1134,13 +1134,13 @@ export default function App() {
   const filteredMenuItems = useMemo(() => {
     let list = menuItems;
     if (menuCategoryFilter && menuCategoryFilter !== 'all') {
-      list = list.filter(item => (item.category || '').toLowerCase().trim() === menuCategoryFilter.toLowerCase().trim());
+      list = list.filter(item => String(item.category || '').toLowerCase().trim() === String(menuCategoryFilter || '').toLowerCase().trim());
     }
     if (menuSearch) {
       const query = menuSearch.toLowerCase().trim();
       list = list.filter(item => 
-        item.name.toLowerCase().includes(query) || 
-        item.category.toLowerCase().includes(query)
+        String(item.name || '').toLowerCase().includes(query) || 
+        String(item.category || '').toLowerCase().includes(query)
       );
     }
     return list;

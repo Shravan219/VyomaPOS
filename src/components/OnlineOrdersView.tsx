@@ -323,7 +323,7 @@ export function OnlineOrdersView({
 
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        const matchToken = order.token.toLowerCase().includes(q);
+        const matchToken = String(order.token || '').toLowerCase().includes(q);
         const matchName = (order.customer_name || '').toLowerCase().includes(q);
         const matchPhone = (order.customer_phone || '').toLowerCase().includes(q);
         const matchNotes = (order.notes || '').toLowerCase().includes(q);

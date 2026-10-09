@@ -222,7 +222,7 @@ export function TableStatusGrid({
             
             // Fast O(1) match of ready orders for this table
             const tId = String(table.id).toLowerCase();
-            const tNum = table.table_number.toLowerCase();
+            const tNum = String(table.table_number || '').toLowerCase();
             const tNumPlain = tNum.replace(/^table\s*/, '').trim();
             const tableReadyOrders = readyOrdersByTable.get(tNumPlain) || readyOrdersByTable.get(tId) || readyOrdersByTable.get(tNum) || [];
             const hasReadyFood = tableReadyOrders.length > 0;
