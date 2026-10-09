@@ -12,7 +12,7 @@
 
 **Overall risk assessment**: **LOW**
 
-Empirical challenge and stress-testing of the Vyoma ScanServe Dashboard verified the following invariants:
+Empirical challenge and stress-testing of the VyomaPOS - Xtra Rooftop Dashboard verified the following invariants:
 1. **Automated Test Suite (`npm test`)**: 100% pass rate across 6 test suites and 63 unit/integration tests with 0 failures, 0 flakiness, and 0 skipped tests.
 2. **Type Safety & Linting (`npm run lint`)**: `tsc --noEmit` exited cleanly with return code 0 and 0 compiler errors.
 3. **Production Build Integrity (`npm run build`)**: Vite 6.4.2 production bundle and Node esbuild standalone server bundle compile without errors. Outputs `dist/index.html` (4.51 kB) and `dist/server.cjs` (3.71 MB) are complete, valid, and fully self-contained.

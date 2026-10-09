@@ -6,9 +6,9 @@
 
 ---
 
-**Project:** Vyoma ScanServe
-**Generated:** 2026-09-20 10:06:15
-**Category:** Conference / Symposium Landing Page
+**Project:** VyomaPOS Dashboard
+**Generated:** 2026-09-01 15:51:14
+**Category:** Study Together / Virtual Coworking
 
 ---
 
@@ -18,18 +18,18 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#1E3A5F` | `--color-primary` |
+| Primary | `#0F172A` | `--color-primary` |
 | On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#2563EB` | `--color-secondary` |
-| Accent/CTA | `#A16207` | `--color-accent` |
-| Background | `#F8FAFC` | `--color-background` |
-| Foreground | `#0F172A` | `--color-foreground` |
-| Muted | `#E9EEF5` | `--color-muted` |
-| Border | `#CBD5E1` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| Ring | `#1E3A5F` | `--color-ring` |
+| Secondary | `#1E293B` | `--color-secondary` |
+| Accent/CTA | `#22C55E` | `--color-accent` |
+| Background | `#020617` | `--color-background` |
+| Foreground | `#F8FAFC` | `--color-foreground` |
+| Muted | `#1A1E2F` | `--color-muted` |
+| Border | `#334155` | `--color-border` |
+| Destructive | `#EF4444` | `--color-destructive` |
+| Ring | `#0F172A` | `--color-ring` |
 
-**Color Notes:** Academic navy + gold keynote + track chips
+**Color Notes:** Dark bg + green positive indicators
 
 ### Typography
 
@@ -73,7 +73,7 @@
 ```css
 /* Primary Button */
 .btn-primary {
-  background: #A16207;
+  background: #22C55E;
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
@@ -90,8 +90,8 @@
 /* Secondary Button */
 .btn-secondary {
   background: transparent;
-  color: #1E3A5F;
-  border: 2px solid #1E3A5F;
+  color: #0F172A;
+  border: 2px solid #0F172A;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
@@ -104,7 +104,7 @@
 
 ```css
 .card {
-  background: #F8FAFC;
+  background: #020617;
   border-radius: 12px;
   padding: 24px;
   box-shadow: var(--shadow-md);
@@ -130,9 +130,9 @@
 }
 
 .input:focus {
-  border-color: #1E3A5F;
+  border-color: #0F172A;
   outline: none;
-  box-shadow: 0 0 0 3px #1E3A5F20;
+  box-shadow: 0 0 0 3px #0F172A20;
 }
 ```
 
@@ -158,13 +158,13 @@
 
 ## Style Guidelines
 
-**Style:** Vibrant & Block-based
+**Style:** Soft UI Evolution
 
-**Keywords:** Bold, energetic, playful, block layout, geometric shapes, high color contrast, duotone, modern, energetic
+**Keywords:** Evolved soft UI, better contrast, modern aesthetics, subtle depth, accessibility-focused, improved shadows, hybrid
 
-**Best For:** Startups, creative agencies, gaming, social media, youth-focused, entertainment, consumer
+**Best For:** Modern enterprise apps, SaaS platforms, health/wellness, modern business tools, professional, hybrid
 
-**Key Effects:** Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms
+**Key Effects:** Improved shadows (softer than flat, clearer than neumorphism), modern (200-300ms), focus visible, WCAG AA/AAA
 
 ### Page Pattern
 
@@ -178,8 +178,7 @@
 
 ## Anti-Patterns (Do NOT Use)
 
-- ❌ Flat design without depth
-- ❌ Text-heavy pages
+- ❌ Excessive decoration
 
 ### Additional Forbidden Patterns
 

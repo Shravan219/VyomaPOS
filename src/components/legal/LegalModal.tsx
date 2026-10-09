@@ -87,7 +87,7 @@ export function LegalModal({ isOpen, onClose, initialDoc = 'terms' }: LegalModal
                   </span>
                 </div>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-white/50 font-bold mt-0.5">
-                  Vyoma ScanServe Enterprise Governance Suite
+                  VyomaPOS - Xtra Rooftop Enterprise Governance Suite
                 </p>
               </div>
             </div>

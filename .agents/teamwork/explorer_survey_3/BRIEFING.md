@@ -6,7 +6,7 @@ Investigate testing infrastructure, build/lint configurations, and 4 required te
 ## 🔒 My Identity
 - Archetype: explorer
 - Roles: Test and Build Explorer (explorer_survey_3)
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: Survey & Investigation for R5 (Automated Testing Suite Setup)
 

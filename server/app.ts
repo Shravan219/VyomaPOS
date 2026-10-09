@@ -96,8 +96,8 @@ app.post('/api/whatsapp/send-receipt', async (req, res) => {
     const pdfBuffer = generateReceiptPdfBuffer(order);
     const fileName = `Receipt_${order.token || String(order.id || '').slice(-4)}.pdf`;
 
-    const restName = restaurantName || order.restaurant_name || process.env.RESTAURANT_NAME || 'Vyoma Luxury Dining';
-    const reviewUrl = googleReviewUrl || process.env.GOOGLE_REVIEW_URL || 'https://maps.google.com';
+    const restName = restaurantName || order.restaurant_name || process.env.RESTAURANT_NAME || 'Xtra Rooftop Lounge & Cafe';
+    const reviewUrl = googleReviewUrl || process.env.GOOGLE_REVIEW_URL || 'https://maps.app.goo.gl/A2caFjF8RDXqDBXA7';
     const tokenStr = order.token ? ` #${order.token}` : '';
     const totalStr = order.total ? ` • ₹${Number(order.total).toFixed(2)}` : '';
 

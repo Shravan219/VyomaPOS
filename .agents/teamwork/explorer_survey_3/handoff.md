@@ -3,7 +3,7 @@
 **Agent**: explorer_survey_3 (Test and Build Explorer)  
 **Type**: Hard Handoff (Investigation & Survey Complete)  
 **Date**: 2026-10-06  
-**Report Artifact**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md`  
+**Report Artifact**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md`  
 
 ---
 
@@ -92,7 +92,7 @@ To verify these findings and test the future implementation:
    - `npm run lint` -> Confirms `tsc --noEmit` exits with code 0.
    - `npm run build` -> Confirms `vite build && node build.js` exits with code 0.
 2. **Inspect Survey Report**:
-   - View `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md` for complete matrices of test cases, edge cases, and code templates.
+   - View `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md` for complete matrices of test cases, edge cases, and code templates.
 3. **Post-Implementation Verification Commands**:
    - `npm test` -> Must run Vitest and report 100% passing tests across all 4 suites.
    - `npm run lint` -> Must pass with 0 errors.

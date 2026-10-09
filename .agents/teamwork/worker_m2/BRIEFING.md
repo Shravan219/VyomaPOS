@@ -6,7 +6,7 @@ Consolidate `supabase_schema.sql`, document Google Sheets sync secrets in `.env.
 ## 🔒 My Identity
 - Archetype: worker_m2
 - Roles: implementer, qa, specialist
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m2
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m2
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: M2 (Database Schema Consolidation & Documentation)
 

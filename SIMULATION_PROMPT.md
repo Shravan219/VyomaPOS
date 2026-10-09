@@ -1,4 +1,4 @@
-# MIROFISH SIMULATION PROMPT: VYOMA SCANSERVE EFFICIENCY & RESILIENCE STRESS-TEST
+# MIROFISH SIMULATION PROMPT: VYOMAPOS - XTRA ROOFTOP EFFICIENCY & RESILIENCE STRESS-TEST
 **Target Engine:** MiroFish Swarm Intelligence Platform (Multi-Agent Simulation Harness)  
 **Execution Mode:** Parallel Swarm Simulation with GraphRAG Ingestion  
 **Objective:** Stress-test system throughput, order lifecycle latency, human-machine handoff bottlenecks, and edge-case failure modes across peak-hour restaurant operations.
@@ -6,8 +6,8 @@
 ---
 
 ```yaml
-simulation_id: "vyoma-scanserve-efficiency-benchmark-01"
-system_under_test: "Vyoma ScanServe (React 19 + Supabase + Express + Android Captain POS + KDS)"
+simulation_id: "vyomapos-xtra-rooftop-efficiency-benchmark-01"
+system_under_test: "VyomaPOS - Xtra Rooftop (React 19 + Supabase + Express + Android Captain POS + KDS)"
 time_horizon: "2.5 Hours (19:30 - 22:00 Friday Dinner Peak)"
 time_step_resolution: "30 Seconds"
 total_agent_population: 68
@@ -19,7 +19,7 @@ Deploy a synthetic population of 68 interacting agents mapped across the followi
 
 ### A. Front-of-House (Floor Staff)
 - **4x CaptainAgents (`CAPTAIN_01` to `CAPTAIN_04`):**
-  - *Device:* 10-inch Android Tablet running Capacitor ScanServe APK.
+  - *Device:* 10-inch Android Tablet running Capacitor VyomaPOS APK.
   - *Behavioral Profile:* Fast-paced, handling 5 tables each. Prone to input errors when tables have more than 6 guests or complex dietary custom instructions.
   - *Tasks:* Seating guests, taking orders via `OrderBuilderSheet`, monitoring `ReadyOrdersBanner`, delivering dishes, handling table status transitions (`available` -> `occupied` -> `cleaning`).
 

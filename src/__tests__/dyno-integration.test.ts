@@ -26,6 +26,9 @@ import {
   acceptSwiggyOrder,
   markZomatoOrderReady,
   toggleSwiggyItemInStock,
+  mapOrderActionToDynoStatus,
+  updateDynoOrderStatus,
+  DYNO_ACTION_STATUS_MAP,
   type DynoClientConfig,
 } from '../lib/dyno-outbound-client';
 
@@ -327,6 +330,45 @@ describe('OUTBOUND REST APIs (POS -> Dyno)', () => {
   it('rejects invalid order IDs client-side (blank / whitespace)', async () => {
     const { fn, calls } = mockFetchFactory(() => jsonResponse(200, {}));
     const res = await acceptSwiggyOrder(TEST_CFG(fn), { order_id: '   ', prep_time: 25 });
+    expect(res.ok).toBe(false);
+    expect(res.httpStatus).toBe(422);
+    expect(calls).toHaveLength(0);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════
+describe('OUTBOUND lifecycle mapping (POS action -> Dyno status)', () => {
+  it('maps the full lifecycle without skipping the dispatch phase', () => {
+    expect(DYNO_ACTION_STATUS_MAP.accept).toBe('ACCEPTED');
+    expect(DYNO_ACTION_STATUS_MAP.preparing).toBe('PREPARING');
+    expect(DYNO_ACTION_STATUS_MAP.ready).toBe('READY');
+    expect(DYNO_ACTION_STATUS_MAP.handover).toBe('OUT_FOR_DELIVERY');
+    expect(DYNO_ACTION_STATUS_MAP.delivered).toBe('DELIVERED');
+    expect(DYNO_ACTION_STATUS_MAP.cancelled).toBe('CANCELLED');
+  });
+
+  it('maps handover aliases to OUT_FOR_DELIVERY, never DELIVERED', () => {
+    for (const alias of ['handover', 'handover_to_rider', 'dispatched', 'out_for_delivery']) {
+      expect(mapOrderActionToDynoStatus(alias)).toBe('OUT_FOR_DELIVERY');
+    }
+    expect(mapOrderActionToDynoStatus('delivered')).toBe('DELIVERED');
+    expect(mapOrderActionToDynoStatus('completed')).toBe('DELIVERED');
+  });
+
+  it('emits the standard payload {"order_id","status":"OUT_FOR_DELIVERY"} on handover', async () => {
+    const { fn, calls } = mockFetchFactory(() => jsonResponse(200, { success: true }));
+    const res = await updateDynoOrderStatus(TEST_CFG(fn), { order_id: 'SW-101', action: 'handover' });
+    expect(res.ok).toBe(true);
+    expect(calls).toHaveLength(1);
+    expect(calls[0].init.method).toBe('POST');
+    expect(calls[0].url).toBe('https://dynoapis.example/api/v1/orders/status');
+    expect(JSON.parse(calls[0].init.body)).toEqual({ order_id: 'SW-101', status: 'OUT_FOR_DELIVERY' });
+    expect(calls[0].init.headers['Content-Type']).toBe('application/json');
+  });
+
+  it('422 on missing order_id without network call', async () => {
+    const { fn, calls } = mockFetchFactory(() => jsonResponse(200, {}));
+    const res = await updateDynoOrderStatus(TEST_CFG(fn), { order_id: '  ', action: 'handover' });
     expect(res.ok).toBe(false);
     expect(res.httpStatus).toBe(422);
     expect(calls).toHaveLength(0);

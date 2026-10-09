@@ -32,7 +32,7 @@
      - `.env.example` (+9 lines)
      - `README.md` (+58 lines)
    - Obsidian Vault notes updated:
-     - `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\Vyoma ScanServe\Database Schema.md`
+     - `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\VyomaPOS - Xtra Rooftop\Database Schema.md`
      - `C:\Users\Anay0216\Documents\Obsidian Vault\Daily\2026-10-06.md`
 
 ---

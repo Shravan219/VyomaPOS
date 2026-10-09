@@ -6,7 +6,7 @@ Harden `src/lib/authService.ts` to restrict default demo passcodes strictly to d
 ## 🔒 My Identity
 - Archetype: implementer
 - Roles: implementer, qa
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m3
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m3
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: M3 / Requirement R1
 

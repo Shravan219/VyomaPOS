@@ -13,7 +13,7 @@ export interface LegalDocument {
 }
 
 export const LEGAL_DISCLAIMER_NOTICE = 
-  "Notice: This legal document is published for contractual governance and regulatory compliance across Vyoma ScanServe software deployments. Consult with qualified legal counsel for jurisdiction-specific advisory.";
+  "Notice: This legal document is published for contractual governance and regulatory compliance across VyomaPOS - Xtra Rooftop software deployments. Consult with qualified legal counsel for jurisdiction-specific advisory.";
 
 export const TERMS_OF_SERVICE: LegalDocument = {
   title: "Terms of Service & SaaS Agreement",
@@ -24,7 +24,7 @@ export const TERMS_OF_SERVICE: LegalDocument = {
     {
       id: "acceptance",
       title: "1. Acceptance of Terms & Eligibility",
-      content: `By registering, deploying, or accessing the Vyoma ScanServe Restaurant Operating System ("Software", "Service", or "Platform"), you ("Customer", "Merchant", or "Operator") enter into a legally binding agreement with Vyoma Hospitality Technologies Private Limited ("Vyoma", "Company", "we", or "us"). 
+      content: `By registering, deploying, or accessing the VyomaPOS - Xtra Rooftop Restaurant Operating System ("Software", "Service", or "Platform"), you ("Customer", "Merchant", or "Operator") enter into a legally binding agreement with Vyoma Hospitality Technologies Private Limited ("Vyoma", "Company", "we", or "us"). 
       
 If you are entering into this Agreement on behalf of a restaurant company, franchise group, or commercial entity, you represent and warrant that you possess full corporate authorization to bind that entity to these Terms. If you do not accept all clauses of this Agreement, you must not access or utilize the Service.`
     },
@@ -42,7 +42,7 @@ Customer agrees not to:
     {
       id: "tiers",
       title: "3. Subscription Tiers & Service Level Architecture",
-      content: `Vyoma ScanServe offers three distinct operational tiers:
+      content: `VyomaPOS - Xtra Rooftop offers three distinct operational tiers:
 • Bistro & Cafe Tier: Single-queue KDS, counter ordering, and digital WhatsApp billing for independent cafes and specialty coffee shops.
 • Grand Brasserie Tier: Multi-station KDS routing (Grill, Saute, Pastry, Pass, Bar), Swiggy & Zomato bi-directional webhooks, and automated VIP loyalty CRM.
 • Enterprise Group Tier: Multi-property franchise mesh, dedicated local relay server synchronization (sub-millisecond local latency), consolidated multi-outlet ledgers, and automated Tally XML & SAP ERP batch export.
@@ -178,7 +178,7 @@ export const COOKIE_POLICY: LegalDocument = {
     {
       id: "cookies-overview",
       title: "1. How Vyoma Uses Local Storage & Cookies",
-      content: `Unlike advertising-driven websites, Vyoma ScanServe DOES NOT utilize third-party tracking cookies, behavioral ad retargeting pixels, or commercial data-broker beacons. 
+      content: `Unlike advertising-driven websites, VyomaPOS - Xtra Rooftop DOES NOT utilize third-party tracking cookies, behavioral ad retargeting pixels, or commercial data-broker beacons. 
 
 Our application strictly utilizes standard browser LocalStorage and SessionStorage technologies to maintain essential terminal state, staff session persistence, and offline ticket stability.`
     },
@@ -209,7 +209,7 @@ export const GST_DISCLAIMER: LegalDocument = {
     {
       id: "gst-mandate",
       title: "1. Statutory Invoicing Architecture",
-      content: `Vyoma ScanServe includes automated thermal printing and digital WhatsApp receipt generators designed to assist food and beverage establishments in issuing valid Tax Invoices under Section 31 of the Central Goods and Services Tax (CGST) Act, 2017 and respective State GST enactments.`
+      content: `VyomaPOS - Xtra Rooftop includes automated thermal printing and digital WhatsApp receipt generators designed to assist food and beverage establishments in issuing valid Tax Invoices under Section 31 of the Central Goods and Services Tax (CGST) Act, 2017 and respective State GST enactments.`
     },
     {
       id: "merchant-liability",

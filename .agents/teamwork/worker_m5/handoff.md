@@ -51,7 +51,7 @@ Milestone M5 (Requirement R5) is 100% complete and fully verified.
 - 100% test pass rate achieved (`npm test` passes 41/41 tests with 0 failures).
 - TypeScript linting (`npm run lint`) passes with 0 errors.
 - Production build (`npm run build`) completes cleanly.
-- Obsidian Vault documentation is synchronized in `Projects/Vyoma ScanServe/Roadmap.md` and `Daily/2026-10-06.md`.
+- Obsidian Vault documentation is synchronized in `Projects/VyomaPOS - Xtra Rooftop/Roadmap.md` and `Daily/2026-10-06.md`.
 - Knowledge graph is updated via `graphify update .`.
 
 ## 5. Verification Method

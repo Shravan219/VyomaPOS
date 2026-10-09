@@ -143,7 +143,7 @@ export function ServerConnectionModal({ open, onOpenChange }: ServerConnectionMo
               <span>Backend Server Address</span>
               <span className="text-[10px] text-white/40 font-normal">e.g. http://192.168.1.100:3000</span>
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col min-[420px]:flex-row gap-2">
               <Input
                 id="backend-server-address-input"
                 type="text"
@@ -154,14 +154,14 @@ export function ServerConnectionModal({ open, onOpenChange }: ServerConnectionMo
                   setUrlInput(e.target.value);
                   setTestResult(null);
                 }}
-                className="bg-black/60 border-white/15 text-white font-mono text-xs focus-visible:ring-primary h-10"
+                className="bg-black/60 border-white/15 text-white font-mono text-xs focus-visible:ring-primary h-10 min-w-0 flex-1"
               />
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleTest}
                 disabled={testing || !urlInput.trim()}
-                className="border-white/15 bg-white/5 hover:bg-white/10 text-white shrink-0 text-xs px-3 h-10 cursor-pointer"
+                className="border-white/15 bg-white/5 hover:bg-white/10 text-white shrink-0 text-xs px-3 h-10 cursor-pointer w-full min-[420px]:w-auto"
               >
                 {testing ? (
                   <RefreshCw size={14} className="animate-spin text-primary" />

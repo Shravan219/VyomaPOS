@@ -6,7 +6,7 @@ Adversarially challenge the build integrity, lint status, test suite, and Invoic
 ## 🔒 My Identity
 - Archetype: challenger
 - Roles: critic, specialist
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\challenger_2
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\challenger_2
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: Build & Edge-Case Stress Challenge
 - Instance: 2 of 2

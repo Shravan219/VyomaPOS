@@ -1,8 +1,8 @@
-# Comprehensive Business Case: Vyoma ScanServe
+# Comprehensive Business Case: VyomaPOS - Xtra Rooftop
 **Document Version:** 1.0 (Investor-Ready)  
 **Date:** September 20, 2026  
 **Company:** Vyoma Hospitality Technologies  
-**Product:** ScanServe POS & KDS Hospitality Operating System  
+**Product:** VyomaPOS POS & KDS Hospitality Operating System  
 **Stage:** Seed / Early Commercialization  
 **Funding Ask:** $1.50M USD (₹12.50 Crore INR)  
 
@@ -11,7 +11,7 @@
 ## 1. Executive Summary
 
 ### 1.1 Company Overview
-**Vyoma ScanServe** is a mission-critical, offline-resilient restaurant management operating system combining luxury-tier cloud POS, multi-station Kitchen Display Systems (KDS), captain floor tablets, WhatsApp digital invoicing, and multi-unit franchise enterprise mesh architecture. 
+**VyomaPOS - Xtra Rooftop** is a mission-critical, offline-resilient restaurant management operating system combining luxury-tier cloud POS, multi-station Kitchen Display Systems (KDS), captain floor tablets, WhatsApp digital invoicing, and multi-unit franchise enterprise mesh architecture. 
 
 ### 1.2 The Problem
 The Indian food services industry is valued at **₹5.69 Lakh Crore ($68.3B USD)** and growing rapidly, yet restaurants struggle with fragile broadband infrastructure, high aggregator commission burdens (22%–30%), paper receipt waste, and clunky, legacy desktop software that crashes during internet interruptions.
@@ -75,7 +75,7 @@ Vyoma solves food service operational downtime with an **offline-first hybrid-ed
 
 ## 3. Product & Technology Architecture
 
-Vyoma ScanServe is built as a cloud-native, edge-cached progressive architecture designed for extreme uptime and modern culinary workflows.
+VyomaPOS - Xtra Rooftop is built as a cloud-native, edge-cached progressive architecture designed for extreme uptime and modern culinary workflows.
 
 ```
 ┌───────────────────────────────────────────────────────────────────────┐
@@ -132,7 +132,7 @@ LEGACY WINDOWS             │   ★ VYOMA GRAND BRASSERIE & BISTRO
 
 ### 4.1 Detailed Competitive Comparison
 
-| Feature / Metric | Vyoma ScanServe | Petpooja | Restroworks (Posist) | Toast Inc. (US Benchmark) |
+| Feature / Metric | VyomaPOS - Xtra Rooftop | Petpooja | Restroworks (Posist) | Toast Inc. (US Benchmark) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Target Segment** | Cafes, Casual & Fine Dining, Multi-Unit Chains | Budget QSRs & Street Outlets | Multi-National Enterprise Chains | US/EU Full Service & QSR |
 | **Offline Performance** | **Edge LAN Relay (`0.4ms`), Local Storage** | Local Windows Client | Cloud-heavy, partial sync | Offline payments & local queue |
@@ -304,6 +304,6 @@ Vyoma Hospitality Technologies is raising **$1.50M USD (₹12.50 Crore INR)** in
 
 ## 11. Conclusion & Investment Summary
 
-Vyoma ScanServe addresses a critical gap in emerging market hospitality technology: providing a **Toast-level, Michelin-grade dining and kitchen management suite** without proprietary hardware lock-in, fortified by **offline LAN edge resilience** and **instant WhatsApp tax billing**.
+VyomaPOS - Xtra Rooftop addresses a critical gap in emerging market hospitality technology: providing a **Toast-level, Michelin-grade dining and kitchen management suite** without proprietary hardware lock-in, fortified by **offline LAN edge resilience** and **instant WhatsApp tax billing**.
 
 With unit economics demonstrating **85%+ gross margins**, **< 3-month CAC payback**, and a clearly mapped route to **₹54.1 Crore ($6.5M USD) ARR by Year 5**, Vyoma represents a high-conviction venture investment at the ground floor of India's organized restaurant revolution.

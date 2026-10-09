@@ -91,6 +91,6 @@ Milestone M5 implemented a fully configured, high-performance automated testing 
 - Production mode Supabase `app_passwords` table fallback verification for staff (`secureStaff2026`) and admin (`secureAdmin2026`), with rejection of invalid passcodes.
 
 ## External Documentation & Vault Synchronization
-- Synchronized `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\Vyoma ScanServe\Roadmap.md` with Milestone M5 completion.
+- Synchronized `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\VyomaPOS - Xtra Rooftop\Roadmap.md` with Milestone M5 completion.
 - Synchronized `C:\Users\Anay0216\Documents\Obsidian Vault\Daily\2026-10-06.md` with comprehensive M5 activity summary.
 - Updated project AST knowledge graph via `graphify update .`.

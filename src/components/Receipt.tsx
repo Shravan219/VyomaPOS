@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { RESTAURANT_NAME, getGSTIN } from '@/src/lib/restaurantSettings';
 
 export interface OrderItem {
   name: string;
@@ -11,8 +12,14 @@ export interface ReceiptProps {
   table: string;
   items: OrderItem[];
   subtotal: number;
+  /** Buyer GSTIN (per-invoice, optional) — only switches TAX INVOICE label. */
   gstin?: string;
   taxRate?: number;
+  /** Discount already applied before tax. Defaults to 0. */
+  discount?: number;
+  /** Outlet identity — defaults to stored settings. */
+  restaurantName?: string;
+  restaurantGstin?: string;
   token?: string;
   customerName?: string;
   customerPhone?: string;
@@ -26,6 +33,9 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
   subtotal,
   gstin,
   taxRate = 5,
+  discount = 0,
+  restaurantName = RESTAURANT_NAME,
+  restaurantGstin,
   token,
   customerName,
   customerPhone,
@@ -50,16 +60,24 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
     });
   }, [createdAt]);
 
-  // Calculations for GST compliance
-  const hasGstin = !!gstin && gstin.trim().length > 0;
-  const computedTaxRate = Number(taxRate);
-  const cgstRate = computedTaxRate / 2;
-  const sgstRate = computedTaxRate / 2;
+  // Outlet identity (stored GSTIN/GSTAMT are the source of truth for tax).
+  const outletGstin = (restaurantGstin !== undefined ? restaurantGstin : getGSTIN()).trim();
 
-  const cgstAmount = hasGstin ? subtotal * (cgstRate / 100) : 0;
-  const sgstAmount = hasGstin ? subtotal * (sgstRate / 100) : 0;
-  const taxAmount = cgstAmount + sgstAmount;
-  const grandTotal = hasGstin ? subtotal + taxAmount : subtotal;
+  // Final payable: GST always applies on the discounted taxable base.
+  // Buyer GSTIN only decides the TAX INVOICE vs RETAIL BILL label — never the math.
+  const safeSubtotal = Math.max(0, Number(subtotal) || 0);
+  const safeDiscount = Math.min(safeSubtotal, Math.max(0, Number(discount) || 0));
+  const taxableAmount = Math.max(0, safeSubtotal - safeDiscount);
+  const effectiveRate = Math.max(0, Number(taxRate) || 0);
+  const hasCustomerGstin = !!gstin && gstin.trim().length > 0;
+
+  const cgstRate = effectiveRate / 2;
+  const sgstRate = effectiveRate / 2;
+  const rawGst = taxableAmount * (effectiveRate / 100);
+  const taxAmount = Math.round(rawGst * 100) / 100;
+  const cgstAmount = Math.round((taxAmount / 2) * 100) / 100;
+  const sgstAmount = Math.round((taxAmount / 2) * 100) / 100;
+  const grandTotal = Math.round((taxableAmount + taxAmount) * 100) / 100;
 
   return (
     <div ref={ref} className="receipt-print-container relative bg-white text-black p-6 font-mono text-xs w-[80mm] mx-auto border border-gray-200 shadow-lg rounded-md select-none print:border-none print:shadow-none print:rounded-none">
@@ -120,10 +138,10 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
 
       {/* Brand Header */}
       <div className="text-center mb-4">
-        <h1 className="text-lg font-bold tracking-tight uppercase">Vyoma Rooftop Lounge &amp; Cafe</h1>
+        <h1 className="text-lg font-bold tracking-tight uppercase">{restaurantName}</h1>
         <p className="text-[9px] uppercase tracking-wider text-gray-500">Contactless Table Ordering</p>
         <p className="text-[10px] text-gray-600 font-bold mt-1">
-          {hasGstin ? 'TAX INVOICE' : 'RETAIL BILL'}
+          {outletGstin || hasCustomerGstin ? 'TAX INVOICE' : 'RETAIL BILL'}
         </p>
       </div>
 
@@ -159,10 +177,16 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
             <span>{customerPhone}</span>
           </div>
         )}
-        {hasGstin && (
+        {outletGstin && (
           <div className="flex justify-between text-[10px] font-semibold text-gray-800">
             <span>GSTIN:</span>
-            <span>{gstin.toUpperCase()}</span>
+            <span>{outletGstin.toUpperCase()}</span>
+          </div>
+        )}
+        {hasCustomerGstin && (
+          <div className="flex justify-between text-[10px] text-gray-600">
+            <span>Customer GSTIN:</span>
+            <span>{gstin!.trim().toUpperCase()}</span>
           </div>
         )}
       </div>
@@ -192,10 +216,17 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
       <div className="border-t border-dashed border-black/40 pt-2 space-y-1.5 text-[10px]">
         <div className="flex justify-between">
           <span>Subtotal:</span>
-          <span>₹{subtotal.toFixed(2)}</span>
+          <span>₹{safeSubtotal.toFixed(2)}</span>
         </div>
 
-        {hasGstin && (
+        {safeDiscount > 0 && (
+          <div className="flex justify-between text-gray-600">
+            <span>Discount:</span>
+            <span>-₹{safeDiscount.toFixed(2)}</span>
+          </div>
+        )}
+
+        {effectiveRate > 0 && (
           <>
             <div className="flex justify-between text-gray-600">
               <span>CGST ({cgstRate.toFixed(1)}%):</span>
@@ -220,7 +251,7 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
       <div className="text-center text-[9px] text-gray-600 space-y-1 border-t border-dashed border-black/40 pt-3">
         <p className="font-semibold uppercase tracking-wider">Thank you for dining with us!</p>
         <p className="italic">Powered by Vyoma SaaS</p>
-        {hasGstin && (
+        {(outletGstin || hasCustomerGstin) && (
           <p className="font-bold text-[8px] tracking-[0.1em] uppercase mt-1 text-gray-500">
             *** TAX INVOICE ***
           </p>

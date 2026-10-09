@@ -191,7 +191,7 @@
     "ast_hash": "c777a4127ae7213f7da22c4105bdfeab",
     "semantic_hash": "c777a4127ae7213f7da22c4105bdfeab"
   },
-  "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java": {
+  "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java": {
     "mtime": 1789550609.0195215,
     "seen": 1789780154.2241642,
     "ast_hash": "b9bbbd4b7c2d52115243f3454ff12e84",
@@ -988,7 +988,7 @@
     "ast_hash": "f04802c7af087b614dd55d7b0d5f80aa",
     "semantic_hash": ""
   },
-  "design-system/scanserve-dashboard/MASTER.md": {
+  "design-system/vyomapos-dashboard/MASTER.md": {
     "mtime": 1788258074.6587877,
     "seen": 1789780154.2243984,
     "ast_hash": "ca7c723df3a1e84cfd233354fa84d5c7",
@@ -1336,13 +1336,13 @@
     "ast_hash": "b8639de872c3e71c296b48d18b76a88f",
     "semantic_hash": ""
   },
-  "design-system/vyoma-scanserve/MASTER.md": {
+  "design-system/vyomapos-xtra-rooftop/MASTER.md": {
     "mtime": 1789878975.2948027,
     "seen": 1789879215.3664343,
     "ast_hash": "a43be7f94b0d3b879707ed7b81a66e3b",
     "semantic_hash": ""
   },
-  "design-system/vyoma-scanserve/pages/landing.md": {
+  "design-system/vyomapos-xtra-rooftop/pages/landing.md": {
     "mtime": 1789878975.3109589,
     "seen": 1789879215.3664372,
     "ast_hash": "f4ca4940d51852eb68f56767a749549d",
@@ -1372,7 +1372,7 @@
     "ast_hash": "28003078998a9afae9d8bcae2c19c20b",
     "semantic_hash": ""
   },
-  "business-case-vyoma-scanserve-2026-09-20.md": {
+  "business-case-vyomapos-xtra-rooftop-2026-09-20.md": {
     "mtime": 1789882503.126235,
     "seen": 1789882813.4039326,
     "ast_hash": "797ee2bca6210185d2b2b6ee939a4cb7",

@@ -27,7 +27,7 @@
 3. **TypeScript Lint Check**:
    Running `npm run lint` (`tsc --noEmit`) before and after edits confirmed 0 TypeScript errors.
 4. **Graphify & Vault Sync**:
-   `graphify update .` completed successfully (5078 nodes, 7214 edges). Obsidian Vault documentation at `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\Vyoma ScanServe\Roadmap.md` and daily log at `Daily\2026-10-06.md` synchronized.
+   `graphify update .` completed successfully (5078 nodes, 7214 edges). Obsidian Vault documentation at `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\VyomaPOS - Xtra Rooftop\Roadmap.md` and daily log at `Daily\2026-10-06.md` synchronized.
 
 ---
 

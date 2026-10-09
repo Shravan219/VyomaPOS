@@ -8016,20 +8016,20 @@
     {
       "label": "MainActivity.java",
       "file_type": "code",
-      "source_file": "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java",
+      "source_file": "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "android_app_src_main_java_com_vyoma_scanserve_mainactivity",
+      "id": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity",
       "community": 59,
       "norm_label": "mainactivity.java"
     },
     {
       "label": "MainActivity",
       "file_type": "code",
-      "source_file": "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java",
+      "source_file": "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "android_app_src_main_java_com_vyoma_scanserve_mainactivity_mainactivity",
+      "id": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity_mainactivity",
       "community": 59,
       "norm_label": "mainactivity"
     },
@@ -23390,31 +23390,31 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java",
+      "source_file": "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "android_app_src_main_java_com_vyoma_scanserve_mainactivity",
-      "target": "android_app_src_main_java_com_vyoma_scanserve_mainactivity_mainactivity",
+      "source": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity",
+      "target": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity_mainactivity",
       "confidence_score": 1.0
     },
     {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java",
+      "source_file": "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java",
       "source_location": "L3",
       "weight": 1.0,
-      "source": "android_app_src_main_java_com_vyoma_scanserve_mainactivity",
+      "source": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity",
       "target": "bridgeactivity",
       "confidence_score": 1.0
     },
     {
       "relation": "inherits",
       "confidence": "EXTRACTED",
-      "source_file": "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java",
+      "source_file": "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "android_app_src_main_java_com_vyoma_scanserve_mainactivity_mainactivity",
+      "source": "android_app_src_main_java_com_vyoma_vyomapos_mainactivity_mainactivity",
       "target": "bridgeactivity",
       "confidence_score": 1.0
     },

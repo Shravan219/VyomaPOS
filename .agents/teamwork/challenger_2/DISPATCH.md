@@ -1,13 +1,13 @@
 ## 2026-10-06T05:06:44Z
 You are challenger_2 (Edge-Case Stress Challenger).
-Your working directory is: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\challenger_2
+Your working directory is: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\challenger_2
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 You MUST read ORIGINAL_REQUEST.md before starting work.
 
 Also read:
-- PROJECT.md: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
+- PROJECT.md: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
 
 Your Objective:
 1. Challenge the build integrity and runtime behavior:

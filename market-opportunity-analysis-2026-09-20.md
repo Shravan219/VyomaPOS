@@ -1,4 +1,4 @@
-# Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)
+# Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)
 **Document Version:** 1.0  
 **Date:** September 20, 2026  
 **Target Domain:** Restaurant Management Software (RMS), Cloud POS, Kitchen Display Systems (KDS) & Hospitality Operations  
@@ -8,7 +8,7 @@
 
 ## 1. Executive Summary
 
-Vyoma ScanServe is an offline-resilient, omnichannel hospitality operating system integrating cloud Point of Sale (POS), multi-station Kitchen Display Systems (KDS), captain floor tablets, WhatsApp e-invoicing, and multi-unit enterprise mesh architectures. 
+VyomaPOS - Xtra Rooftop is an offline-resilient, omnichannel hospitality operating system integrating cloud Point of Sale (POS), multi-station Kitchen Display Systems (KDS), captain floor tablets, WhatsApp e-invoicing, and multi-unit enterprise mesh architectures. 
 
 The market opportunity sits at the intersection of a rapidly digitizing **₹5.69 Lakh Crore ($68.3B USD)** Indian Food Services sector and the global **$14.7B+** restaurant management software transformation. Fueled by organized dining growing at **13.2% CAGR**, stricter GST compliance requirements, high aggregator commissions (Swiggy/Zomato), and the failure of legacy desktop POS platforms during internet drops, Vyoma possesses a clear wedge into high-growth cafes, casual/fine dining establishments, and enterprise multi-outlet franchises.
 
@@ -172,4 +172,4 @@ Vyoma’s long-term enterprise valuation can expand significantly beyond basic s
 
 The restaurant operating system market in India is at an inflection point. With a validated **$585.6M TAM** and an immediate **$124.9M SAM**, capturing just **5.2% of the organized market (5,100 outlets)** by Year 5 yields **₹54.1 Crore ($6.5M USD) ARR** in pure high-margin software revenue. 
 
-Vyoma ScanServe's offline-first architecture, elegant fine dining design system, and multi-tier pricing make it ideally positioned to capture this market window.
+VyomaPOS - Xtra Rooftop's offline-first architecture, elegant fine dining design system, and multi-tier pricing make it ideally positioned to capture this market window.

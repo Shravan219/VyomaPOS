@@ -1,4 +1,4 @@
-# Project: Vyoma ScanServe Dashboard Remediation
+# Project: VyomaPOS - Xtra Rooftop Dashboard Remediation
 
 ## Architecture
 - Frontend: React 19 + TypeScript + Vite 6 + Tailwind CSS v4.

@@ -6,7 +6,7 @@ Execute Milestone M1 / Requirement R4: CI and repository cleanliness by relocati
 ## 🔒 My Identity
 - Archetype: worker
 - Roles: implementer, qa, specialist
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m1
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m1
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: M1 / Requirement R4 (CI & Repository Cleanliness)
 
@@ -22,13 +22,13 @@ Execute Milestone M1 / Requirement R4: CI and repository cleanliness by relocati
 ## Task Summary
 - **What to build**: Relocate root `build-apk.yml` to `.github/workflows/build-apk.yml`, untrack `VyomPOS Leads.xlsx` from git while preserving it on disk, update `.gitignore` with required file patterns.
 - **Success criteria**: Workflow in `.github/workflows/`, original removed from root; spreadsheet not tracked in git; `.gitignore` contains required rules; `npm run lint` passes without errors.
-- **Interface contracts**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md`
+- **Interface contracts**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md`
 - **Code layout**: Standard GitHub Actions and git hygiene.
 
 ## Key Decisions Made
 - Used `git mv` with directory creation to cleanly register workflow relocation as a git rename.
 - Used `git rm --cached` for `VyomPOS Leads.xlsx` and added `*.xlsx` and `*.xls` to `.gitignore`.
-- Synchronized Obsidian Vault (`Daily/2026-10-06.md` and `Projects/Vyoma ScanServe/Roadmap.md`).
+- Synchronized Obsidian Vault (`Daily/2026-10-06.md` and `Projects/VyomaPOS - Xtra Rooftop/Roadmap.md`).
 
 ## Artifact Index
 - `.agents/teamwork/worker_m1/DISPATCH.md` — Assigned instructions

@@ -21,11 +21,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 import { soundService } from '@/src/lib/sound';
 import { supabase } from '@/src/lib/supabase';
-import { 
+import {
   OrderReceiptData,
-  formatPhoneNumber, 
+  formatPhoneNumber,
   sendWhatsAppReceiptWithPDF
 } from '@/src/lib/whatsapp';
+import { getGSTAMT, GOOGLE_REVIEW_URL, RESTAURANT_NAME } from '@/src/lib/restaurantSettings';
 
 export interface GroupedInvoice {
   groupKey: string;
@@ -36,6 +37,7 @@ export interface GroupedInvoice {
   table_id?: string | number;
   subtotal: number;
   tax: number;
+  tax_rate: number;
   grand_total: number;
   items: OrderItem[];
   mergedCount: number;
@@ -84,11 +86,26 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
 
     const rawSubtotal = (order as unknown as { subtotal?: number }).subtotal;
     const rawTax = (order as unknown as { tax_amount?: number }).tax_amount;
+    const rawRate = (order as unknown as { tax_rate?: number }).tax_rate;
 
-    const orderSubtotal = Number(rawSubtotal) || 
+    const orderSubtotal = Number(rawSubtotal) ||
       orderItems.reduce((acc, it) => acc + ((Number(it.price) || 0) * (Number(it.quantity) || 1)), 0);
-    const orderTax = Number(rawTax) || 0;
-    const orderTotal = Number(order.total) || (orderSubtotal + orderTax);
+    const orderTotal = Number(order.total) || (orderSubtotal + (Number(rawTax) || 0));
+    // Derive GST paid when the order was saved without a tax split
+    // (captain/counter orders store the GST-inclusive total only).
+    const storedTax = Number(rawTax) || 0;
+    const orderTax = storedTax > 0
+      ? storedTax
+      : Math.max(0, Math.round((orderTotal - orderSubtotal) * 100) / 100);
+    // Recover the rate this bill was created with: a stored rate wins, else
+    // derive it from the amounts (covers bills fired before a rate change),
+    // else fall back to the current outlet rate.
+    const storedRate = Number(rawRate);
+    const orderRate = storedRate > 0
+      ? storedRate
+      : orderTax > 0 && orderSubtotal > 0
+        ? Math.round((orderTax / orderSubtotal) * 1000) / 10
+        : getGSTAMT();
     const orderToken = order.token ? String(order.token) : (order.id ? String(order.id).slice(-4) : '0000');
 
     const existing = groups.get(groupKey);
@@ -126,6 +143,8 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
       existing.subtotal += orderSubtotal;
       existing.tax += orderTax;
       existing.grand_total += orderTotal;
+      // Keep the highest GST rate seen in the group for the receipt line.
+      if (orderRate > existing.tax_rate) existing.tax_rate = orderRate;
 
       // 4. Retain customer information
       if (
@@ -182,6 +201,7 @@ export function groupOrdersByCustomerAndTable(orders: Order[]): GroupedInvoice[]
         table_id: order.table_id,
         subtotal: orderSubtotal,
         tax: orderTax,
+        tax_rate: orderRate,
         grand_total: orderTotal,
         items: aggregatedItems,
         mergedCount: 1,
@@ -308,6 +328,7 @@ export function PaymentsView({
       items: invoice.items,
       subtotal: invoice.subtotal,
       tax_amount: invoice.tax,
+      tax_rate: invoice.tax_rate,
       total: invoice.grand_total,
       payment_mode: String(paymentMode || 'UPI').toUpperCase(),
       table_id: invoice.table_id,
@@ -353,11 +374,11 @@ export function PaymentsView({
       fetch('/api/whatsapp/send-receipt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          order: receiptPayload, 
+        body: JSON.stringify({
+          order: receiptPayload,
           phone: targetPhone,
-          restaurantName: 'Vyoma Luxury Dining',
-          googleReviewUrl: 'https://maps.google.com'
+          restaurantName: RESTAURANT_NAME,
+          googleReviewUrl: GOOGLE_REVIEW_URL
         })
       })
         .then(res => res.json())
@@ -843,7 +864,7 @@ export function PaymentsView({
                     </div>
 
                     {/* Right: Payment Method Selector & Actions */}
-                    <div className="flex flex-col justify-between items-end border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-6 gap-4 shrink-0 min-w-[290px]">
+                    <div className="flex flex-col justify-between items-end border-t lg:border-t-0 lg:border-l border-white/10 pt-4 lg:pt-0 lg:pl-6 gap-4 shrink-0 w-full lg:w-auto lg:min-w-[290px]">
                       {/* Price Summary */}
                       <div className="w-full text-right">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-white/70 block mb-0.5">
@@ -854,7 +875,7 @@ export function PaymentsView({
                         </div>
                         <div className="text-[10px] text-white/60 flex items-center justify-end gap-2 mt-0.5">
                           <span>Subtotal: ₹{invoice.subtotal.toFixed(0)}</span>
-                          {invoice.tax > 0 && <span>• GST: ₹{invoice.tax.toFixed(0)}</span>}
+                          <span>• GST ({invoice.tax_rate}%): ₹{invoice.tax.toFixed(0)}</span>
                         </div>
                       </div>
 

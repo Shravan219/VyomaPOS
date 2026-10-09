@@ -1,15 +1,15 @@
 ## 2026-10-06T04:50:27Z
 You are worker_m3 (Auth Security Hardening Worker).
-Your working directory is: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m3
+Your working directory is: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m3
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 You MUST read ORIGINAL_REQUEST.md before starting work.
 
 Also read PROJECT.md at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
 And reference Explorer 1 findings at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_1\survey_report.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_1\survey_report.md
 
 DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A teamwork_preview_auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
 

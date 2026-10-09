@@ -1,11 +1,11 @@
 # BRIEFING — 2026-10-06T04:30:00Z
 
 ## Mission
-Remediate all client-delivery blockers, harden auth security, unify database schemas, fix invoicing error handling, organize CI/CD workflows, and implement an automated Vitest test suite for the Vyoma ScanServe Dashboard.
+Remediate all client-delivery blockers, harden auth security, unify database schemas, fix invoicing error handling, organize CI/CD workflows, and implement an automated Vitest test suite for the VyomaPOS - Xtra Rooftop Dashboard.
 
 ## 🔒 My Identity
 - Archetype: sentinel
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork
 - Orchestrator: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Victory Auditor: 381b4526-8ff7-4a08-bd3f-a480c2dc584f
 - Cron 1 (Progress): 361570e2-ee67-45ea-8f94-4748a5c22d6f/task-24
@@ -37,7 +37,7 @@ Remediate all client-delivery blockers, harden auth security, unify database sch
 - **Retry count**: 0
 
 ## Artifact Index
-- c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative record of user request
-- c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\BRIEFING.md — Sentinel persistent working memory
-- c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\handoff.md — Sentinel final handoff report
-- c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\victory_auditor_1\handoff.md — Victory Auditor forensic report
+- c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative record of user request
+- c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\BRIEFING.md — Sentinel persistent working memory
+- c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\handoff.md — Sentinel final handoff report
+- c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\victory_auditor_1\handoff.md — Victory Auditor forensic report

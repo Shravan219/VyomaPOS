@@ -1,7 +1,7 @@
-# Brag Plan: Vyoma ScanServe (16-Chapter Keynote Film — 2m 40s)
+# Brag Plan: VyomaPOS - Xtra Rooftop (16-Chapter Keynote Film — 2m 40s)
 
 ## What is this app?
-Vyoma ScanServe is an enterprise, Michelin-grade restaurant POS, Kitchen KDS, and tableside operations system engineered for fine dining hospitality and high-tempo kitchen velocity.
+VyomaPOS - Xtra Rooftop is an enterprise, Michelin-grade restaurant POS, Kitchen KDS, and tableside operations system engineered for fine dining hospitality and high-tempo kitchen velocity.
 
 ## Video Specifications
 - Duration: 160 seconds (2 minutes 40 seconds • 4,800 frames at 30 fps)

@@ -1,6 +1,6 @@
 # Landing Page Overrides
 
-> **PROJECT:** Vyoma ScanServe
+> **PROJECT:** VyomaPOS - Xtra Rooftop
 > **Generated:** 2026-09-20 10:06:15
 > **Page Type:** Landing / Marketing
 

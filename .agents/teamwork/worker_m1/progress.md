@@ -12,6 +12,6 @@ Last visited: 2026-10-06T04:47:00Z
 - [x] Untrack `VyomPOS Leads.xlsx` via `git rm --cached`
 - [x] Update `.gitignore` with all required entries
 - [x] Verify git status, git ls-files, and run npm run lint
-- [x] Synchronize Obsidian Vault per protocol (`Daily/2026-10-06.md` and `Projects/Vyoma ScanServe/Roadmap.md`)
+- [x] Synchronize Obsidian Vault per protocol (`Daily/2026-10-06.md` and `Projects/VyomaPOS - Xtra Rooftop/Roadmap.md`)
 - [x] Write changes.md and handoff.md
 - [ ] Notify parent via send_message

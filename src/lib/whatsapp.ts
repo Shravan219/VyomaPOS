@@ -14,6 +14,8 @@ export interface OrderReceiptData {
   }>;
   subtotal?: number;
   tax_amount?: number;
+  /** Outlet GST % used for this bill — shown next to the GST line. */
+  tax_rate?: number;
   discount?: number;
   total: number;
   payment_mode?: string;
@@ -72,7 +74,7 @@ export function getWhatsAppPhoneNumber(phone: string): string {
  */
 export function generateWhatsAppReceiptText(
   data: OrderReceiptData, 
-  restaurantName = 'VYOMA ARTISAN CAFE'
+  restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'
 ): string {
   // Format token string: multiple tokens if merged, or single token
   let tokenStr: string;
@@ -107,8 +109,23 @@ export function generateWhatsAppReceiptText(
     .join('\n');
 
   const subtotalVal = data.subtotal ?? data.items.reduce((acc, i) => acc + (i.price * i.quantity), 0);
-  const taxVal = data.tax_amount ?? 0;
   const discountVal = data.discount ?? 0;
+  const taxableVal = Math.max(0, subtotalVal - discountVal);
+  // GST paid by the customer: prefer the stored split, otherwise derive it as
+  // total − taxable (covers captain/counter orders saved without a tax_amount).
+  let taxVal = data.tax_amount ?? 0;
+  if (!(taxVal > 0)) {
+    taxVal = Math.max(0, data.total - taxableVal);
+    taxVal = Math.round(taxVal * 100) / 100;
+  }
+  const taxRateVal = (() => {
+    const stored = Number(data.tax_rate);
+    // A bill created under an older rate keeps that rate: recover it from the
+    // amounts instead of printing the current 0%.
+    if (stored > 0) return stored;
+    if (taxVal > 0 && taxableVal > 0) return Math.round((taxVal / taxableVal) * 1000) / 10;
+    return 0;
+  })();
   const grandTotal = data.total;
   const payMode = (data.payment_mode || 'UPI').toUpperCase();
 
@@ -131,12 +148,12 @@ ${itemsList}
 
 --------------------------------
 Subtotal: ₹${subtotalVal.toFixed(2)}
-${taxVal > 0 ? `GST: ₹${taxVal.toFixed(2)}\n` : ''}${discountVal > 0 ? `Discount: -₹${discountVal.toFixed(2)}\n` : ''}*GRAND TOTAL:* *₹${grandTotal.toFixed(2)}*
+${discountVal > 0 ? `Discount: -₹${discountVal.toFixed(2)}\n` : ''}GST (${taxRateVal}%): ₹${taxVal.toFixed(2)}${taxVal > 0 ? ` (incl. CGST ₹${(taxVal / 2).toFixed(2)} + SGST ₹${(taxVal / 2).toFixed(2)})` : ''}\n*GRAND TOTAL:* *₹${grandTotal.toFixed(2)}*
 *Payment Mode:* ${payMode} (Paid ✅)
 
 🌟 *Loved your dining experience?*
 Help us shine with a quick 5-star review on Google:
-👉 https://maps.google.com
+👉 https://maps.app.goo.gl/A2caFjF8RDXqDBXA7
 
 Thank you for dining with us! Have a wonderful day ahead! ✨`;
 }
@@ -157,7 +174,7 @@ export function getWhatsAppLink(phone: string, textPayload: string): string | nu
  */
 export function createWhatsAppReceiptLink(
   data: OrderReceiptData,
-  restaurantName = 'VYOMA ARTISAN CAFE'
+  restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'
 ): string | null {
   const phone = data.customer_phone;
   if (!phone) return null;
@@ -221,7 +238,7 @@ export function openExternalUrl(url: string): void {
 /**
  * Generates an 80mm thermal/receipt PDF matching the physical thermal roll.
  */
-export async function generateReceiptPDF(data: OrderReceiptData, restaurantName = 'VYOMA ARTISAN CAFE'): Promise<any> {
+export async function generateReceiptPDF(data: OrderReceiptData, restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'): Promise<any> {
   const { jsPDF } = await import('jspdf');
   const lineCount = data.items.length;
   // Dynamic height calculation (in mm)
@@ -338,25 +355,34 @@ export async function generateReceiptPDF(data: OrderReceiptData, restaurantName 
   y += 4.5;
 
   const subtotalVal = data.subtotal ?? data.items.reduce((acc, i) => acc + (i.price * i.quantity), 0);
-  const taxVal = data.tax_amount ?? 0;
   const discountVal = data.discount ?? 0;
+  const taxableVal = Math.max(0, subtotalVal - discountVal);
+  let taxVal = data.tax_amount ?? 0;
+  if (!(taxVal > 0)) {
+    taxVal = Math.max(0, data.total - taxableVal);
+    taxVal = Math.round(taxVal * 100) / 100;
+  }
+  const taxRateVal = (() => {
+    const stored = Number(data.tax_rate);
+    if (stored > 0) return stored;
+    if (taxVal > 0 && taxableVal > 0) return Math.round((taxVal / taxableVal) * 1000) / 10;
+    return 0;
+  })();
   const grandTotal = data.total;
 
   doc.text('Subtotal:', 40, y);
   doc.text(`Rs. ${subtotalVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
   y += 4;
 
-  if (taxVal > 0) {
-    doc.text('GST:', 40, y);
-    doc.text(`Rs. ${taxVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
-    y += 4;
-  }
-
   if (discountVal > 0) {
     doc.text('Discount:', 40, y);
     doc.text(`-Rs. ${discountVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
     y += 4;
   }
+
+  doc.text(`GST (${taxRateVal}%):`, 40, y);
+  doc.text(`Rs. ${taxVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
+  y += 4;
 
   doc.setLineWidth(0.3);
   doc.line(6, y, pageWidth - 6, y);
@@ -395,7 +421,7 @@ export async function generateReceiptPDF(data: OrderReceiptData, restaurantName 
 /**
  * Downloads the PDF receipt locally to the device (wrapped with safety guards).
  */
-export async function downloadReceiptPDF(data: OrderReceiptData, restaurantName = 'VYOMA ARTISAN CAFE'): Promise<void> {
+export async function downloadReceiptPDF(data: OrderReceiptData, restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'): Promise<void> {
   try {
     const doc = await generateReceiptPDF(data, restaurantName);
     const tokenPart = data.tokens && data.tokens.length > 0
@@ -414,7 +440,7 @@ export async function downloadReceiptPDF(data: OrderReceiptData, restaurantName 
 export function triggerWhatsAppReceipt(
   data: OrderReceiptData,
   phoneOverride?: string,
-  restaurantName = 'VYOMA ARTISAN CAFE'
+  restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'
 ): { success: boolean; url?: string; formattedPhone?: string; error?: string } {
   const rawPhone = phoneOverride || data.customer_phone || '';
   const digitsOnly = getWhatsAppPhoneNumber(rawPhone);
@@ -453,7 +479,7 @@ export function triggerWhatsAppReceipt(
 export function sendWhatsAppReceiptWithPDF(
   data: OrderReceiptData,
   phoneOverride?: string,
-  restaurantName = 'VYOMA ARTISAN CAFE'
+  restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'
 ): { success: boolean; formattedPhone?: string; url?: string; error?: string } {
   const rawPhone = phoneOverride || data.customer_phone || '';
   const digitsOnly = getWhatsAppPhoneNumber(rawPhone);

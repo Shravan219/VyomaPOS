@@ -3,7 +3,7 @@
 **Author**: `explorer_survey_1`  
 **Date**: 2026-10-06  
 **Type**: Hard Handoff  
-**Working Directory**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_1`
+**Working Directory**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_1`
 
 ---
 
@@ -117,6 +117,6 @@ Detailed findings, code snippets, and remediation plans are documented in `surve
 To independently verify the survey observations:
 1. Inspect `src/lib/authService.ts` lines 33–36 and 103–106 to verify lack of `import.meta.env.DEV` check.
 2. Inspect `src/components/invoices/InvoiceCreator.tsx` lines 292–323 to verify missing early return on `!res.ok`.
-3. Check `survey_report.md` at `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_1\survey_report.md`.
+3. Check `survey_report.md` at `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_1\survey_report.md`.
 4. Validate TypeScript cleanliness:
    `npm run lint` (runs `tsc --noEmit`).

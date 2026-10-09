@@ -1,7 +1,7 @@
 # Explorer Survey Report: Database Schema Consolidation & CI/CD Cleanliness (R2 & R4)
 
 **Investigator**: `explorer_survey_2` (Database and CI Explorer)  
-**Target Repository**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main`  
+**Target Repository**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main`  
 **Date**: 2026-10-06  
 **Scope**: Requirements R2 (Database Schema Consolidation & Documentation) & R4 (Repository Cleanliness & CI/CD Organization)  
 
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-This investigation examines the current state of database definitions, environment documentation, repository cleanliness, and CI/CD workflow configuration for the Vyoma ScanServe Dashboard.
+This investigation examines the current state of database definitions, environment documentation, repository cleanliness, and CI/CD workflow configuration for the VyomaPOS - Xtra Rooftop Dashboard.
 
 ### Key Findings:
 1. **Database Schema Gaps (R2)**:
@@ -257,7 +257,7 @@ SHEET_RANGE="Sheet1!A:E"
 ### 3.1 CI/CD Workflow Analysis: `build-apk.yml`
 
 #### Current Status:
-- File location: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\build-apk.yml`
+- File location: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\build-apk.yml`
 - Root directory contains `build-apk.yml`.
 - `.github/` directory: **Does not exist**.
 - Impact: GitHub Actions completely ignores workflow files placed in the repository root. The automated Android APK build pipeline has never been discoverable or executable by GitHub Actions runners.
@@ -283,7 +283,7 @@ SHEET_RANGE="Sheet1!A:E"
 ### 3.2 File Tracking Analysis: `VyomPOS Leads.xlsx`
 
 #### Current Status:
-- File location: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\VyomPOS Leads.xlsx`
+- File location: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\VyomPOS Leads.xlsx`
 - File size: 23,996 bytes
 - Git tracking status:
   - Output of `git ls-files "VyomPOS Leads.xlsx"`: `VyomPOS Leads.xlsx` (tracked).
@@ -296,7 +296,7 @@ SHEET_RANGE="Sheet1!A:E"
    git rm --cached "VyomPOS Leads.xlsx"
    ```
 2. Verify file status:
-   - `VyomPOS Leads.xlsx` remains intact on disk at `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\VyomPOS Leads.xlsx`.
+   - `VyomPOS Leads.xlsx` remains intact on disk at `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\VyomPOS Leads.xlsx`.
    - Git status marks the file as `deleted` in staging (`D  VyomPOS Leads.xlsx`).
    - When `.gitignore` contains `*.xlsx`, Git will not show `VyomPOS Leads.xlsx` as an untracked file.
 

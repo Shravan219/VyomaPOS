@@ -2,7 +2,7 @@
 
 **Reviewer**: `reviewer_1` (Primary Code Reviewer & Adversarial Critic)  
 **Parent Orchestrator**: `orchestrator_1` (`91cfa12b-48b4-4448-aaed-ed21828f0dbd`)  
-**Target Repository**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main`  
+**Target Repository**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main`  
 **Timestamp**: 2026-10-06T05:12:00Z  
 
 ---
@@ -131,7 +131,7 @@ As required by the adversarial reviewer mandate, all code changes and test imple
 > vyoma-app@1.0.0 test
 > vitest run
 
- RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/ScanServe_Dashboard-main
+ RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/VyomaPOS_Dashboard-main
 
  ✓ src/__tests__/gstin.test.ts (11 tests) 8ms
  ✓ src/__tests__/gst.test.ts (12 tests) 9ms

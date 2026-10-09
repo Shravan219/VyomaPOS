@@ -1,4 +1,4 @@
-# Adversarial Challenge & Verification Report: Vyoma ScanServe Dashboard
+# Adversarial Challenge & Verification Report: VyomaPOS - Xtra Rooftop Dashboard
 
 **Verifier**: challenger_1 (Primary Adversarial Verifier)  
 **Date**: 2026-10-06  
@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-An exhaustive empirical stress-test was conducted against the implementation of user requirements R1 through R5 for the Vyoma ScanServe Dashboard. All tests were executed directly in Node.js/Vitest, TypeScript, and the live repository environment.
+An exhaustive empirical stress-test was conducted against the implementation of user requirements R1 through R5 for the VyomaPOS - Xtra Rooftop Dashboard. All tests were executed directly in Node.js/Vitest, TypeScript, and the live repository environment.
 
 ### Summary Metrics:
 - **Total Test Suites Executed**: 5 (`gst.test.ts`, `gstin.test.ts`, `orderStatus.test.ts`, `authService.test.ts`, `stress.test.ts`)

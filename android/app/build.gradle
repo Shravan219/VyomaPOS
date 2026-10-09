@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "com.vyoma.scanserve"
+    namespace = "com.vyoma.vyomapos"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.vyoma.scanserve"
+        applicationId "com.vyoma.vyomapos"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

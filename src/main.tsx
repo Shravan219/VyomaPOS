@@ -49,7 +49,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             <span className="text-3xl">⚠️</span>
           </div>
           <h1 className="text-2xl font-bold font-serif text-[#C5A059] tracking-wider mb-2">
-            Vyoma ScanServe Dashboard
+            VyomaPOS - Xtra Rooftop Dashboard
           </h1>
           <p className="text-white/60 text-sm max-w-md mb-4">
             An unexpected error occurred while rendering the dashboard.

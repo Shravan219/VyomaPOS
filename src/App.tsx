@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/src/lib/supabase';
-import { Order, MenuItem, OrderStatus, normalizeOrder, normalizeOrderItems } from '@/src/types';
+import { Order, MenuItem, OrderStatus, normalizeOrder, normalizeOrderItems, isAggregatorOrder, isActiveOrder } from '@/src/types';
 import { 
   LayoutDashboard, 
   ChefHat, 
@@ -56,6 +56,8 @@ import { PaymentsView } from '@/src/components/payments/PaymentsView';
 import { MenuImporterModal } from '@/src/components/menu/MenuImporterModal';
 import { MenuEngineeringModal } from '@/src/components/menu/MenuEngineeringModal';
 import { ServerConnectionModal } from '@/src/components/ServerConnectionModal';
+import { RestaurantSetupModal } from '@/src/components/settings/RestaurantSetupModal';
+import { getGSTIN, getGSTAMT, isRestaurantConfigured, SETTINGS_CHANGED_EVENT } from '@/src/lib/restaurantSettings';
 import { ErrorBoundary } from '@/src/components/ErrorBoundary';
 import { getApiBaseUrl } from '@/src/lib/apiConfig';
 import { Capacitor } from '@capacitor/core';
@@ -158,6 +160,14 @@ export default function App() {
   const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
   const [serverModalOpen, setServerModalOpen] = useState(false);
   const [currentServerUrl, setCurrentServerUrl] = useState(() => getApiBaseUrl());
+  const [restaurantSetupOpen, setRestaurantSetupOpen] = useState(() => !isRestaurantConfigured());
+  const [outletGstLabel, setOutletGstLabel] = useState(() => `${getGSTIN() || 'No GSTIN'} • ${getGSTAMT()}%`);
+
+  useEffect(() => {
+    const refreshOutletLabel = () => setOutletGstLabel(`${getGSTIN() || 'No GSTIN'} • ${getGSTAMT()}%`);
+    window.addEventListener(SETTINGS_CHANGED_EVENT, refreshOutletLabel);
+    return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, refreshOutletLabel);
+  }, []);
 
   useEffect(() => {
     const handleConfigChange = (e: any) => {
@@ -407,8 +417,20 @@ export default function App() {
   };
 
   const [stats, setStats] = useState({ preparedToday: 0, avgTime: '12m' });
+  // Require password on every fresh app launch (EXE close/reopen or web tab close/reopen).
+  // Auth lives only in memory + sessionStorage (cleared on app/tab close).
+  // Legacy localStorage key ('vyoma_staff_authenticated') is removed on startup so
+  // installs that were stuck logged-in will correctly lock again.
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('vyoma_staff_authenticated') === 'true';
+    try {
+      localStorage.removeItem('vyoma_staff_authenticated');
+    } catch { /* storage unavailable */
+    }
+    try {
+      return sessionStorage.getItem('vyoma_staff_authenticated') === 'true';
+    } catch {
+      return false;
+    }
   });
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState(false);
@@ -503,7 +525,11 @@ export default function App() {
     if (res.success) {
       setIsAuthenticated(true);
       setAuthError(false);
-      localStorage.setItem('vyoma_staff_authenticated', 'true');
+      setPassword('');
+      try {
+        sessionStorage.setItem('vyoma_staff_authenticated', 'true');
+      } catch { /* storage unavailable */
+      }
       toast.success('Access Granted');
     } else {
       setAuthError(true);
@@ -512,7 +538,14 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('vyoma_staff_authenticated');
+    try {
+      sessionStorage.removeItem('vyoma_staff_authenticated');
+    } catch { /* storage unavailable */
+    }
+    try {
+      localStorage.removeItem('vyoma_staff_authenticated');
+    } catch { /* storage unavailable */
+    }
     setIsAuthenticated(false);
     setPassword('');
     toast.info('Terminal Locked');
@@ -589,9 +622,7 @@ export default function App() {
               dbAllOrders = Array.from(mergedMap.values())
                 .map(o => normalizeOrder(o))
                 .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-              dbActiveOrders = dbAllOrders.filter(
-                o => o.status !== 'completed' && o.status !== 'cancelled'
-              );
+              dbActiveOrders = dbAllOrders.filter(isActiveOrder);
             }
           }
         } catch (apiErr) {
@@ -599,7 +630,7 @@ export default function App() {
         }
       }
 
-      setOrders(dbActiveOrders);
+      setOrders(dbActiveOrders.filter(isActiveOrder));
       setAllOrders(dbAllOrders);
 
       // Try getting dedicated customer records from Supabase, with API fallback
@@ -728,7 +759,7 @@ export default function App() {
           }
 
           setOrders(prev => {
-            if (updated.status === 'completed' || updated.status === 'cancelled') {
+            if (!isActiveOrder(updated)) {
               return prev.filter(o => o.id !== updated.id && o.token !== updated.token);
             }
             return prev.map(o => (o.id === updated.id || o.token === updated.token) ? updated : o);
@@ -775,12 +806,18 @@ export default function App() {
             });
 
             setOrders(prev => {
-              const activeApi = apiOrders.filter(o => o.status !== 'completed' && o.status !== 'cancelled');
+              const activeApi = apiOrders.filter(isActiveOrder);
               const map = new Map<string, Order>();
+              let hasChanges = false;
               for (const o of prev) {
+                // Drop cards that left the active lifecycle (completed,
+                // cancelled, or handed-over aggregator orders).
+                if (!isActiveOrder(o)) {
+                  hasChanges = true;
+                  continue;
+                }
                 map.set(o.id || o.token, o);
               }
-              let hasChanges = false;
               for (const o of activeApi) {
                 const key = o.id || o.token;
                 if (!map.has(key) || map.get(key)?.status !== o.status) {
@@ -791,7 +828,7 @@ export default function App() {
               // Also remove completed
               for (const [key, o] of map.entries()) {
                 const latest = apiOrders.find(ao => (ao.id && ao.id === o.id) || (ao.token && ao.token === o.token));
-                if (latest && (latest.status === 'completed' || latest.status === 'cancelled')) {
+                if (latest && !isActiveOrder(latest)) {
                   map.delete(key);
                   hasChanges = true;
                 }
@@ -864,7 +901,7 @@ export default function App() {
             setStats(prev => ({ ...prev, preparedToday: prev.preparedToday + 1 }));
           }
           setOrders(prev => {
-            if (updated.status === 'completed' || updated.status === 'cancelled') {
+            if (!isActiveOrder(updated)) {
               return prev.filter(o => o.id !== updated.id && o.token !== updated.token);
             }
             return prev.map(o => (o.id === updated.id || o.token === updated.token) ? updated : o);
@@ -942,9 +979,15 @@ export default function App() {
 
     const realOrderId = orderToUpdate?.id || orderId;
 
-    // 1. Optimistic UI State Update
+    // 1. Optimistic UI State Update — Handover drops aggregator cards
+    // from the active views (rider has the order); in-house dispatched
+    // orders stay visible for "Mark Delivered".
+    const leavesActiveView =
+      newStatus === 'completed' ||
+      newStatus === 'cancelled' ||
+      (newStatus === 'dispatched' && !!orderToUpdate && isAggregatorOrder(orderToUpdate));
     setOrders(prev => {
-      if (newStatus === 'completed' || newStatus === 'cancelled') {
+      if (leavesActiveView) {
         return prev.filter(o => o.id !== realOrderId && o.token !== orderId);
       }
       return prev.map(o => (o.id === realOrderId || o.token === orderId) ? { ...o, status: newStatus } : o);
@@ -1192,6 +1235,12 @@ export default function App() {
           </div>
         </motion.div>
         <Toaster position="top-center" theme="dark" richColors />
+        {/* First-run outlet setup must prompt even before staff login */}
+        <RestaurantSetupModal
+          open={restaurantSetupOpen}
+          mode={isRestaurantConfigured() ? 'settings' : 'onboarding'}
+          onOpenChange={setRestaurantSetupOpen}
+        />
       </div>
     );
   }
@@ -1203,6 +1252,11 @@ export default function App() {
           <RefreshCcw className="h-10 w-10 animate-spin text-primary opacity-20" />
           <p className="font-serif text-2xl tracking-tight leading-[1.15] pb-1 text-primary">Vy<span className="italic opacity-60">oma</span></p>
         </div>
+        <RestaurantSetupModal
+          open={restaurantSetupOpen}
+          mode={isRestaurantConfigured() ? 'settings' : 'onboarding'}
+          onOpenChange={setRestaurantSetupOpen}
+        />
       </div>
     );
   }
@@ -1314,6 +1368,26 @@ export default function App() {
               </div>
             </div>
             <Server size={14} className="text-white/40 group-hover:text-primary transition-colors shrink-0 ml-1" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setRestaurantSetupOpen(true)}
+            className="glass-card flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl hover:bg-white/[0.07] transition-all text-left group cursor-pointer"
+            title="Outlet GSTIN & GST % settings"
+          >
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className={`h-2.5 w-2.5 rounded-full shrink-0 ${getGSTIN() ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]' : 'bg-amber-400'}`} />
+              <div className="flex flex-col min-w-0">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80 group-hover:text-white truncate">
+                  GST / Outlet
+                </span>
+                <span className="text-[9px] font-mono text-white/40 truncate">
+                  {outletGstLabel}
+                </span>
+              </div>
+            </div>
+            <FileText size={14} className="text-white/40 group-hover:text-primary transition-colors shrink-0 ml-1" />
           </button>
 
           <button
@@ -1606,6 +1680,20 @@ export default function App() {
                     }`}
                   >
                     <Wallet size={16} /> Expenses Ledger
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setRestaurantSetupOpen(true);
+                    }}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all bg-white/5 text-white"
+                  >
+                    <span className="flex items-center gap-3">
+                      <FileText size={16} /> GST / Outlet
+                    </span>
+                    <span className="text-[9px] font-mono text-white/50 normal-case">
+                      {outletGstLabel}
+                    </span>
                   </button>
                 </>
               )}
@@ -2019,14 +2107,14 @@ export default function App() {
                 <div className="luxury-stat-tile p-4 rounded-2xl flex flex-col justify-between">
                   <span className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">Total Diners</span>
                   <div className="flex items-baseline justify-between mt-2">
-                    <span className="text-2xl font-serif font-bold text-white font-mono">{computedCustomers.length}</span>
+                    <span className="text-xl sm:text-2xl font-serif font-bold text-white font-mono tabular-nums truncate min-w-0">{computedCustomers.length}</span>
                     <Users size={16} className="text-primary/60" />
                   </div>
                 </div>
                 <div className="luxury-stat-tile p-4 rounded-2xl flex flex-col justify-between">
                   <span className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">VIP Patrons</span>
                   <div className="flex items-baseline justify-between mt-2">
-                    <span className="text-2xl font-serif font-bold text-primary font-mono">
+                    <span className="text-xl sm:text-2xl font-serif font-bold text-primary font-mono tabular-nums truncate min-w-0">
                       {computedCustomers.filter(c => c.loyal_vip || c.orderCount >= minOrdersForDiscount).length}
                     </span>
                     <Sparkles size={16} className="text-primary" />
@@ -2035,7 +2123,7 @@ export default function App() {
                 <div className="luxury-stat-tile p-4 rounded-2xl flex flex-col justify-between">
                   <span className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">Total CRM Revenue</span>
                   <div className="flex items-baseline justify-between mt-2">
-                    <span className="text-2xl font-serif font-bold text-emerald-400 font-mono">
+                    <span className="text-lg sm:text-2xl font-serif font-bold text-emerald-400 font-mono tabular-nums truncate min-w-0">
                       ₹{computedCustomers.reduce((acc, c) => acc + c.totalSpent, 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                     </span>
                     <TrendingUp size={16} className="text-emerald-400/70" />
@@ -2044,7 +2132,7 @@ export default function App() {
                 <div className="luxury-stat-tile p-4 rounded-2xl flex flex-col justify-between">
                   <span className="text-[10px] uppercase tracking-[0.18em] text-white/60 font-bold">Avg Ticket / Guest</span>
                   <div className="flex items-baseline justify-between mt-2">
-                    <span className="text-2xl font-serif font-bold text-sky-400 font-mono">
+                    <span className="text-lg sm:text-2xl font-serif font-bold text-sky-400 font-mono tabular-nums truncate min-w-0">
                       ₹{computedCustomers.length > 0 
                         ? (computedCustomers.reduce((acc, c) => acc + c.totalSpent, 0) / Math.max(1, computedCustomers.reduce((acc, c) => acc + c.orderCount, 0))).toFixed(0)
                         : '0'}
@@ -2300,16 +2388,30 @@ export default function App() {
                   renderOrderCard={(order, index) => {
                     let actionLabel = "Accept & Fire";
                     let nextStatus: OrderStatus = "preparing";
-                    
+                    // Aggregator orders (3rd-party rider) cap at Handover —
+                    // no manual "Mark Delivered"; completion comes via webhook.
+                    const aggCapped = isAggregatorOrder(order);
+                    let hideAction = false;
+
                     if (order.status === 'preparing') {
                       actionLabel = "Mark Ready";
                       nextStatus = "ready";
                     } else if (order.status === 'ready') {
                       actionLabel = "Handover to Rider";
-                      nextStatus = "completed";
+                      nextStatus = "dispatched";
+                    } else if (order.status === 'dispatched') {
+                      if (aggCapped) {
+                        actionLabel = "Rider In Transit";
+                        nextStatus = "dispatched";
+                        hideAction = true;
+                      } else {
+                        actionLabel = "Mark Delivered";
+                        nextStatus = "completed";
+                      }
                     } else if (order.status === 'completed') {
                       actionLabel = "Handed Over";
                       nextStatus = "completed";
+                      if (aggCapped) hideAction = true;
                     }
 
                     return (
@@ -2319,6 +2421,7 @@ export default function App() {
                         actionLabel={actionLabel} 
                         actionIcon={<CheckCircle2 size={14} strokeWidth={1.5} />}
                         onAction={() => updateOrderStatus(order.id, nextStatus)}
+                        hideAction={hideAction}
                         variant={order.status as any}
                         index={index}
                         discountInfo={getOrderDiscountInfo(order)}
@@ -2369,6 +2472,13 @@ export default function App() {
         open={serverModalOpen} 
         onOpenChange={setServerModalOpen} 
       />
+
+      {/* First-run outlet setup (GSTIN + GST %) + re-editable settings */}
+      <RestaurantSetupModal
+        open={restaurantSetupOpen}
+        mode={isRestaurantConfigured() ? 'settings' : 'onboarding'}
+        onOpenChange={setRestaurantSetupOpen}
+      />
     </div>
   );
 }
@@ -2413,7 +2523,7 @@ function EditMenuItemDialog({ item, onSave }: { item: MenuItem, onSave: (updates
           <Edit2 size={14} strokeWidth={1.5} />
         </button>
       </DialogTrigger>
-      <DialogContent className="bg-[#0A0A0A] border-white/10 text-white sm:max-w-[480px] rounded-[2rem] p-8 sm:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <DialogContent className="bg-[#0A0A0A] border-white/10 text-white sm:max-w-[480px] rounded-[2rem] p-5 sm:p-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] max-h-[90vh] overflow-y-auto custom-scrollbar">
         <DialogHeader>
           <DialogTitle className="text-3xl font-serif tracking-tight text-white">Edit Item</DialogTitle>
           <DialogDescription className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-bold mt-2">
@@ -2430,7 +2540,7 @@ function EditMenuItemDialog({ item, onSave }: { item: MenuItem, onSave: (updates
               className="bg-black border-white/10 rounded-full h-12 text-xs font-bold uppercase tracking-[0.15em] focus-visible:ring-primary/20 focus-visible:border-primary/40 transition-all text-white"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-4">
             <div className="grid gap-3">
               <label htmlFor="price" className="text-[10px] uppercase tracking-[0.2em] text-white/70 ml-1 font-bold">Base Price (₹)</label>
               <Input 
@@ -2562,13 +2672,15 @@ function OrderCard({
   onAction,
   variant = 'pending',
   index = 0,
-  discountInfo
+  discountInfo,
+  hideAction = false
 }: { 
   order: Order, 
   actionLabel: string, 
   actionIcon: React.ReactNode, 
   onAction: () => void | Promise<void>,
-  variant?: 'pending' | 'preparing' | 'ready' | 'waiting for payment' | 'completed' | 'cancelled',
+  hideAction?: boolean,
+  variant?: 'pending' | 'preparing' | 'ready' | 'dispatched' | 'waiting for payment' | 'completed' | 'cancelled',
   index?: number,
   key?: string | number,
   discountInfo?: {
@@ -2735,6 +2847,7 @@ function OrderCard({
         variant === 'pending' && "border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.1)]",
         variant === 'preparing' && "border-amber-500/30 shadow-[0_0_25px_rgba(245,158,11,0.1)]",
         variant === 'ready' && "border-emerald-500/30 shadow-[0_0_25px_rgba(16,185,129,0.1)]",
+        variant === 'dispatched' && "border-violet-500/30 shadow-[0_0_25px_rgba(139,92,246,0.1)]",
         isOldReady && "border-primary/50 shadow-[0_0_40px_rgba(197,160,89,0.2)]"
       )}>
         {/* Top Header Bar */}
@@ -2781,6 +2894,7 @@ function OrderCard({
                 variant === 'pending' ? "bg-blue-400 animate-pulse" : 
                 variant === 'preparing' ? "bg-amber-400 animate-pulse" : 
                 variant === 'waiting for payment' ? "bg-amber-400 animate-pulse" : 
+                variant === 'dispatched' ? "bg-violet-400 animate-pulse" :
                 "bg-emerald-400"
               )} />
               <span className="text-[9px] font-extrabold uppercase tracking-[0.15em] text-white/80">
@@ -2917,7 +3031,7 @@ function OrderCard({
                           </span>
                         )}
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col min-[420px]:flex-row gap-2">
                         <Input 
                           id="receipt-gstin-input"
                           maxLength={15}
@@ -2925,7 +3039,7 @@ function OrderCard({
                           value={receiptGstin} 
                           onChange={(e) => handleGstinChange(e.target.value)}
                           className={cn(
-                            "bg-black/60 border-white/15 rounded-xl h-11 text-xs font-mono uppercase tracking-wider focus-visible:ring-primary/20 focus-visible:border-primary/40 transition-all placeholder:text-white/30 text-white flex-1",
+                            "bg-black/60 border-white/15 rounded-xl h-11 text-xs font-mono uppercase tracking-wider focus-visible:ring-primary/20 focus-visible:border-primary/40 transition-all placeholder:text-white/30 text-white flex-1 min-w-0",
                             receiptGstin && !isValidGstin && "border-amber-500/50 focus-visible:border-amber-500",
                             receiptGstin && isValidGstin && "border-emerald-500/50 focus-visible:border-emerald-500"
                           )}
@@ -2935,7 +3049,7 @@ function OrderCard({
                           onClick={() => handleSaveGstinToDb(receiptGstin)}
                           disabled={isSavingGstin || (Boolean(receiptGstin) && !isValidGstin)}
                           variant="outline"
-                          className="border border-primary/30 hover:border-primary text-primary hover:bg-primary/10 rounded-xl h-11 px-4 text-[9px] uppercase tracking-wider font-bold transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
+                          className="border border-primary/30 hover:border-primary text-primary hover:bg-primary/10 rounded-xl h-11 px-4 text-[9px] uppercase tracking-wider font-bold transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed w-full min-[420px]:w-auto"
                         >
                           {isSavingGstin ? 'Saving...' : 'Save to DB'}
                         </Button>
@@ -2970,8 +3084,8 @@ function OrderCard({
 
                     <div className="space-y-2">
                       <span className="text-[10px] uppercase tracking-[0.2em] text-white/70 ml-1 font-bold">Receipt Preview</span>
-                      <div className="border border-white/10 rounded-xl bg-zinc-100 p-4 max-h-[280px] overflow-y-auto custom-scrollbar flex justify-center shadow-inner">
-                        <div className="receipt-print-wrapper" ref={printRef}>
+                      <div className="border border-white/10 rounded-xl bg-zinc-100 p-3 sm:p-4 max-h-[280px] overflow-auto custom-scrollbar flex shadow-inner">
+                        <div className="receipt-print-wrapper m-auto shrink-0" ref={printRef}>
                           <Receipt 
                             orderId={order.id}
                             table={order.table_id?.toString() || 'Walk-in'}
@@ -3006,6 +3120,12 @@ function OrderCard({
                 </DialogContent>
               </Dialog>
 
+              {hideAction ? (
+                <span className="flex items-center gap-2 rounded-xl px-6 min-h-[44px] text-[10px] uppercase tracking-[0.25em] font-extrabold bg-violet-500/10 text-violet-300 border border-violet-500/30">
+                  <span className="h-2 w-2 rounded-full bg-violet-400 animate-pulse" />
+                  {actionLabel}
+                </span>
+              ) : (
               <Button 
                 onClick={handleActionClick}
                 disabled={isActionSubmitting}
@@ -3020,6 +3140,7 @@ function OrderCard({
                   {isActionSubmitting ? 'Processing...' : actionLabel}
                 </span>
               </Button>
+              )}
             </div>
           </div>
         </div>

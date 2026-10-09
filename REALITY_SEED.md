@@ -1,4 +1,4 @@
-# REALITY SEED: VYOMA SCANSERVE RESTAURANT OS & CAPTAIN DASHBOARD
+# REALITY SEED: VYOMAPOS - XTRA ROOFTOP RESTAURANT OS & CAPTAIN DASHBOARD
 **Document Version:** 1.0.0-PROD  
 **Target Ingestion Engine:** MiroFish Swarm Intelligence / GraphRAG Engine  
 **System Class:** Michelin-Grade Luxury Restaurant Point-of-Sale (POS), Kitchen Display System (KDS), & Captain Operations Mesh  
@@ -9,7 +9,7 @@
 ## 1. SYSTEM IDENTITY & STRATEGIC MISSION
 
 ### 1.1 Architectural North Star: "The Obsidian Guild"
-Vyoma ScanServe is an ultra-low-latency, mission-critical restaurant management ecosystem engineered for high-paced fine dining and luxury hospitality. It unifies front-of-house floor operations (Captain ordering tablets), back-of-house culinary production (Kitchen Display Systems), administrative cash settlement, and multi-channel delivery aggregator intake (Swiggy, Zomato, Magicpin, Dyno API) into a synchronized real-time state machine.
+VyomaPOS - Xtra Rooftop is an ultra-low-latency, mission-critical restaurant management ecosystem engineered for high-paced fine dining and luxury hospitality. It unifies front-of-house floor operations (Captain ordering tablets), back-of-house culinary production (Kitchen Display Systems), administrative cash settlement, and multi-channel delivery aggregator intake (Swiggy, Zomato, Magicpin, Dyno API) into a synchronized real-time state machine.
 
 The visual and functional design follows strict "Dark Luxury" principles:
 - **Base Canvas:** Deep pitch-black OLED void (`#000000`) engineered for zero glare in ambient dining environments and minimal battery drain on handheld floor tablets during 14-hour shifts.

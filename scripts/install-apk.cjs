@@ -88,8 +88,8 @@ try {
     process.exit(0);
   }
 
-  const apkPath = path.join(__dirname, '..', 'apk', 'Vyoma_ScanServe_Dashboard_v1.0.apk');
-  const fallbackApk = path.join(__dirname, '..', 'Vyoma_ScanServe.apk');
+  const apkPath = path.join(__dirname, '..', 'apk', 'VyomaPOS_Dashboard_v1.0.apk');
+  const fallbackApk = path.join(__dirname, '..', 'VyomaPOS.apk');
   const targetApk = fs.existsSync(apkPath) ? apkPath : fallbackApk;
 
   if (!fs.existsSync(targetApk)) {
@@ -101,12 +101,12 @@ try {
   // Install with -r (reinstall) and -d (allow version downgrade if needed)
   execSync(`"${adbPath}" install -r -d "${targetApk}"`, { stdio: 'inherit' });
 
-  console.log('\n🚀 Launching Vyoma ScanServe on device...');
+  console.log('\n🚀 Launching VyomaPOS - Xtra Rooftop on device...');
   try {
-    execSync(`"${adbPath}" shell am start -n com.vyoma.scanserve/com.vyoma.scanserve.MainActivity`, { stdio: 'inherit' });
-    console.log('\n✨ Done! Vyoma ScanServe Dashboard is now running on your device.\n');
+    execSync(`"${adbPath}" shell am start -n com.vyoma.vyomapos/com.vyoma.vyomapos.MainActivity`, { stdio: 'inherit' });
+    console.log('\n✨ Done! VyomaPOS - Xtra Rooftop Dashboard is now running on your device.\n');
   } catch (launchErr) {
-    console.log('\n✅ APK installed successfully! You can tap the "Vyoma ScanServe" icon on your device.\n');
+    console.log('\n✅ APK installed successfully! You can tap the "VyomaPOS - Xtra Rooftop" icon on your device.\n');
   }
 
 } catch (err) {

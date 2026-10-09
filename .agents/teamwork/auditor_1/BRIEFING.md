@@ -1,12 +1,12 @@
 # BRIEFING — 2026-10-06T05:15:00Z
 
 ## Mission
-Conduct an independent forensic integrity audit of all remediation changes across R1-R5 in the Vyoma ScanServe Dashboard.
+Conduct an independent forensic integrity audit of all remediation changes across R1-R5 in the VyomaPOS - Xtra Rooftop Dashboard.
 
 ## 🔒 My Identity
 - Archetype: forensic_auditor
 - Roles: critic, specialist, auditor
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\auditor_1
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\auditor_1
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Target: full project (remediation R1-R5)
 
@@ -22,7 +22,7 @@ Conduct an independent forensic integrity audit of all remediation changes acros
 - Updated: 2026-10-06T05:15:00Z
 
 ## Audit Scope
-- **Work product**: Vyoma ScanServe Dashboard remediation changes (R1-R5) across source code, SQL schema, git tracking, CI/CD, and test suites
+- **Work product**: VyomaPOS - Xtra Rooftop Dashboard remediation changes (R1-R5) across source code, SQL schema, git tracking, CI/CD, and test suites
 - **Profile loaded**: General Project
 - **Audit type**: forensic integrity check
 

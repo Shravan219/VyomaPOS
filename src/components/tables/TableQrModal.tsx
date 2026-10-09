@@ -24,6 +24,7 @@ import { Badge } from '@/components/ui/badge';
 import { RestaurantTable } from '@/src/types';
 import QRCode from 'qrcode';
 import { toast } from 'sonner';
+import { RESTAURANT_NAME } from '@/src/lib/restaurantSettings';
 
 interface TableQrModalProps {
   tables?: RestaurantTable[];
@@ -57,7 +58,7 @@ export function TableQrModal({ tables = DEFAULT_TABLES, activeTableId, triggerBu
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [wifiSsid, setWifiSsid] = useState('Vyoma_Guest');
   const [wifiPassword, setWifiPassword] = useState('welcome@vyoma');
-  const [restaurantName, setRestaurantName] = useState('Vyoma Luxury Dining');
+  const [restaurantName, setRestaurantName] = useState(RESTAURANT_NAME);
   const [batchMode, setBatchMode] = useState(false);
   const [batchQrs, setBatchQrs] = useState<Record<string, string>>({});
 
@@ -133,7 +134,7 @@ export function TableQrModal({ tables = DEFAULT_TABLES, activeTableId, triggerBu
         )}
       </DialogTrigger>
 
-      <DialogContent className="max-w-4xl bg-[#090A0E] border border-white/10 text-white p-6 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[92vh] flex flex-col custom-scrollbar">
+      <DialogContent className="max-w-4xl bg-[#090A0E] border border-white/10 text-white p-4 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[92vh] flex flex-col custom-scrollbar overflow-y-auto">
         <DialogHeader className="space-y-1 shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -388,7 +389,7 @@ export function TableQrModal({ tables = DEFAULT_TABLES, activeTableId, triggerBu
             </div>
           ) : (
             /* Batch View: All Tables Grid */
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {displayTables.map(t => {
                 const qrUrl = batchQrs[t.table_number];
                 return (

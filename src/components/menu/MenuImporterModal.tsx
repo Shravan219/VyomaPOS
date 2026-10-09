@@ -301,7 +301,7 @@ export function MenuImporterModal({ onImportSuccess }: MenuImporterModalProps) {
       } else {
         const finalItems = (data && data.length > 0) ? (data as MenuItem[]) : (itemsToInsert as MenuItem[]);
         onImportSuccess(finalItems);
-        toast.success(`🎉 Successfully migrated ${finalItems.length} dishes into ScanServe Catalog!`);
+        toast.success(`🎉 Successfully migrated ${finalItems.length} dishes into VyomaPOS Catalog!`);
       }
 
       setOpen(false);
@@ -327,7 +327,7 @@ export function MenuImporterModal({ onImportSuccess }: MenuImporterModalProps) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-3xl bg-[#0B0C11] border border-white/10 text-white p-6 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[90vh] flex flex-col custom-scrollbar">
+      <DialogContent className="max-w-3xl bg-[#0B0C11] border border-white/10 text-white p-4 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[90vh] flex flex-col custom-scrollbar">
         <DialogHeader className="space-y-1.5 shrink-0">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary">

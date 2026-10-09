@@ -20,6 +20,7 @@ export interface ReceiptData {
   items: ReceiptItem[];
   subtotal?: number;
   tax_amount?: number;
+  tax_rate?: number;
   discount?: number;
   total: number;
   payment_mode?: string;
@@ -34,7 +35,7 @@ export interface ReceiptData {
  */
 export function generateReceiptPdfBuffer(
   data: ReceiptData,
-  restaurantName = 'VYOMA ARTISAN CAFE'
+  restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'
 ): Buffer {
   const baseHeight = 110;
   const itemHeight = Math.max(data.items.length * 6.5, 20);
@@ -140,8 +141,19 @@ export function generateReceiptPdfBuffer(
 
   const subtotalVal =
     data.subtotal ?? data.items.reduce((acc, i) => acc + i.price * i.quantity, 0);
-  const taxVal = data.tax_amount ?? 0;
   const discountVal = data.discount ?? 0;
+  const taxableVal = Math.max(0, subtotalVal - discountVal);
+  let taxVal = data.tax_amount ?? 0;
+  if (!(taxVal > 0)) {
+    taxVal = Math.max(0, data.total - taxableVal);
+    taxVal = Math.round(taxVal * 100) / 100;
+  }
+  const taxRateVal = (() => {
+    const stored = Number(data.tax_rate);
+    if (stored > 0) return stored;
+    if (taxVal > 0 && taxableVal > 0) return Math.round((taxVal / taxableVal) * 1000) / 10;
+    return 0;
+  })();
   const grandTotal = data.total;
 
   doc.setFont('helvetica', 'normal');
@@ -152,17 +164,15 @@ export function generateReceiptPdfBuffer(
   doc.text(`Rs. ${subtotalVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
   y += 4;
 
-  if (taxVal > 0) {
-    doc.text('GST (5%):', 40, y);
-    doc.text(`Rs. ${taxVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
-    y += 4;
-  }
-
   if (discountVal > 0) {
     doc.text('Discount:', 40, y);
     doc.text(`-Rs. ${discountVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
     y += 4;
   }
+
+  doc.text(`GST (${taxRateVal}%):`, 40, y);
+  doc.text(`Rs. ${taxVal.toFixed(2)}`, pageWidth - 6, y, { align: 'right' });
+  y += 4;
 
   doc.setLineWidth(0.3);
   doc.line(6, y, pageWidth - 6, y);

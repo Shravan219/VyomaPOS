@@ -1,8 +1,8 @@
-# Forensic Audit Report: Vyoma ScanServe Dashboard Remediation (R1–R5)
+# Forensic Audit Report: VyomaPOS - Xtra Rooftop Dashboard Remediation (R1–R5)
 
 **Auditor**: `auditor_1` (Forensic Integrity Auditor)  
 **Date**: 2026-10-06  
-**Work Product**: Vyoma ScanServe Dashboard Remediation (Remediation Tracks R1 through R5)  
+**Work Product**: VyomaPOS - Xtra Rooftop Dashboard Remediation (Remediation Tracks R1 through R5)  
 **Profile**: General Project  
 **Integrity Mode**: Development (Ground truth sourced directly from `ORIGINAL_REQUEST.md`)  
 **Verdict**: **CLEAN**
@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary
 
-An exhaustive forensic integrity audit was conducted across all changes delivered for remediation tracks R1 through R5 in the Vyoma ScanServe Dashboard repository (`ScanServe_Dashboard-main`).
+An exhaustive forensic integrity audit was conducted across all changes delivered for remediation tracks R1 through R5 in the VyomaPOS - Xtra Rooftop Dashboard repository (`VyomaPOS_Dashboard-main`).
 
 The audit verified source code authenticity, Git index status, SQL DDL validity, test suite rigour, and empirical operational execution under `npm test`, `npm run lint`, and `npm run build`. 
 
@@ -49,7 +49,7 @@ The audit verified source code authenticity, Git index status, SQL DDL validity,
 > vyoma-app@1.0.0 test
 > vitest run
 
- RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/ScanServe_Dashboard-main
+ RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/VyomaPOS_Dashboard-main
 
  ✓ src/__tests__/gstin.test.ts (11 tests) 8ms
  ✓ src/__tests__/gst.test.ts (12 tests) 8ms

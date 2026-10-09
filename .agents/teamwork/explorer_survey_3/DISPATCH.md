@@ -1,9 +1,9 @@
 ## 2026-10-06T04:32:48Z
 You are explorer_survey_3 (Test and Build Explorer).
-Your working directory is: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3
+Your working directory is: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 
 You MUST read ORIGINAL_REQUEST.md before beginning your investigation.
 
@@ -23,5 +23,5 @@ Your objective:
 
 Scope boundary:
 - You are strictly read-only. DO NOT modify files or run install commands.
-- Write your findings to `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md` and write your `handoff.md`.
+- Write your findings to `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3\survey_report.md` and write your `handoff.md`.
 - Send a completion message back to the parent agent with the path to your report.

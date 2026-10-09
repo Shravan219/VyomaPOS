@@ -6,7 +6,7 @@ Investigate Requirement R2 (Database Schema Consolidation & Documentation) and R
 ## 🔒 My Identity
 - Archetype: explorer
 - Roles: Database and CI Explorer
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_2
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_2
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: Survey Phase
 

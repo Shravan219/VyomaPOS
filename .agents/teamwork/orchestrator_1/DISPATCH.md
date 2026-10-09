@@ -1,16 +1,16 @@
 # DISPATCH Log
 
 ## 2026-10-06T04:31:27Z
-You are the Project Orchestrator for the Vyoma ScanServe Dashboard remediation project.
+You are the Project Orchestrator for the VyomaPOS - Xtra Rooftop Dashboard remediation project.
 
 Your working directory is:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 
 Project root:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main
 
 Please read ORIGINAL_REQUEST.md and plan and execute all requirements (R1 - R5):
 1. R1: Authentication Security Hardening (src/lib/authService.ts - restrict demo passcodes to DEV, enforce Supabase app_passwords / /api/auth/verify in prod).

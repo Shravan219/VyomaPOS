@@ -52,7 +52,7 @@ export async function initializeCapacitorAdaptations(options?: {
         CapApp.exitApp();
       } else {
         lastBackPressTime = now;
-        toast.info('Press back again to exit Vyoma ScanServe', { duration: 2000 });
+        toast.info('Press back again to exit VyomaPOS - Xtra Rooftop', { duration: 2000 });
       }
     });
   } catch (err) {

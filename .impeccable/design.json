@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-09-16T10:24:00.000Z",
-  "title": "Design System: Vyoma ScanServe",
+  "title": "Design System: VyomaPOS - Xtra Rooftop",
   "extensions": {
     "colorMeta": {
       "primary": {
@@ -155,7 +155,7 @@
   ],
   "narrative": {
     "northStar": "The Obsidian Guild",
-    "overview": "Vyoma ScanServe synthesizes the quiet grandeur of a private dark luxury atelier with the uncompromising speed of a Michelin-caliber culinary command center. Built for high-velocity restaurant operations—from captain table ordering on Android tablets to kitchen display terminals (KDS) and cashier settlement—the interface treats darkness not merely as a theme, but as an infinite obsidian canvas where information illuminates with surgical intent.\n\nEvery pixel balances aristocratic refinement against operational ergonomics. Deep obsidian substrates (#000000) and translucent glass cards eliminate eye fatigue during grueling 14-hour double shifts, while warm Imperial Gold (#C5A059) accents serve as authoritative beacons for decisive action. Neoclassical Cormorant Garamond typography bestows dignity upon order titles and customer receipts, while JetBrains Mono renders prices, token IDs, and order timers with unwavering telemetry precision.\n\nConfirmed Anti-Reference: Vyoma firmly rejects sterile, blinding white SaaS dashboards, rainbow-colored plastic POS buttons, cookie-cutter Bootstrap/Chakra widgets, and cartoonish casual-dining aesthetics. It is built to feel like an expensive precision instrument created specifically for elite hospitality.",
+    "overview": "VyomaPOS - Xtra Rooftop synthesizes the quiet grandeur of a private dark luxury atelier with the uncompromising speed of a Michelin-caliber culinary command center. Built for high-velocity restaurant operations—from captain table ordering on Android tablets to kitchen display terminals (KDS) and cashier settlement—the interface treats darkness not merely as a theme, but as an infinite obsidian canvas where information illuminates with surgical intent.\n\nEvery pixel balances aristocratic refinement against operational ergonomics. Deep obsidian substrates (#000000) and translucent glass cards eliminate eye fatigue during grueling 14-hour double shifts, while warm Imperial Gold (#C5A059) accents serve as authoritative beacons for decisive action. Neoclassical Cormorant Garamond typography bestows dignity upon order titles and customer receipts, while JetBrains Mono renders prices, token IDs, and order timers with unwavering telemetry precision.\n\nConfirmed Anti-Reference: Vyoma firmly rejects sterile, blinding white SaaS dashboards, rainbow-colored plastic POS buttons, cookie-cutter Bootstrap/Chakra widgets, and cartoonish casual-dining aesthetics. It is built to feel like an expensive precision instrument created specifically for elite hospitality.",
     "keyCharacteristics": [
       "Obsidian Immersion: Deep pitch-black base canvas (#000000) paired with smoky glass cards (#0A0A0E) and whisper-quiet 8% white borders.",
       "Imperial Gold Discipline: Reserved strictly for primary focal points, active state highlights, and high-priority actions.",

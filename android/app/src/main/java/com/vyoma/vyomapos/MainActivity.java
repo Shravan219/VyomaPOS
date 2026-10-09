@@ -1,4 +1,4 @@
-package com.vyoma.scanserve;
+package com.vyoma.vyomapos;
 
 import com.getcapacitor.BridgeActivity;
 

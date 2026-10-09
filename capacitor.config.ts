@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.vyoma.scanserve',
-  appName: 'Vyoma ScanServe',
+  appId: 'com.vyoma.vyomapos',
+  appName: 'VyomaPOS - Xtra Rooftop',
   webDir: 'dist',
   backgroundColor: '#000000',
   server: {

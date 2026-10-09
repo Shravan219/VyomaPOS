@@ -2,7 +2,7 @@
 
 **Worker**: `worker_m1` (CI and Repository Cleanliness Worker)  
 **Timestamp**: 2026-10-06T04:46:00Z  
-**Target Repository**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main`
+**Target Repository**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main`
 
 ---
 
@@ -54,7 +54,7 @@
 
 ### D. Obsidian Vault Synchronization
 - Created `C:\Users\Anay0216\Documents\Obsidian Vault\Daily\2026-10-06.md` documenting M1 CI/CD and repo cleanup activities.
-- Updated `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\Vyoma ScanServe\Roadmap.md` with CI/CD and repository cleanliness milestone checklist.
+- Updated `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\VyomaPOS - Xtra Rooftop\Roadmap.md` with CI/CD and repository cleanliness milestone checklist.
 
 ---
 

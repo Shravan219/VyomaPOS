@@ -1,1 +1,1 @@
-We built Vyoma ScanServe: the Michelin-grade restaurant operating system. Zero-latency tableside ordering, real-time KDS multi-station routing, and automated WhatsApp digital tax invoicing engineered for fine dining velocity. 🍽️✨ vyomadashboard.vercel.app
+We built VyomaPOS - Xtra Rooftop: the Michelin-grade restaurant operating system. Zero-latency tableside ordering, real-time KDS multi-station routing, and automated WhatsApp digital tax invoicing engineered for fine dining velocity. 🍽️✨ vyomadashboard.vercel.app

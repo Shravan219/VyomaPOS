@@ -1,7 +1,7 @@
 # Handoff Report: Database Schema Consolidation & CI/CD Cleanliness (R2 & R4)
 
 **Agent**: `explorer_survey_2`  
-**Working Directory**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_2`  
+**Working Directory**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_2`  
 **Handoff Type**: Hard (Task Complete)  
 **Date**: 2026-10-06  
 
@@ -71,7 +71,7 @@ All requirements for R2 and R4 are clearly defined and ready for execution by th
    - Update `.gitignore` with `*.xlsx`, `*.xls`, `.vitest/`, `.nyc_output/`, `test-results/`, `*.tmp`, `tmp/`, and `*.apk`.
 
 The full specifications, complete SQL code blocks, and proposed file contents are detailed in:
-`c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_2\survey_report.md`.
+`c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_2\survey_report.md`.
 
 ---
 
@@ -81,7 +81,7 @@ To independently verify the investigation and subsequent implementation:
 
 1. **Inspect Survey Report**:
    ```powershell
-   Get-Content "c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_2\survey_report.md"
+   Get-Content "c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_2\survey_report.md"
    ```
 2. **Verify CI/CD File Relocation**:
    ```powershell

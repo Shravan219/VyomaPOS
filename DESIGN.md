@@ -1,5 +1,5 @@
 ---
-name: Vyoma ScanServe
+name: VyomaPOS - Xtra Rooftop
 description: Real-time luxury restaurant POS, kitchen display system & captain service dashboard
 colors:
   primary: "#C5A059"
@@ -127,13 +127,13 @@ components:
     height: "44px"
 ---
 
-# Design System: Vyoma ScanServe
+# Design System: VyomaPOS - Xtra Rooftop
 
 ## Overview
 
 **Creative North Star: "The Obsidian Guild"**
 
-Vyoma ScanServe synthesizes the quiet grandeur of a private dark luxury atelier with the uncompromising speed of a Michelin-caliber culinary command center. Built for high-velocity restaurant operations—from captain table ordering on Android tablets to kitchen display terminals (KDS) and cashier settlement—the interface treats darkness not merely as a theme, but as an infinite obsidian canvas where information illuminates with surgical intent.
+VyomaPOS - Xtra Rooftop synthesizes the quiet grandeur of a private dark luxury atelier with the uncompromising speed of a Michelin-caliber culinary command center. Built for high-velocity restaurant operations—from captain table ordering on Android tablets to kitchen display terminals (KDS) and cashier settlement—the interface treats darkness not merely as a theme, but as an infinite obsidian canvas where information illuminates with surgical intent.
 
 Every pixel balances aristocratic refinement against operational ergonomics. Deep obsidian substrates (`#000000`) and translucent glass cards eliminate eye fatigue during grueling 14-hour double shifts, while warm Imperial Gold (`#C5A059`) accents serve as authoritative beacons for decisive action. Neoclassical Cormorant Garamond typography bestows dignity upon order titles and customer receipts, while JetBrains Mono renders prices, token IDs, and order timers with unwavering telemetry precision.
 

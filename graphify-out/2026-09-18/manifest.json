@@ -159,7 +159,7 @@
     "ast_hash": "c777a4127ae7213f7da22c4105bdfeab",
     "semantic_hash": "c777a4127ae7213f7da22c4105bdfeab"
   },
-  "android/app/src/main/java/com/vyoma/scanserve/MainActivity.java": {
+  "android/app/src/main/java/com/vyoma/vyomapos/MainActivity.java": {
     "mtime": 1789550609.0195215,
     "ast_hash": "b9bbbd4b7c2d52115243f3454ff12e84",
     "semantic_hash": "b9bbbd4b7c2d52115243f3454ff12e84"
@@ -834,7 +834,7 @@
     "ast_hash": "3ee09c17666e8457798ddb2de42ba6b7",
     "semantic_hash": "3ee09c17666e8457798ddb2de42ba6b7"
   },
-  "design-system/scanserve-dashboard/MASTER.md": {
+  "design-system/vyomapos-dashboard/MASTER.md": {
     "mtime": 1788258074.6587877,
     "ast_hash": "ca7c723df3a1e84cfd233354fa84d5c7",
     "semantic_hash": "ca7c723df3a1e84cfd233354fa84d5c7"

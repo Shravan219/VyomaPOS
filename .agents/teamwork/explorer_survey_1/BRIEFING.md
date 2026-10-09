@@ -6,7 +6,7 @@ Investigate and produce comprehensive findings for Requirement R1 (Authenticatio
 ## 🔒 My Identity
 - Archetype: explorer
 - Roles: survey, analysis
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_1
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_1
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: Survey R1 & R3
 

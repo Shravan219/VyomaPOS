@@ -1,8 +1,10 @@
 // Standardized status mapping for outbound Dyno POS integration
+// Full lifecycle: Accept -> Preparing -> Ready -> Out-for-delivery -> Delivered
 export const DYNO_STATUS_MAP = {
   pending: 'ACCEPTED',
   preparing: 'PREPARING',
   ready: 'READY',
+  dispatched: 'OUT_FOR_DELIVERY',
   completed: 'DELIVERED',
   cancelled: 'CANCELLED'
 } as const;

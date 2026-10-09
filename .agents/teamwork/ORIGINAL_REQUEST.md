@@ -2,9 +2,9 @@
 
 ## Initial Request — 2026-10-06T04:29:47Z
 
-Remediate all client-delivery blockers, harden auth security, unify database schemas, fix invoicing error handling, organize CI/CD workflows, and implement an automated Vitest test suite for the Vyoma ScanServe Dashboard.
+Remediate all client-delivery blockers, harden auth security, unify database schemas, fix invoicing error handling, organize CI/CD workflows, and implement an automated Vitest test suite for the VyomaPOS - Xtra Rooftop Dashboard.
 
-Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main
+Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main
 Integrity mode: development
 
 ## Requirements

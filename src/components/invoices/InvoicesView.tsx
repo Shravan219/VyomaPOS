@@ -22,33 +22,35 @@ export function InvoicesView({
   return (
     <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col min-h-0 bg-black">
       {/* Sub-Navigation Switcher Bar */}
-      <div className="border-b border-white/10 bg-[#0A0A0E]/80 backdrop-blur-xl px-6 py-3.5 sticky top-0 z-20 shrink-0">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2 bg-[#0D0E14] p-1.5 rounded-full border border-white/10 shadow-lg">
+      <div className="border-b border-white/10 bg-[#0A0A0E]/80 backdrop-blur-xl px-4 sm:px-6 py-3.5 sticky top-0 z-20 shrink-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-[#0D0E14] p-1.5 rounded-full border border-white/10 shadow-lg min-w-0">
             <button
               type="button"
               onClick={() => setSubView('create')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all cursor-pointer whitespace-nowrap ${
                 subView === 'create'
                   ? 'bg-primary text-black shadow-[0_0_20px_rgba(197,160,89,0.35)] font-extrabold'
                   : 'text-white/70 hover:text-white hover:bg-white/5'
               }`}
             >
-              <PlusCircle size={14} />
-              Create Invoice
+              <PlusCircle size={14} className="shrink-0" />
+              <span className="hidden min-[400px]:inline">Create Invoice</span>
+              <span className="min-[400px]:hidden">Create</span>
             </button>
 
             <button
               type="button"
               onClick={() => setSubView('history')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all cursor-pointer whitespace-nowrap ${
                 subView === 'history'
                   ? 'bg-primary text-black shadow-[0_0_20px_rgba(197,160,89,0.35)] font-extrabold'
                   : 'text-white/70 hover:text-white hover:bg-white/5'
               }`}
             >
-              <History size={14} />
-              History &amp; Ledger
+              <History size={14} className="shrink-0" />
+              <span className="hidden min-[400px]:inline">History &amp; Ledger</span>
+              <span className="min-[400px]:hidden">History</span>
             </button>
           </div>
 

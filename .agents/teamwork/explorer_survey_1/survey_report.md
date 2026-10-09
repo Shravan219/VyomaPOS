@@ -2,7 +2,7 @@
 
 **Date**: 2026-10-06  
 **Investigator**: `explorer_survey_1` (Auth & Invoicing Explorer)  
-**Target Project**: Vyoma ScanServe Dashboard (`c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main`)  
+**Target Project**: VyomaPOS - Xtra Rooftop Dashboard (`c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main`)  
 **Scope**: Requirements R1 & R3 from `ORIGINAL_REQUEST.md`
 
 ---

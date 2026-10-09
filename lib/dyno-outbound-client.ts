@@ -197,3 +197,74 @@ export function toggleSwiggyItemInStock(
   }
   return doRequest(config, 'POST', '/api/v1/swiggy/items/instock', { item_id: params.item_id });
 }
+
+// ── Full outbound lifecycle mapping (POS action → Dyno status string) ─
+//   Accept Order            -> ACCEPTED
+//   In Kitchen / Preparing  -> PREPARING
+//   Food Ready / Mark Ready -> READY
+//   Handover to Rider       -> OUT_FOR_DELIVERY (never DELIVERED here)
+//   Mark Delivered / Complete -> DELIVERED
+//   Cancel Order            -> CANCELLED
+
+export type DynoOrderAction =
+  | 'accept'
+  | 'preparing'
+  | 'ready'
+  | 'handover'
+  | 'delivered'
+  | 'cancelled';
+
+export const DYNO_ACTION_STATUS_MAP: Record<DynoOrderAction, string> = {
+  accept: 'ACCEPTED',
+  preparing: 'PREPARING',
+  ready: 'READY',
+  handover: 'OUT_FOR_DELIVERY',
+  delivered: 'DELIVERED',
+  cancelled: 'CANCELLED',
+};
+
+export function mapOrderActionToDynoStatus(action: DynoOrderAction | string): string {
+  const key = String(action || '').toLowerCase();
+  if (key === 'accept' || key === 'accepted' || key === 'pending') return 'ACCEPTED';
+  if (key === 'preparing' || key === 'in_kitchen' || key === 'in kitchen') return 'PREPARING';
+  if (key === 'ready' || key === 'food_ready' || key === 'mark_ready') return 'READY';
+  if (key === 'handover' || key === 'handover_to_rider' || key === 'dispatched' || key === 'out_for_delivery')
+    return 'OUT_FOR_DELIVERY';
+  if (key === 'delivered' || key === 'completed' || key === 'complete') return 'DELIVERED';
+  if (key === 'cancelled' || key === 'canceled' || key === 'cancel') return 'CANCELLED';
+  return 'ACCEPTED';
+}
+
+export interface DynoStatusPayload {
+  order_id: string;
+  status: string;
+}
+
+/**
+ * Emits the standard Dyno status payload over POST:
+ *   { "order_id": "<ORDER_ID>", "status": "OUT_FOR_DELIVERY" }
+ * Used by POS action triggers (accept → … → handover → delivered).
+ */
+export function updateDynoOrderStatus(
+  config: DynoClientConfig,
+  params: { order_id: string; action: DynoOrderAction | string },
+): Promise<DynoResult> {
+  if (!params?.order_id?.trim()) {
+    return Promise.resolve({
+      ok: false,
+      httpStatus: 422,
+      data: null,
+      error: 'Validation Failed: order_id is required',
+      request: {
+        method: 'POST',
+        url: `${cleanBase(config.baseUrl)}/api/v1/orders/status`,
+        headers: baseHeaders(config, true),
+      },
+    });
+  }
+  const payload: DynoStatusPayload = {
+    order_id: params.order_id,
+    status: mapOrderActionToDynoStatus(params.action),
+  };
+  return doRequest(config, 'POST', '/api/v1/orders/status', {}, payload);
+}

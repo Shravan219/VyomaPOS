@@ -1,7 +1,7 @@
 # Handoff Report — Project Sentinel
 
 ## Observation
-The user requested full remediation of client-delivery blockers, auth security hardening, database schema consolidation, invoicing transaction integrity, CI/CD organization, and implementation of an automated Vitest test suite for the Vyoma ScanServe Dashboard.
+The user requested full remediation of client-delivery blockers, auth security hardening, database schema consolidation, invoicing transaction integrity, CI/CD organization, and implementation of an automated Vitest test suite for the VyomaPOS - Xtra Rooftop Dashboard.
 Specific requirements:
 - R1: Auth security hardening (`src/lib/authService.ts`) — restrict default passcodes strictly to `import.meta.env.DEV`, requiring remote/Supabase credentials in production.
 - R2: Database schema consolidation (`supabase_schema.sql`) — add `app_passwords`, `expenses`, and `receipts` public storage bucket DDL and RLS policies; document Google Sheets sync secrets in `.env.example` and `README.md`.

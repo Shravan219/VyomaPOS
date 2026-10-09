@@ -6,7 +6,7 @@ Independently inspect all remediation changes against acceptance criteria in ORI
 ## 🔒 My Identity
 - Archetype: reviewer_critic
 - Roles: reviewer, critic
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\reviewer_2
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\reviewer_2
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: Remediation Verification & Review
 - Instance: 2 of 2

@@ -52,5 +52,5 @@
 ---
 
 ## 4. Obsidian Vault Synchronization
-- Synchronized `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\Vyoma ScanServe\Database Schema.md` with definitions for `app_passwords`, `expenses`, `receipts` storage bucket, and updated RLS details.
+- Synchronized `C:\Users\Anay0216\Documents\Obsidian Vault\Projects\VyomaPOS - Xtra Rooftop\Database Schema.md` with definitions for `app_passwords`, `expenses`, `receipts` storage bucket, and updated RLS details.
 - Recorded accomplishments in `C:\Users\Anay0216\Documents\Obsidian Vault\Daily\2026-10-06.md`.

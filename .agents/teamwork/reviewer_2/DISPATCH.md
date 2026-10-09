@@ -1,14 +1,14 @@
 ## 2026-10-06T05:06:44Z
 You are reviewer_2 (Secondary Verification Reviewer).
-Your working directory is: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\reviewer_2
+Your working directory is: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\reviewer_2
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 You MUST read ORIGINAL_REQUEST.md before starting your review.
 
 Also read:
-- PROJECT.md: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
-- TEST_READY.md: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\TEST_READY.md
+- PROJECT.md: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
+- TEST_READY.md: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\TEST_READY.md
 
 Your Objective:
 1. Independently inspect all remediation changes against the acceptance criteria in ORIGINAL_REQUEST.md:

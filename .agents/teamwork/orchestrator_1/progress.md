@@ -1,4 +1,4 @@
-# Progress — Vyoma ScanServe Dashboard Remediation
+# Progress — VyomaPOS - Xtra Rooftop Dashboard Remediation
 
 ## Current Status
 Last visited: 2026-10-06T05:10:30Z

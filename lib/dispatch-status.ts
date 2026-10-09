@@ -1,6 +1,6 @@
-export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'waiting for payment' | 'completed' | 'cancelled';
+export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'dispatched' | 'waiting for payment' | 'completed' | 'cancelled';
 
-export type DynoMappedStatus = 'ACCEPTED' | 'PREPARING' | 'READY' | 'DISPATCHED' | 'DELIVERED' | 'CANCELLED';
+export type DynoMappedStatus = 'ACCEPTED' | 'PREPARING' | 'READY' | 'OUT_FOR_DELIVERY' | 'DISPATCHED' | 'DELIVERED' | 'CANCELLED';
 
 export interface DispatchOrderStatusParams {
   orderId: string;
@@ -25,8 +25,8 @@ export interface DispatchResult {
  * - 'preparing' -> 'PREPARING'
  * - 'ready'     -> 'READY'
  * - 'waiting for payment' -> 'READY'
- * - 'completed' -> 'DELIVERED'
- * - 'dispatched' -> 'DISPATCHED'
+ * - 'dispatched' / 'out_for_delivery' -> 'OUT_FOR_DELIVERY' (Handover to Rider)
+ * - 'completed' -> 'DELIVERED' (Mark Delivered / Complete only)
  * - 'cancelled' -> 'CANCELLED'
  */
 export function mapStatusToDyno(status: OrderStatus | string): DynoMappedStatus {
@@ -43,7 +43,9 @@ export function mapStatusToDyno(status: OrderStatus | string): DynoMappedStatus 
     case 'waiting_for_payment':
       return 'READY';
     case 'dispatched':
-      return 'DISPATCHED';
+    case 'out_for_delivery':
+    case 'out for delivery':
+      return 'OUT_FOR_DELIVERY';
     case 'completed':
     case 'delivered':
       return 'DELIVERED';

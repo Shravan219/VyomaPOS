@@ -1,4 +1,4 @@
-export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'waiting for payment' | 'completed' | 'cancelled';
+export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'dispatched' | 'waiting for payment' | 'completed' | 'cancelled';
 
 export type TableStatus = 'available' | 'occupied' | 'reserved' | 'cleaning';
 
@@ -156,6 +156,33 @@ export function normalizeOrder(rawOrder: any): Order {
       rawOrder?.dishes
     )
   };
+}
+
+/**
+ * Aggregator lifecycle cap: orders fulfilled by a 3rd-party rider (Swiggy,
+ * Zomato, Dyno, …) end their manual POS journey at Handover ("OUT_FOR_DELIVERY").
+ * Completion arrives via the delivery webhook — the POS must not offer a manual
+ * "Mark Delivered" step for these orders.
+ */
+export function isAggregatorOrder(order: Order): boolean {
+  const platform = (order.aggregator_platform || '').trim().toLowerCase();
+  if (platform) return true;
+  const orderType = (order.order_type || '').trim().toLowerCase();
+  if (orderType === 'aggregator' || orderType === 'delivery') return true;
+  return false;
+}
+
+/**
+ * Active-list membership: completed/cancelled are out, and dispatched
+ * aggregator orders leave the active views on Handover (the rider has the
+ * order; completion arrives via webhook). In-house dispatched orders stay
+ * visible so staff can still tap "Mark Delivered".
+ */
+export function isActiveOrder(order: Order): boolean {
+  const st = (order.status || '').toLowerCase().trim();
+  if (st === 'completed' || st === 'cancelled') return false;
+  if (st === 'dispatched' && isAggregatorOrder(order)) return false;
+  return true;
 }
 
 export function getOrderPlatform(order: Order): 'swiggy' | 'zomato' | 'other_online' | 'dine_in' {

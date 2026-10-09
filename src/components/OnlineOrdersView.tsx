@@ -25,7 +25,6 @@ import {
   Code,
   ArrowDownToLine,
   ArrowUpRight,
-  Zap,
   Trash2
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -74,7 +73,6 @@ export function OnlineOrdersView({
   const [recentInboundLogs, setRecentInboundLogs] = useState<any[]>([]);
   const [selectedInboundLog, setSelectedInboundLog] = useState<any | null>(null);
   const [copiedUrl, setCopiedUrl] = useState(false);
-  const [isSimulating, setIsSimulating] = useState(false);
 
   const inboundWebhookUrl = typeof window !== 'undefined' ? `${window.location.origin}/api/webhooks/petpooja` : '/api/webhooks/petpooja';
 
@@ -186,68 +184,6 @@ export function OnlineOrdersView({
       toast.success('Inbound inspection logs cleared');
     } catch (e: any) {
       toast.error('Failed to clear logs: ' + e.message);
-    }
-  };
-
-  const handleSimulateQuickOrder = async (platform: 'swiggy' | 'zomato') => {
-    setIsSimulating(true);
-    const token = Math.floor(1000 + Math.random() * 9000).toString();
-    const isSwiggy = platform === 'swiggy';
-    
-    const testPayload = {
-      order_details: {
-        order_id: isSwiggy ? `SWIGGY_${token}` : `ZOMATO_${token}`,
-        token,
-        order_from: platform.toUpperCase(),
-        status: 'in_kitchen',
-        customer_name: isSwiggy ? 'Swiggy Express Customer' : 'Zomato Gold Member',
-        customer_phone: '+919876543210',
-        table_id: `${platform.toUpperCase()} Online`,
-        total: isSwiggy ? 540 : 680,
-        items: [
-          {
-            item_id: 'item-101',
-            item_name: isSwiggy ? 'Paneer Butter Masala Combo' : 'Chicken Tikka Biryani Box',
-            price: isSwiggy ? 320 : 420,
-            quantity: 1,
-            notes: 'Extra spicy, cutlery included'
-          },
-          {
-            item_id: 'item-102',
-            item_name: 'Garlic Butter Naan (2 pcs)',
-            price: isSwiggy ? 120 : 160,
-            quantity: 1
-          },
-          {
-            item_id: 'item-103',
-            item_name: 'Gulab Jamun Dessert',
-            price: 100,
-            quantity: 1
-          }
-        ],
-        notes: `Simulated live ${platform.toUpperCase()} test order`
-      }
-    };
-
-    try {
-      const res = await fetch('/api/webhooks/petpooja', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testPayload)
-      });
-      const data = await res.json();
-      if (res.ok && (data.success === '1' || data.success === true || data.status === 'success')) {
-        toast.success(`🎉 Test ${platform.toUpperCase()} Order #${token} Ingested Successfully!`, {
-          description: `Order verified and active in kitchen queue.`
-        });
-        refreshAllLogs();
-      } else {
-        toast.error(`Simulation failed: ${data.message || 'Unknown error'}`);
-      }
-    } catch (e: any) {
-      toast.error(`Simulation error: ${e.message}`);
-    } finally {
-      setIsSimulating(false);
     }
   };
 
@@ -419,28 +355,28 @@ export function OnlineOrdersView({
                 </div>
                 
                 {/* Tab Switcher */}
-                <div className="flex items-center bg-black/60 p-1 rounded-2xl border border-white/10 gap-1 self-stretch md:self-auto">
+                <div className="grid grid-cols-1 min-[420px]:grid-cols-2 items-center bg-black/60 p-1 rounded-2xl border border-white/10 gap-1 self-stretch md:self-auto">
                   <button
                     onClick={() => setActiveTab('inbound')}
-                    className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
                       activeTab === 'inbound'
                         ? 'bg-primary text-black shadow-[0_0_15px_rgba(197,160,89,0.25)]'
                         : 'text-white/60 hover:text-white'
                     }`}
                   >
-                    <ArrowDownToLine size={14} />
-                    <span>Inbound Webhooks ({recentInboundLogs.length})</span>
+                    <ArrowDownToLine size={14} className="shrink-0" />
+                    <span>Inbound ({recentInboundLogs.length})</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('outbound')}
-                    className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
                       activeTab === 'outbound'
                         ? 'bg-primary text-black shadow-[0_0_15px_rgba(197,160,89,0.25)]'
                         : 'text-white/60 hover:text-white'
                     }`}
                   >
-                    <ArrowUpRight size={14} />
-                    <span>Outbound Callbacks ({recentOutboundLogs.length})</span>
+                    <ArrowUpRight size={14} className="shrink-0" />
+                    <span>Outbound ({recentOutboundLogs.length})</span>
                   </button>
                 </div>
               </div>
@@ -486,32 +422,6 @@ export function OnlineOrdersView({
                     </div>
                   </div>
 
-                  {/* Quick Simulation Buttons */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                    <div className="flex items-center gap-2 text-xs text-white/60">
-                      <Zap size={14} className="text-amber-400" />
-                      <span>Need instant test orders? Click to simulate direct webhook payload:</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        onClick={() => handleSimulateQuickOrder('swiggy')}
-                        disabled={isSimulating}
-                        size="sm"
-                        className="h-8 rounded-xl bg-[#FC8019] hover:bg-[#FC8019]/90 text-white text-[10px] font-bold uppercase tracking-wider px-3"
-                      >
-                        + Test Swiggy Order
-                      </Button>
-                      <Button
-                        onClick={() => handleSimulateQuickOrder('zomato')}
-                        disabled={isSimulating}
-                        size="sm"
-                        className="h-8 rounded-xl bg-[#E23744] hover:bg-[#E23744]/90 text-white text-[10px] font-bold uppercase tracking-wider px-3"
-                      >
-                        + Test Zomato Order
-                      </Button>
-                    </div>
-                  </div>
-
                   {/* Inbound Logs Table & Inspector */}
                   <div className="flex flex-col gap-3">
                     <div className="flex items-center justify-between">
@@ -531,8 +441,8 @@ export function OnlineOrdersView({
                     {recentInboundLogs.length > 0 ? (
                       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                         {/* Table */}
-                        <div className="lg:col-span-7 max-h-64 overflow-y-auto custom-scrollbar border border-white/5 rounded-2xl bg-black/40">
-                          <table className="w-full text-left text-xs">
+                        <div className="lg:col-span-7 max-h-64 overflow-auto custom-scrollbar border border-white/5 rounded-2xl bg-black/40">
+                          <table className="w-full min-w-[560px] text-left text-xs">
                             <thead className="bg-white/5 text-[9px] uppercase tracking-wider text-white/40 sticky top-0">
                               <tr>
                                 <th className="py-2.5 px-3">Time</th>
@@ -635,18 +545,18 @@ export function OnlineOrdersView({
                       <label htmlFor="target-webhook-url" className="text-[10px] font-bold uppercase tracking-widest text-primary/80 cursor-pointer">
                         Target Tester Callback URL (PETPOOJA_OUTBOUND_WEBHOOK_URL)
                       </label>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center gap-2">
                         <Input
                           id="target-webhook-url"
                           placeholder="e.g. https://your-tester-app.run.app/api/pos-callback"
                           value={webhookUrl}
                           onChange={(e) => setWebhookUrl(e.target.value)}
-                          className="bg-black border-white/10 rounded-xl h-11 text-xs text-white font-mono focus-visible:ring-primary/20"
+                          className="bg-black border-white/10 rounded-xl h-11 text-xs text-white font-mono focus-visible:ring-primary/20 min-w-0 flex-1"
                         />
                         <Button
                           onClick={handleSaveConfig}
                           disabled={isSavingConfig}
-                          className="bg-primary text-black hover:bg-primary/90 font-bold text-[10px] uppercase tracking-wider h-11 px-5 rounded-xl shrink-0"
+                          className="bg-primary text-black hover:bg-primary/90 font-bold text-[10px] uppercase tracking-wider h-11 px-5 rounded-xl shrink-0 w-full min-[420px]:w-auto"
                         >
                           {isSavingConfig ? 'Saving...' : 'Save URL'}
                         </Button>
@@ -700,8 +610,8 @@ export function OnlineOrdersView({
                     </div>
 
                     {recentOutboundLogs.length > 0 ? (
-                      <div className="max-h-48 overflow-y-auto custom-scrollbar border border-white/5 rounded-xl bg-black/40">
-                        <table className="w-full text-left text-xs">
+                      <div className="max-h-48 overflow-auto custom-scrollbar border border-white/5 rounded-xl bg-black/40">
+                        <table className="w-full min-w-[560px] text-left text-xs">
                           <thead className="bg-white/5 text-[9px] uppercase tracking-wider text-white/40 sticky top-0">
                             <tr>
                               <th className="py-2 px-3">Time</th>

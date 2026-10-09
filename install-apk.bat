@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo ===================================================
-echo   Vyoma ScanServe - Android APK Installer
+echo   VyomaPOS - Xtra Rooftop - Android APK Installer
 echo ===================================================
 
 node "%~dp0scripts\install-apk.cjs" %*

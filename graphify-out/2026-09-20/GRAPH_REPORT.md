@@ -1,4 +1,4 @@
-# Graph Report - ScanServe_Dashboard-main  (2026-09-20)
+# Graph Report - VyomaPOS_Dashboard-main  (2026-09-20)
 
 ## Corpus Check
 - 383 files · ~377,956 words
@@ -16,7 +16,7 @@
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Comprehensive Business Case: Vyoma ScanServe
+- Comprehensive Business Case: VyomaPOS - Xtra Rooftop
 - orderStore.ts
 - CaptainDashboard.tsx
 - gray
@@ -27,7 +27,7 @@
 - slide_search_core.py
 - spacing
 - TestTailwindConfigGenerator
-- Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)
+- Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)
 - html-token-validator.py
 - compilerOptions
 - logo/core.py
@@ -106,7 +106,7 @@
 - Logo Usage Rules
 - Component Specifications
 - shadcn/ui Accessibility Patterns
-- Design System: Vyoma ScanServe
+- Design System: VyomaPOS - Xtra Rooftop
 - Asset Approval Checklist
 - Logo AI Prompt Engineering
 - Color Palette Management
@@ -198,7 +198,7 @@
 - .test_init_default_typescript
 - Install BeyondSEO in your assistant
 - RobotsRules
-- c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_cjs
+- c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_cjs
 - .test_write_config
 - Technical SEO Audit
 - .test_init_framework
@@ -375,7 +375,7 @@
 
 ## Communities (335 total, 52 thin omitted)
 
-### Community 0 - "Comprehensive Business Case: Vyoma ScanServe"
+### Community 0 - "Comprehensive Business Case: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.06
 Nodes (31): 10.1 Allocation of Proceeds, 10. Funding Request & Use of Proceeds, 11. Conclusion & Investment Summary, 1.1 Company Overview, 1.2 The Problem, 1.3 The Solution, 1.4 Market Sizing Snapshot, 1.5 3-Year Financial Snapshot (+23 more)
 
@@ -419,7 +419,7 @@ Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more
 Cohesion: 0.07
 Nodes (15): Test adding colors multiple times., Test adding full color palette., Test adding custom spacing., Test TailwindConfigGenerator class., Test generating JavaScript configuration., Test generating config with custom colors., Test generating config with plugins., Test validating config with no content paths. (+7 more)
 
-### Community 11 - "Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)"
+### Community 11 - "Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)"
 Cohesion: 0.09
 Nodes (22): 10. Summary & Recommendation, 1. Executive Summary, 2.1 The Core Problems Solved, 2.2 Customer Segmentation & Pricing Tiers, 2. Market Definition & Target Segments, 3.1 Segment Counts & ACV Assumptions (India Base), 3. Bottom-Up TAM Analysis, 4.1 Industry Sizing Data Points (+14 more)
 
@@ -585,7 +585,7 @@ Nodes (21): capabilities, cef, auto_install, dir, description, display_name, act
 
 ### Community 53 - "electron.cjs"
 Cohesion: 0.22
-Nodes (7): c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
+Nodes (7): c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
 
 ### Community 54 - "extract-colors.cjs"
 Cohesion: 0.22
@@ -711,9 +711,9 @@ Nodes (28): Alert, Anatomy, Anatomy, Anatomy, Anatomy, Anatomy, Badge, Button (+
 Cohesion: 0.07
 Nodes (28): Accordion, Alert, ARIA Labels, Checkbox and Radio, Color Contrast, Command Palette Navigation, Component-Specific Patterns, Dialog/Modal Navigation (+20 more)
 
-### Community 96 - "Design System: Vyoma ScanServe"
+### Community 96 - "Design System: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.07
-Nodes (26): Buttons, Colors, Components, Design System: Vyoma ScanServe, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
+Nodes (26): Buttons, Colors, Components, Design System: VyomaPOS - Xtra Rooftop, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
 
 ### Community 97 - "Asset Approval Checklist"
 Cohesion: 0.08
@@ -1525,7 +1525,7 @@ _Questions this graph is uniquely positioned to answer:_
   _`TailwindConfigGenerator` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `beyondseo`, `Response`, `fs` to the rest of the system?**
   _2172 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Comprehensive Business Case: Vyoma ScanServe` be split into smaller, more focused modules?**
+- **Should `Comprehensive Business Case: VyomaPOS - Xtra Rooftop` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `orderStore.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.055246913580246915 - nodes in this community are weakly interconnected._

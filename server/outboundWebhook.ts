@@ -53,7 +53,9 @@ export function mapStatusToDyno(rawStatus: string): string {
   if (s === 'PENDING' || s === 'ACCEPTED') return 'ACCEPTED';
   if (s === 'PREPARING' || s === 'IN_KITCHEN') return 'PREPARING';
   if (s === 'READY' || s === 'READY_FOR_PICKUP') return 'READY';
-  if (s === 'COMPLETED' || s === 'DISPATCHED' || s === 'DELIVERED') return 'DELIVERED';
+  // Handover to Rider is its own phase — never collapse to DELIVERED here.
+  if (s === 'DISPATCHED' || s === 'OUT_FOR_DELIVERY' || s === 'OUT FOR DELIVERY') return 'OUT_FOR_DELIVERY';
+  if (s === 'COMPLETED' || s === 'DELIVERED') return 'DELIVERED';
   if (s === 'CANCELLED') return 'CANCELLED';
   return 'ACCEPTED';
 }

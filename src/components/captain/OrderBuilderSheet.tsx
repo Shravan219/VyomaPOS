@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
+import { getGSTAMT, SETTINGS_CHANGED_EVENT } from '@/src/lib/restaurantSettings';
 
 interface OrderBuilderSheetProps {
   isOpen: boolean;
@@ -260,10 +261,20 @@ export function OrderBuilderSheet({
     }
   };
 
-  // Cart total calculations
+  // Cart total calculations (outlet GSTAMT applied — card shows final payable)
   const cartEntries = Object.values(cart) as Array<{ item: MenuItem; quantity: number; notes: string }>;
   const totalItemCount = cartEntries.reduce((acc, c) => acc + c.quantity, 0);
   const totalAmount = cartEntries.reduce((acc, c) => acc + (c.item.price * c.quantity), 0);
+  const [outletGstRate, setOutletGstRate] = useState<number>(() => getGSTAMT());
+
+  useEffect(() => {
+    const syncRate = () => setOutletGstRate(getGSTAMT());
+    window.addEventListener(SETTINGS_CHANGED_EVENT, syncRate);
+    return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, syncRate);
+  }, []);
+
+  const cartGstAmount = Math.round(totalAmount * (outletGstRate / 100) * 100) / 100;
+  const cartGrandTotal = Math.round((totalAmount + cartGstAmount) * 100) / 100;
 
   // Submit Order handler
   const handleSendToCounter = async () => {
@@ -331,7 +342,7 @@ export function OrderBuilderSheet({
         status: 'pending',
         order_type: orderType,
         aggregator_platform: aggregatorPlatform,
-        total: totalAmount,
+        total: cartGrandTotal,
         items: orderItems,
         customer_name: customerName.trim() || (isAggregator ? `${orderChannel === 'swiggy' ? 'Swiggy' : 'Zomato'} Order` : 'Guest'),
         customer_phone: customerPhone.trim() || undefined,
@@ -371,7 +382,7 @@ export function OrderBuilderSheet({
             status: 'occupied',
             customer_name: customerName.trim() || 'Guest',
             active_order_id: createdOrderRecord.id,
-            total_amount: totalAmount,
+            total_amount: cartGrandTotal,
             updated_at: new Date().toISOString()
           });
 
@@ -581,9 +592,19 @@ export function OrderBuilderSheet({
 
                 {/* Subtotal & Action in Cart Card */}
                 <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
+                  <div className="flex flex-col gap-1 px-1 text-xs">
+                    <div className="flex items-center justify-between text-white/60">
+                      <span className="uppercase tracking-wider font-semibold">Subtotal</span>
+                      <span className="font-mono">₹{totalAmount.toFixed(2)}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-white/60">
+                      <span className="uppercase tracking-wider font-semibold">GST ({outletGstRate}%)</span>
+                      <span className="font-mono">₹{cartGstAmount.toFixed(2)}</span>
+                    </div>
+                  </div>
                   <div className="flex items-center justify-between px-1">
                     <span className="text-xs font-semibold text-white/80 uppercase tracking-wider">Grand Total</span>
-                    <span className="text-xl font-mono font-bold tabular-nums text-primary">₹{totalAmount}</span>
+                    <span className="text-xl font-mono font-bold tabular-nums text-primary">₹{cartGrandTotal.toFixed(2)}</span>
                   </div>
 
                   <button
@@ -954,7 +975,7 @@ export function OrderBuilderSheet({
                 <div className="md:hidden shrink-0 p-3.5 pb-[max(0.875rem,env(safe-area-inset-bottom))] bg-[#12141C] border border-primary/40 rounded-2xl shadow-[0_0_25px_rgba(197,160,89,0.2)] flex items-center justify-between z-10 backdrop-blur-md">
                   <div>
                     <span className="text-[9px] font-bold uppercase tracking-widest text-primary block">Selected Items ({totalItemCount})</span>
-                    <span className="text-sm font-mono font-bold tabular-nums text-white">Total: ₹{totalAmount.toFixed(2)}</span>
+                    <span className="text-sm font-mono font-bold tabular-nums text-white">Total: ₹{cartGrandTotal.toFixed(2)}</span>
                   </div>
                   <button
                     type="button"

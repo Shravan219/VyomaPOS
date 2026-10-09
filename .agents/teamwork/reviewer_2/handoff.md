@@ -4,7 +4,7 @@
 
 - **Tool Execution — `npm test`**:
   ```
-  RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/ScanServe_Dashboard-main
+  RUN  v5.0.3 C:/Users/Anay0216/Documents/Coding/VyomaPOS_Dashboard-main
 
   ✓ src/__tests__/gstin.test.ts (11 tests) 8ms
   ✓ src/__tests__/gst.test.ts (12 tests) 9ms

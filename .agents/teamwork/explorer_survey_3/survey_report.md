@@ -3,13 +3,13 @@
 **Agent**: explorer_survey_3 (Test and Build Explorer)  
 **Date**: 2026-10-06  
 **Target Milestone**: Survey and Architecture for Requirement R5  
-**Working Directory**: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\explorer_survey_3`  
+**Working Directory**: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\explorer_survey_3`  
 
 ---
 
 ## 1. Executive Summary
 
-This report provides an exhaustive, read-only architectural investigation for **Requirement R5: Automated Testing Suite Setup** in the Vyoma ScanServe Dashboard repository, as specified in `ORIGINAL_REQUEST.md`.
+This report provides an exhaustive, read-only architectural investigation for **Requirement R5: Automated Testing Suite Setup** in the VyomaPOS - Xtra Rooftop Dashboard repository, as specified in `ORIGINAL_REQUEST.md`.
 
 ### Core Findings
 1. **Existing Test Infrastructure**: Currently, the repository has **no test runner, no test scripts, and zero test files** in `src/`. `package.json` contains no `"test"` script.
@@ -509,7 +509,7 @@ vi.mock('@/src/lib/supabase', () => ({
 ## 5. Detailed Test Suite Architecture & File Layout
 
 ```
-ScanServe_Dashboard-main/
+VyomaPOS_Dashboard-main/
 ├── vitest.config.ts                 # Vitest configuration (aliases, happy-dom, test patterns)
 ├── tsconfig.json                    # Updated to include vitest.config.ts
 ├── package.json                     # Updated with "test": "vitest run" and devDependencies

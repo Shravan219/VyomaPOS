@@ -1,4 +1,4 @@
-# Graph Report - ScanServe_Dashboard-main  (2026-09-19)
+# Graph Report - VyomaPOS_Dashboard-main  (2026-09-19)
 
 ## Corpus Check
 - 181 files · ~154,535 words
@@ -92,7 +92,7 @@
 - .test_recommend_plugins
 - .test_generate_typescript_config
 - scripts
-- REALITY SEED: VYOMA SCANSERVE RESTAURANT OS & CAPTAIN DASHBOARD
+- REALITY SEED: VYOMAPOS - XTRA ROOFTOP RESTAURANT OS & CAPTAIN DASHBOARD
 - .test_init_javascript
 - inject-brand-context.cjs
 - embed-tokens.cjs
@@ -106,7 +106,7 @@
 - Logo Usage Rules
 - Component Specifications
 - shadcn/ui Accessibility Patterns
-- Design System: Vyoma ScanServe
+- Design System: VyomaPOS - Xtra Rooftop
 - Asset Approval Checklist
 - Logo AI Prompt Engineering
 - Color Palette Management
@@ -419,7 +419,7 @@ Nodes (11): Input(), ref_base_ui_react_input, react, InvoiceCreator(), InvoiceCr
 
 ### Community 53 - "electron.cjs"
 Cohesion: 0.22
-Nodes (7): c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
+Nodes (7): c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
 
 ### Community 54 - "extract-colors.cjs"
 Cohesion: 0.22
@@ -469,7 +469,7 @@ Nodes (12): devDependencies, autoprefixer, @capacitor/cli, concurrently, cross-e
 Cohesion: 0.17
 Nodes (12): scripts, apk:build, apk:devices, apk:install, build, cap:sync, clean, dev (+4 more)
 
-### Community 76 - "REALITY SEED: VYOMA SCANSERVE RESTAURANT OS & CAPTAIN DASHBOARD"
+### Community 76 - "REALITY SEED: VYOMAPOS - XTRA ROOFTOP RESTAURANT OS & CAPTAIN DASHBOARD"
 Cohesion: 0.17
 Nodes (11): 1.1 Architectural North Star: "The Obsidian Guild", 1. SYSTEM IDENTITY & STRATEGIC MISSION, 2.1 Technology Stack Matrix, 2.2 Operational Hardware Footprint, 2. TECHNICAL SPECIFICATIONS & RUNTIME TOPOLOGY, 3.1 Core Entity Definitions, 3. DOMAIN ENTITIES & KNOWLEDGE GRAPH RELATIONSHIPS, 4.2 Aggregator / Online Inbound Flow (Swiggy / Zomato / Dyno API) (+3 more)
 
@@ -509,9 +509,9 @@ Nodes (28): Alert, Anatomy, Anatomy, Anatomy, Anatomy, Anatomy, Badge, Button (+
 Cohesion: 0.07
 Nodes (28): Accordion, Alert, ARIA Labels, Checkbox and Radio, Color Contrast, Command Palette Navigation, Component-Specific Patterns, Dialog/Modal Navigation (+20 more)
 
-### Community 96 - "Design System: Vyoma ScanServe"
+### Community 96 - "Design System: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.07
-Nodes (26): Buttons, Colors, Components, Design System: Vyoma ScanServe, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
+Nodes (26): Buttons, Colors, Components, Design System: VyomaPOS - Xtra Rooftop, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
 
 ### Community 97 - "Asset Approval Checklist"
 Cohesion: 0.08

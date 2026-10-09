@@ -1,4 +1,4 @@
-# Graph Report - ScanServe_Dashboard-main  (2026-09-21)
+# Graph Report - VyomaPOS_Dashboard-main  (2026-09-21)
 
 ## Corpus Check
 - 415 files · ~479,981 words
@@ -16,7 +16,7 @@
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Comprehensive Business Case: Vyoma ScanServe
+- Comprehensive Business Case: VyomaPOS - Xtra Rooftop
 - orderStore.ts
 - CaptainDashboard.tsx
 - gray
@@ -27,7 +27,7 @@
 - slide_search_core.py
 - spacing
 - TestTailwindConfigGenerator
-- Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)
+- Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)
 - html-token-validator.py
 - compilerOptions
 - logo/core.py
@@ -46,7 +46,7 @@
 - .test_add_all_components_success
 - TestGeneratedConfigIsValidJs
 - pathlib
-- Brag Plan: Vyoma ScanServe (Full Product Showcase — 2.5 Minutes)
+- Brag Plan: VyomaPOS - Xtra Rooftop (Full Product Showcase — 2.5 Minutes)
 - dependencies
 - Tailwind CSS Utility Reference
 - duration
@@ -81,7 +81,7 @@
 - persist_design_system
 - 1. AGENT SWARM TOPOLOGY & PERSONA ROLES
 - Token Architecture
-- Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase)
+- Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase)
 - generate-reality-seed-pdf.cjs
 - hyperframes.json
 - Primitive Tokens
@@ -106,7 +106,7 @@
 - Logo Usage Rules
 - Component Specifications
 - shadcn/ui Accessibility Patterns
-- Design System: Vyoma ScanServe
+- Design System: VyomaPOS - Xtra Rooftop
 - Asset Approval Checklist
 - Logo AI Prompt Engineering
 - Color Palette Management
@@ -198,13 +198,13 @@
 - Reputation and posting plan
 - Install BeyondSEO in your assistant
 - network.py
-- c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_cjs
+- c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_cjs
 - Audio reference
 - Technical SEO Audit
 - .temp_project
 - Content Gap Analysis
 - Step 4: Validate, render, and deliver
-- Share Copy Variants: Vyoma ScanServe
+- Share Copy Variants: VyomaPOS - Xtra Rooftop
 - Keyword Discovery
 - SEO + AEO Audit Report Template
 - backlink-quality-scoring.md
@@ -390,7 +390,7 @@
 
 ## Communities (351 total, 57 thin omitted)
 
-### Community 0 - "Comprehensive Business Case: Vyoma ScanServe"
+### Community 0 - "Comprehensive Business Case: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.06
 Nodes (31): 10.1 Allocation of Proceeds, 10. Funding Request & Use of Proceeds, 11. Conclusion & Investment Summary, 1.1 Company Overview, 1.2 The Problem, 1.3 The Solution, 1.4 Market Sizing Snapshot, 1.5 3-Year Financial Snapshot (+23 more)
 
@@ -434,7 +434,7 @@ Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more
 Cohesion: 0.07
 Nodes (15): Test adding colors multiple times., Test adding full color palette., Test TailwindConfigGenerator class., Test that adding same plugin twice doesn't duplicate., Test generating config with plugins., Test writing configuration to file., Test initialization for JavaScript config., Test that written config contains expected content. (+7 more)
 
-### Community 11 - "Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)"
+### Community 11 - "Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)"
 Cohesion: 0.09
 Nodes (22): 10. Summary & Recommendation, 1. Executive Summary, 2.1 The Core Problems Solved, 2.2 Customer Segmentation & Pricing Tiers, 2. Market Definition & Target Segments, 3.1 Segment Counts & ACV Assumptions (India Base), 3. Bottom-Up TAM Analysis, 4.1 Industry Sizing Data Points (+14 more)
 
@@ -510,9 +510,9 @@ Nodes (7): Reduce a generated TS/JS config to a bare assignable object so it can
 Cohesion: 0.06
 Nodes (33): Classify a supplied CSV's user-assessed relevance/risk; does not measure…, Compatibility entry point for the environment check., Run BeyondSEO directly from a source checkout., Compatibility entrypoint: regenerate evidence reports from a local crawl., Run the bundled CLI from any working directory, without shell activation., Heuristic URL-label helper; URL tokens do not establish page intent., Regression test for sync-brand-to-tokens.cjs. The color parser required a…, main() (+25 more)
 
-### Community 30 - "Brag Plan: Vyoma ScanServe (Full Product Showcase — 2.5 Minutes)"
+### Community 30 - "Brag Plan: VyomaPOS - Xtra Rooftop (Full Product Showcase — 2.5 Minutes)"
 Cohesion: 0.14
-Nodes (13): Audio Direction, Brag Plan: Vyoma ScanServe (Full Product Showcase — 2.5 Minutes), Chapter 1: The Modern Culinary Crisis & The Vision (0.0s – 25.0s), Chapter 2: Floor Captain Intelligence & Table Choreography (25.0s – 55.0s), Chapter 3: The Multi-Station Kitchen KDS Symphony (55.0s – 85.0s), Chapter 4: Omnichannel Aggregators & WhatsApp Tax Billing (85.0s – 115.0s), Chapter 5: Enterprise Resilience & Cloud Telemetry (115.0s – 138.0s), Chapter 6: Transparent Investment & Global Call to Action (138.0s – 150.0s) (+5 more)
+Nodes (13): Audio Direction, Brag Plan: VyomaPOS - Xtra Rooftop (Full Product Showcase — 2.5 Minutes), Chapter 1: The Modern Culinary Crisis & The Vision (0.0s – 25.0s), Chapter 2: Floor Captain Intelligence & Table Choreography (25.0s – 55.0s), Chapter 3: The Multi-Station Kitchen KDS Symphony (55.0s – 85.0s), Chapter 4: Omnichannel Aggregators & WhatsApp Tax Billing (85.0s – 115.0s), Chapter 5: Enterprise Resilience & Cloud Telemetry (115.0s – 138.0s), Chapter 6: Transparent Investment & Global Call to Action (138.0s – 150.0s) (+5 more)
 
 ### Community 31 - "dependencies"
 Cohesion: 0.05
@@ -604,7 +604,7 @@ Nodes (21): capabilities, cef, auto_install, dir, description, display_name, act
 
 ### Community 53 - "electron.cjs"
 Cohesion: 0.22
-Nodes (7): c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
+Nodes (7): c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, { startServer }, { startServer }, electron
 
 ### Community 54 - "extract-colors.cjs"
 Cohesion: 0.22
@@ -642,9 +642,9 @@ Nodes (13): 1. AGENT SWARM TOPOLOGY & PERSONA ROLES, 2. MULTI-PHASE PEAK-HOUR SC
 Cohesion: 0.15
 Nodes (12): Categories, Dark Mode, File Organization, Layer 1: Primitive Tokens, Layer 2: Semantic Tokens, Layer 3: Component Tokens, Layer Overview, Migration from Flat Tokens (+4 more)
 
-### Community 65 - "Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase)"
+### Community 65 - "Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase)"
 Cohesion: 0.29
-Nodes (6): Audio, Creative Direction, Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase), Objective, Output, Source Material
+Nodes (6): Audio, Creative Direction, Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase), Objective, Output, Source Material
 
 ### Community 66 - "generate-reality-seed-pdf.cjs"
 Cohesion: 0.33
@@ -738,9 +738,9 @@ Nodes (28): Alert, Anatomy, Anatomy, Anatomy, Anatomy, Anatomy, Badge, Button (+
 Cohesion: 0.07
 Nodes (28): Accordion, Alert, ARIA Labels, Checkbox and Radio, Color Contrast, Command Palette Navigation, Component-Specific Patterns, Dialog/Modal Navigation (+20 more)
 
-### Community 96 - "Design System: Vyoma ScanServe"
+### Community 96 - "Design System: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.07
-Nodes (26): Buttons, Colors, Components, Design System: Vyoma ScanServe, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
+Nodes (26): Buttons, Colors, Components, Design System: VyomaPOS - Xtra Rooftop, Do:, Do's and Don'ts, Don't:, Elevation & Depth (+18 more)
 
 ### Community 97 - "Asset Approval Checklist"
 Cohesion: 0.08
@@ -1094,9 +1094,9 @@ Nodes (22): AEO/GEO Gap Mapping, Common Mistakes, Competitor Page Comparison, Co
 Cohesion: 0.18
 Nodes (11): Bake the poster as frame 0, Example: Taxi for Taxis, Final output structure, Pick the poster frame, Preview, Render, Share copy by tone, Step 4: Validate, render, and deliver (+3 more)
 
-### Community 194 - "Share Copy Variants: Vyoma ScanServe"
+### Community 194 - "Share Copy Variants: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.40
-Nodes (4): Discord / Dev Communities, LinkedIn, Share Copy Variants: Vyoma ScanServe, Twitter / X
+Nodes (4): Discord / Dev Communities, LinkedIn, Share Copy Variants: VyomaPOS - Xtra Rooftop, Twitter / X
 
 ### Community 195 - "Keyword Discovery"
 Cohesion: 0.09
@@ -1584,7 +1584,7 @@ _Questions this graph is uniquely positioned to answer:_
   _`TailwindConfigGenerator` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `beyondseo`, `Response`, `brag` to the rest of the system?**
   _2313 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Comprehensive Business Case: Vyoma ScanServe` be split into smaller, more focused modules?**
+- **Should `Comprehensive Business Case: VyomaPOS - Xtra Rooftop` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `orderStore.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.05679974034404414 - nodes in this community are weakly interconnected._

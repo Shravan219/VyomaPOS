@@ -1,18 +1,18 @@
 # BRIEFING — 2026-10-06T04:32:00Z
 
 ## Mission
-Remediate all client-delivery blockers (R1 - R5) for Vyoma ScanServe Dashboard with verified quality, zero defects, and full test suite coverage.
+Remediate all client-delivery blockers (R1 - R5) for VyomaPOS - Xtra Rooftop Dashboard with verified quality, zero defects, and full test suite coverage.
 
 ## 🔒 My Identity
 - Archetype: orchestrator
 - Roles: orchestrator, user_liaison, human_reporter, successor
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1
 - Original parent: Sentinel
 - Original parent conversation ID: 361570e2-ee67-45ea-8f94-4748a5c22d6f
 
 ## 🔒 My Workflow
 - **Pattern**: Project
-- **Scope document**: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\PROJECT.md
+- **Scope document**: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\PROJECT.md
 1. **Decompose**: Decompose requirements R1 - R5 into modular milestones and E2E testing track
 2. **Dispatch & Execute**: Direct iteration loop (Explorer -> Worker -> Reviewer -> Challenger -> Auditor -> Gate)
 3. **On failure**: Retry -> Replace -> Skip -> Redistribute -> Redesign -> Escalate

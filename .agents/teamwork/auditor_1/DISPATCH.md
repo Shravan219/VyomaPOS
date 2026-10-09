@@ -3,14 +3,14 @@
 Target: Forensic Integrity Audit of All Remediation Work (M1-M5 / R1-R5).
 ## 2026-10-06T05:06:45Z
 You are auditor_1 (Forensic Integrity Auditor).
-Your working directory is: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\auditor_1
+Your working directory is: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\auditor_1
 
 Authoritative user requirements are located at:
-c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
+c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\ORIGINAL_REQUEST.md
 You MUST read ORIGINAL_REQUEST.md before starting work.
 
 Also read:
-- PROJECT.md: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
+- PROJECT.md: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
 
 Your Objective:
 Conduct an independent forensic integrity audit of all remediation changes across R1, R2, R3, R4, R5:

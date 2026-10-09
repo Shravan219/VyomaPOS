@@ -263,7 +263,7 @@ export function ExpensesView() {
             className="rounded-2xl border border-white/10 bg-[#0E0F16] px-4 py-3.5 shadow-[0_0_25px_rgba(0,0,0,0.35)]"
           >
             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/50">{s.label}</p>
-            <p className="mt-1 font-mono text-lg sm:text-xl font-bold text-primary">
+            <p className="mt-1 font-mono text-base sm:text-xl font-bold text-primary truncate">
               {s.value !== null && s.value !== undefined ? inr.format(s.value) : s.text}
             </p>
           </div>

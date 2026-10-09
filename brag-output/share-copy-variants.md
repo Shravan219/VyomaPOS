@@ -1,9 +1,9 @@
-# Share Copy Variants: Vyoma ScanServe
+# Share Copy Variants: VyomaPOS - Xtra Rooftop
 
 ### Twitter / X
 Fine dining velocity requires uncompromising floor & kitchen synchrony.
 
-We built Vyoma ScanServe — the Michelin-grade restaurant OS:
+We built VyomaPOS - Xtra Rooftop — the Michelin-grade restaurant OS:
 • Zero-latency tableside handheld ordering
 • Real-time multi-station KDS routing with aging timers
 • Automated WhatsApp digital tax invoices (zero thermal paper)
@@ -14,7 +14,7 @@ Explore live: https://vyomadashboard.vercel.app
 ### LinkedIn
 High-tempo luxury restaurants cannot afford operational latency or disconnected kitchen communication.
 
-We created Vyoma ScanServe — an enterprise restaurant operating system designed specifically for the tempo of fine dining.
+We created VyomaPOS - Xtra Rooftop — an enterprise restaurant operating system designed specifically for the tempo of fine dining.
 
 Key capabilities:
 1. Floor Captain Ordering: Instant tableside seat and course allocation with tactile 48px hit targets.
@@ -25,4 +25,4 @@ Key capabilities:
 Live demo: https://vyomadashboard.vercel.app
 
 ### Discord / Dev Communities
-Just wrapped the launch video for Vyoma ScanServe — built with React, Vite, Tailwind, GSAP, and Supabase. It’s an offline-first Michelin-grade restaurant POS + KDS operating system with tableside order firing, multi-station kitchen display pass, and automated WhatsApp GST invoicing. Check it out here: https://vyomadashboard.vercel.app
+Just wrapped the launch video for VyomaPOS - Xtra Rooftop — built with React, Vite, Tailwind, GSAP, and Supabase. It’s an offline-first Michelin-grade restaurant POS + KDS operating system with tableside order firing, multi-station kitchen display pass, and automated WhatsApp GST invoicing. Check it out here: https://vyomadashboard.vercel.app

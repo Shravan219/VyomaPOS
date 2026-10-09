@@ -199,7 +199,7 @@ export function MenuEngineeringModal({ menuItems, orders }: MenuEngineeringModal
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-4xl bg-[#090A0E] border border-white/10 text-white p-6 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[92vh] flex flex-col custom-scrollbar">
+      <DialogContent className="max-w-4xl bg-[#090A0E] border border-white/10 text-white p-4 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-2xl max-h-[92vh] flex flex-col custom-scrollbar">
         <DialogHeader className="space-y-1 shrink-0">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">

@@ -1,4 +1,4 @@
-# Vyoma ScanServe: Complete Legal & Regulatory Compliance Suite
+# VyomaPOS - Xtra Rooftop: Complete Legal & Regulatory Compliance Suite
 **Effective Date:** September 20, 2026  
 **Version:** v2.4-PROD  
 **Governing Entity:** Vyoma Hospitality Technologies Private Limited  
@@ -7,14 +7,14 @@
 ---
 
 > [!NOTE]
-> **Regulatory Notice**: This document outlines the official contractual, privacy, and statutory compliance framework governing all deployments of the Vyoma ScanServe Restaurant Operating System across web, Android, and on-premises relay environments. Consult with qualified legal counsel for venue-specific regulatory interpretations.
+> **Regulatory Notice**: This document outlines the official contractual, privacy, and statutory compliance framework governing all deployments of the VyomaPOS - Xtra Rooftop Restaurant Operating System across web, Android, and on-premises relay environments. Consult with qualified legal counsel for venue-specific regulatory interpretations.
 
 ---
 
 ## 1. Terms of Service & Master SaaS Agreement
 
 ### 1.1 Acceptance of Agreement
-By registering, deploying, or utilizing the Vyoma ScanServe software ("Platform", "Service"), the commercial food and beverage establishment ("Merchant", "Customer") enters into a legally binding agreement with Vyoma Hospitality Technologies Private Limited ("Vyoma").
+By registering, deploying, or utilizing the VyomaPOS - Xtra Rooftop software ("Platform", "Service"), the commercial food and beverage establishment ("Merchant", "Customer") enters into a legally binding agreement with Vyoma Hospitality Technologies Private Limited ("Vyoma").
 
 ### 1.2 License Grant & Scope of Deployment
 Vyoma grants Customer a revocable, non-exclusive, non-transferable subscription license to operate the Platform on authorized point-of-sale terminals, kitchen displays (KDS), captain floor tablets, and administrative devices.
@@ -75,7 +75,7 @@ Patrons retain the statutory right under DPDP Act 2023 to request the erasure of
 
 ## 4. Cookie & Local Storage Disclosure
 
-Vyoma ScanServe **DOES NOT use commercial tracking cookies, third-party advertising pixels, or data-broker beacons**.
+VyomaPOS - Xtra Rooftop **DOES NOT use commercial tracking cookies, third-party advertising pixels, or data-broker beacons**.
 
 ### Essential Local Storage Inventory:
 | Key | Purpose | Duration |
@@ -91,7 +91,7 @@ Vyoma ScanServe **DOES NOT use commercial tracking cookies, third-party advertis
 ## 5. GST Compliance & Tax Billing Disclaimer
 
 ### 5.1 Statutory Invoicing Mandate
-Vyoma ScanServe is engineered to assist restaurants in issuing compliant Tax Invoices under **Section 31 of the Central Goods and Services Tax (CGST) Act, 2017**.
+VyomaPOS - Xtra Rooftop is engineered to assist restaurants in issuing compliant Tax Invoices under **Section 31 of the Central Goods and Services Tax (CGST) Act, 2017**.
 
 ### 5.2 Sole Merchant Responsibility for Tax Configuration
 - The Merchant is solely responsible for entering their valid 15-character **GSTIN** and verifying applicable tax rates (5% without ITC, 18% with ITC, alcohol VAT).

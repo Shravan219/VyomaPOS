@@ -16,9 +16,7 @@ vi.mock('../lib/supabase', () => ({
 // Import after vi.mock so the module binds to mocked dependencies
 import { verifyStaffPassword, verifyAdminPassword } from '../lib/authService';
 
-describe('Auth Service Verification Logic', () => {
-  const originalDev = import.meta.env.DEV;
-
+describe('Auth Service Verification Logic (production)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockIsSupabaseConfigured = false;
@@ -27,13 +25,11 @@ describe('Auth Service Verification Logic', () => {
   });
 
   afterEach(() => {
-    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
   describe('Empty and Whitespace Passwords', () => {
-    it('rejects empty and whitespace inputs for staff password in DEV mode', async () => {
-      vi.stubEnv('DEV', true);
+    it('rejects empty and whitespace inputs for staff password', async () => {
       const emptyRes = await verifyStaffPassword('');
       expect(emptyRes).toEqual({ success: false, message: 'Password cannot be empty' });
 
@@ -41,8 +37,7 @@ describe('Auth Service Verification Logic', () => {
       expect(wsRes).toEqual({ success: false, message: 'Password cannot be empty' });
     });
 
-    it('rejects empty and whitespace inputs for admin password in PROD mode', async () => {
-      vi.stubEnv('DEV', false);
+    it('rejects empty and whitespace inputs for admin password', async () => {
       const emptyRes = await verifyAdminPassword('');
       expect(emptyRes).toEqual({ success: false, message: 'Password cannot be empty' });
 
@@ -51,68 +46,25 @@ describe('Auth Service Verification Logic', () => {
     });
   });
 
-  describe('Development Mode (DEV = true)', () => {
-    beforeEach(() => {
-      vi.stubEnv('DEV', true);
-    });
-
-    it('allows demo passcodes instantly for staff login', async () => {
-      const res1 = await verifyStaffPassword('1234');
-      expect(res1).toEqual({ success: true, message: 'Access Granted' });
-
-      const res2 = await verifyStaffPassword('staff123');
-      expect(res2).toEqual({ success: true, message: 'Access Granted' });
-
-      const res3 = await verifyStaffPassword('admin123');
-      expect(res3).toEqual({ success: true, message: 'Access Granted' });
-    });
-
-    it('allows demo passcodes instantly for admin login', async () => {
-      const res1 = await verifyAdminPassword('admin123');
-      expect(res1).toEqual({ success: true, message: 'Access Granted' });
-
-      const res2 = await verifyAdminPassword('1234');
-      expect(res2).toEqual({ success: true, message: 'Access Granted' });
-    });
-
-    it('rejects unrecognized passwords in DEV mode when offline', async () => {
-      const res = await verifyStaffPassword('wrong_dev_passcode');
-      expect(res.success).toBe(false);
-      expect(res.message).toContain('Use default (1234 / staff123)');
-    });
-  });
-
-  describe('Production Mode (DEV = false)', () => {
-    beforeEach(() => {
-      vi.stubEnv('DEV', false);
-    });
-
-    it('allows demo passcodes in offline mode when Supabase is not configured', async () => {
-      mockIsSupabaseConfigured = false;
-      const resStaff = await verifyStaffPassword('1234');
-      expect(resStaff.success).toBe(true);
-
-      const resAdmin = await verifyAdminPassword('admin123');
-      expect(resAdmin.success).toBe(true);
-    });
-
-    it('strictly DOES NOT bypass auth for demo passcodes when Supabase is configured and passwords do not match', async () => {
-      mockIsSupabaseConfigured = true;
-      mockFrom.mockReturnValue({
-        select: vi.fn().mockResolvedValue({
-          data: [{ key: 'staff_password', password: 'custom_password_only' }],
-          error: null,
-        }),
-      });
-
-      // Demo passcode '1234' must be rejected when Supabase has custom credentials
+  describe('Production auth (no demo bypass)', () => {
+    it('strictly DOES NOT bypass auth for demo passcodes when offline/unconfigured', async () => {
+      // Former demo passcodes must be rejected in production
       const resStaff = await verifyStaffPassword('1234');
       expect(resStaff.success).toBe(false);
-      expect(resStaff.message).toBe('Invalid Staff Access Password');
+      expect(resStaff.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
 
-      // Demo passcode 'admin123' must be rejected
+      const resStaff2 = await verifyStaffPassword('staff123');
+      expect(resStaff2.success).toBe(false);
+
       const resAdmin = await verifyAdminPassword('admin123');
       expect(resAdmin.success).toBe(false);
+      expect(resAdmin.message).toBe('Invalid Admin Passcode. Credentials not found or invalid in database.');
+    });
+
+    it('rejects unrecognized passwords when offline', async () => {
+      const res = await verifyStaffPassword('wrong_passcode');
+      expect(res.success).toBe(false);
+      expect(res.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
     });
 
     it('authorizes staff when server /api/auth/verify succeeds', async () => {

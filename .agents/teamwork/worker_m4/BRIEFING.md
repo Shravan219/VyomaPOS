@@ -6,7 +6,7 @@ Harden `InvoiceCreator.tsx` (M4 / R3) so invoice creation failure does not trigg
 ## 🔒 My Identity
 - Archetype: worker
 - Roles: implementer, qa
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m4
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m4
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: M4 (Invoicing Integrity & R3)
 

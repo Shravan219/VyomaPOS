@@ -352,7 +352,7 @@ export function CaptainDashboard({
             {/* Place Dine-in Order Button */}
             <button
               onClick={() => handleOpenOrderSheet()}
-              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-black shadow-[0_0_20px_rgba(197,160,89,0.25)] hover:bg-primary/90 transition-all cursor-pointer min-h-[44px] active:scale-95 whitespace-nowrap"
+              className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-black shadow-[0_0_20px_rgba(197,160,89,0.25)] hover:bg-primary/90 transition-all cursor-pointer min-h-[44px] active:scale-95"
             >
               <PlusCircle size={16} />
               <span>Take Order</span>
@@ -362,7 +362,7 @@ export function CaptainDashboard({
             {isKioskLocked ? (
               <button
                 onClick={() => openLockPrompt('unlock')}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 transition-all cursor-pointer shadow-lg min-h-[44px] active:scale-95 whitespace-nowrap"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-bold uppercase tracking-wider text-red-400 hover:bg-red-500/20 transition-all cursor-pointer shadow-lg min-h-[44px] active:scale-95"
                 title="Unlock Kiosk Mode with Admin Password"
               >
                 <Unlock size={16} />
@@ -371,7 +371,7 @@ export function CaptainDashboard({
             ) : (
               <button
                 onClick={() => openLockPrompt('lock')}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs font-bold uppercase tracking-wider text-amber-400 hover:bg-amber-500/20 transition-all cursor-pointer shadow-lg min-h-[44px] active:scale-95 whitespace-nowrap"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-xs font-bold uppercase tracking-wider text-amber-400 hover:bg-amber-500/20 transition-all cursor-pointer shadow-lg min-h-[44px] active:scale-95"
                 title="Lock Interface into Captain Kiosk Mode"
               >
                 <Lock size={16} />

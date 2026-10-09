@@ -12,6 +12,7 @@ import { Printer, Download, CheckCircle2, RotateCcw, Copy, Check, MessageSquare,
 import { Receipt } from '@/src/components/Receipt';
 import { toast } from 'sonner';
 import { downloadReceiptPDF, sendWhatsAppReceiptWithPDF } from '@/src/lib/whatsapp';
+import { RESTAURANT_NAME_WHATSAPP, getGSTIN } from '@/src/lib/restaurantSettings';
 
 export interface SavedInvoiceData {
   id: string;
@@ -65,19 +66,21 @@ export function InvoiceReceiptModal({
       .map(it => `• ${it.name} x${it.quantity} = ₹${(it.price * it.quantity).toFixed(2)}`)
       .join('\n');
 
-    const text = `*VYOMA ARTISAN CAFE - INVOICE*
+    const outletGstin = getGSTIN();
+    const taxRate = invoice.tax_rate ?? 5;
+    const text = `*${RESTAURANT_NAME_WHATSAPP} - INVOICE*
 Invoice: ${invoice.id} (${invoice.token || 'N/A'})
 Date: ${new Date(invoice.created_at || Date.now()).toLocaleString('en-IN')}
 Customer: ${invoice.customer_name} (${invoice.customer_phone || 'N/A'})
-
+${outletGstin ? `Outlet GSTIN: ${outletGstin}\n` : ''}${invoice.gstin ? `Customer GSTIN: ${invoice.gstin}\n` : ''}
 *ITEMS:*
 ${itemsList}
 
 Subtotal: ₹${invoice.subtotal.toFixed(2)}
-GST (5%): ₹${(invoice.tax_amount || 0).toFixed(2)}
-${invoice.discount ? `Discount: -₹${invoice.discount.toFixed(2)}\n` : ''}*Grand Total: ₹${invoice.total.toFixed(2)}*
+${invoice.discount ? `Discount: -₹${invoice.discount.toFixed(2)}\n` : ''}GST (${taxRate}%): ₹${(invoice.tax_amount || 0).toFixed(2)}
+*Grand Total: ₹${invoice.total.toFixed(2)}*
 Payment: ${invoice.payment_mode || 'UPI'}
-Thank you for dining with Vyoma!`;
+Thank you for dining with us!`;
 
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -163,8 +166,8 @@ Thank you for dining with Vyoma!`;
         </div>
 
         {/* Live Thermal Receipt Canvas */}
-        <div className="my-2 border border-white/5 rounded-[1.5rem] bg-zinc-100 p-4 max-h-[340px] overflow-y-auto custom-scrollbar flex justify-center shadow-inner">
-          <div className="receipt-print-wrapper" ref={printRef}>
+        <div className="my-2 border border-white/5 rounded-[1.5rem] bg-zinc-100 p-3 sm:p-4 max-h-[340px] overflow-auto custom-scrollbar flex shadow-inner">
+          <div className="receipt-print-wrapper m-auto shrink-0" ref={printRef}>
             <Receipt
               orderId={invoice.id}
               table={invoice.table_id?.toString() || 'Walk-in POS'}
@@ -174,6 +177,7 @@ Thank you for dining with Vyoma!`;
                 quantity: it.quantity
               }))}
               subtotal={invoice.subtotal}
+              discount={invoice.discount || 0}
               taxRate={invoice.tax_rate !== undefined ? invoice.tax_rate : 5}
               gstin={invoice.gstin}
               token={invoice.token}

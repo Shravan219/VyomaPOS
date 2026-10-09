@@ -1,4 +1,4 @@
-# Vyoma ScanServe Dashboard
+# VyomaPOS - Xtra Rooftop Dashboard
 
 A luxury-themed, real-time **POS + Kitchen Display System (KDS)** for restaurants. Built as a single hybrid app that runs in the browser, as a Windows desktop executable, and as an Android (Capacitor) application.
 
@@ -33,7 +33,7 @@ Staff authenticate with a secure access password, then manage orders, menus, cus
 
 ## Overview
 
-Vyoma ScanServe is an all-in-one restaurant operations dashboard:
+VyomaPOS - Xtra Rooftop is an all-in-one restaurant operations dashboard:
 
 | View | Purpose |
 |------|---------|
@@ -102,8 +102,8 @@ The app opens directly on a **password-entry screen** (no public landing page). 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Shravan219/ScanServe_Dashboard.git
-cd ScanServe_Dashboard
+git clone https://github.com/Shravan219/VyomaPOS.git
+cd VyomaPOS
 
 # 2. Install dependencies
 npm install

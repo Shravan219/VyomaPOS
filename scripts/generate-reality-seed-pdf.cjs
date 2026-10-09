@@ -27,7 +27,7 @@ function generatePdf() {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
     doc.setTextColor(140, 140, 140);
-    doc.text('VYOMA SCANSERVE - REALITY SEED (MIROFISH ENGINE)', margin, 10);
+    doc.text('VYOMAPOS - XTRA ROOFTOP - REALITY SEED (MIROFISH ENGINE)', margin, 10);
     doc.text('PAGE ' + doc.internal.getNumberOfPages(), pageWidth - margin, 10, { align: 'right' });
     doc.setDrawColor(200, 200, 200);
     doc.setLineWidth(0.2);
@@ -41,7 +41,7 @@ function generatePdf() {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(15);
   doc.setTextColor(218, 165, 32); // Gold accent
-  doc.text('VYOMA SCANSERVE: REALITY SEED', margin + 6, y + 10);
+  doc.text('VYOMAPOS - XTRA ROOFTOP: REALITY SEED', margin + 6, y + 10);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
@@ -57,7 +57,7 @@ function generatePdf() {
     {
       title: '1. SYSTEM IDENTITY & STRATEGIC MISSION',
       content: [
-        'Vyoma ScanServe is an ultra-low-latency, mission-critical restaurant management ecosystem engineered for high-paced fine dining and luxury hospitality. It unifies front-of-house floor operations (Captain ordering tablets), back-of-house culinary production (Kitchen Display Systems), administrative cash settlement, and multi-channel delivery aggregator intake (Swiggy, Zomato, Magicpin, Dyno API) into a synchronized real-time state machine.',
+        'VyomaPOS - Xtra Rooftop is an ultra-low-latency, mission-critical restaurant management ecosystem engineered for high-paced fine dining and luxury hospitality. It unifies front-of-house floor operations (Captain ordering tablets), back-of-house culinary production (Kitchen Display Systems), administrative cash settlement, and multi-channel delivery aggregator intake (Swiggy, Zomato, Magicpin, Dyno API) into a synchronized real-time state machine.',
         'Architectural North Star ("The Obsidian Guild"):',
         '• Base Canvas: Deep pitch-black OLED void (#000000) for zero glare in ambient dining and low power draw on handheld floor tablets during 14-hour double shifts.',
         '• Accent Hierarchy: Imperial Gold (#C5A059) restricted to <10% surface area to preserve visual urgency for primary actions, active tokens, and VIP alerts.',

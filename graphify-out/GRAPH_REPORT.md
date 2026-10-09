@@ -1,46 +1,46 @@
-# Graph Report - ScanServe_Dashboard-main  (2026-10-09)
+# Graph Report - VyomaPOS_Dashboard-main  (2026-10-06)
 
 ## Corpus Check
-- 522 files · ~541,369 words
+- 511 files · ~533,399 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 93 file(s) not represented in the graph (top: .csv 57, .xml 12, (none) 9)
+- Unclassified: 96 file(s) not represented in the graph (top: .csv 57, .xml 12, (none) 9)
 
 ## Summary
-- 5512 nodes · 7777 edges · 453 communities (371 shown, 82 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 226 edges (avg confidence: 0.93)
+- 5427 nodes · 7636 edges · 434 communities (356 shown, 78 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 218 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9d6cca25`
+- Built from commit: `5b0f7d00`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Comprehensive Business Case: Vyoma ScanServe
+- Comprehensive Business Case: VyomaPOS - Xtra Rooftop
 - app.ts
 - CaptainDashboard.tsx
 - gray
-- cip/core.py
+- cip/generate.py
 - color
 - App.tsx
 - card
 - slide_search_core.py
 - spacing
 - TestTailwindConfigGenerator
-- Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)
+- Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)
 - analyze_music_cues.py
 - compilerOptions
 - 4. Deep-Dive Investigation of the 4 Required Test Areas
 - components.json
 - Comprehensive Technical Survey Report: R1 (Auth Security) & R3 (Invoicing Transaction Integrity)
 - 1. Terms of Service & Master SaaS Agreement
-- onsite.py
+- cli.py
 - fetch-background.py
 - scripts/core.py
 - fontSize
 - TestShadcnInstaller
-- cli.py
-- argparse
+- normalize_url
+- pathlib
 - .check_shadcn_config
 - Design System Master File
 - .test_add_all_components_success
@@ -67,7 +67,7 @@
 - package.json
 - Color Semantics
 - gradlew
-- dyno-integration.test.ts
+- discovery.py
 - app.json
 - electron.cjs
 - extract-colors.cjs
@@ -81,7 +81,7 @@
 - verifyAdminPassword
 - 1. AGENT SWARM TOPOLOGY & PERSONA ROLES
 - Token Architecture
-- Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase)
+- Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase)
 - ref_path
 - hyperframes.json
 - Primitive Tokens
@@ -98,15 +98,15 @@
 - embed-tokens.cjs
 - Component Tokens
 - Reporting playbooks
-- test_design_system_mode.py
+- research.py
 - Survey Report: Automated Testing Suite Setup (Requirement R5)
-- test_core.py
+- json
 - generate-tokens.cjs
 - Typography Specifications
 - Logo Usage Rules
 - Component Specifications
 - shadcn/ui Accessibility Patterns
-- Vyoma ScanServe Dashboard
+- VyomaPOS - Xtra Rooftop Dashboard
 - Asset Approval Checklist
 - Logo AI Prompt Engineering
 - Color Palette Management
@@ -119,7 +119,7 @@
 - DesignSystemGenerator
 - Routing by Task Type
 - shadcn/ui Theming & Customization
-- whatsapp.ts
+- PaymentsView.tsx
 - Asset Organization Guide
 - Primary Color Meanings
 - Core Logo Types
@@ -147,12 +147,12 @@
 - Page-Specific Rules
 - Slide Strategies
 - Slide Strategies
-- pathlib
+- soundService
 - Slides Reference
 - HTML Slide Template
 - HTML Slide Template
 - BRIEFING — 2026-10-06T05:05:00Z
-- authService.ts
+- ServerConnectionModal.tsx
 - Slides
 - Brand Guidelines Template
 - radius
@@ -169,9 +169,9 @@
 - Requirements
 - orderStore.ts
 - scripts
-- dyno-verify.cjs
+- seo-house-workflow.md
 - Config
-- Design System: Vyoma ScanServe
+- Design System: VyomaPOS - Xtra Rooftop
 - BRIEFING — 2026-10-06T04:32:00Z
 - Industry playbooks
 - BRIEFING — 2026-10-06T04:48:00Z
@@ -182,10 +182,10 @@
 - Comprehensive Code Review & Adversarial Stress-Test Report
 - docs/README.md
 - HyperFrames Composition Project
-- backlinks.py
+- review.py
 - HyperFrames Composition Project
 - resolveApiUrl
-- discovery.py
+- doctor.py
 - BRIEFING — 2026-10-06T04:30:00Z
 - VyomaLogo.tsx
 - Content Quality and E-E-A-T Audit
@@ -197,14 +197,14 @@
 - Full Site Audit Workflow
 - Reputation and posting plan
 - Install BeyondSEO in your assistant
-- json
-- c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_cjs
+- engine.py
+- c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_cjs
 - Audio reference
 - Technical SEO Audit
 - 3. Empirical Verification Data & Evidence
 - Content Gap Analysis
 - Step 4: Validate, render, and deliver
-- Share Copy Variants: Vyoma ScanServe
+- Share Copy Variants: VyomaPOS - Xtra Rooftop
 - Keyword Discovery
 - SEO + AEO Audit Report Template
 - What BeyondSEO installs and accesses
@@ -236,7 +236,7 @@
 - Entity SEO Knowledge Graph System
 - Sample Final Audit Output
 - Reputation SEO Proof Stack
-- Checklist
+- processWebhook.ts
 - utcnow
 - AEO Content Writing Persona
 - Citations and Source-Worthiness
@@ -258,7 +258,7 @@
 - Diagnose the failed operation
 - BeyondSEO in Lovable
 - Search through an available browser
-- InvoiceCreator.tsx
+- .test_add_components_no_config
 - SEO roadmap generator
 - What a complete audit delivers
 - Step 3: Hand off to Hyperframes
@@ -318,7 +318,7 @@
 - Local Clinic Report Framework
 - Tone reference
 - SFX Analysis Summary
-- subprocess
+- .temp_project
 - BRIEFING — 2026-10-06T04:40:00Z
 - allowScripts
 - Progress Tracker - worker_m5
@@ -336,12 +336,12 @@
 - .test_init_default_project_root
 - Music Cues: happy-beats-business-moves-vol-11-by-ende-dot-app
 - .test_add_spacing
-- cip/generate.py
+- .test_add_components_already_installed
 - Music Cues: happy-beats-business-moves-vol-12-by-ende-dot-app
 - Music Cues: happy-beats-business-moves-vol-1-by-ende-dot-app
-- Project: Vyoma ScanServe Dashboard Remediation
+- Project: VyomaPOS - Xtra Rooftop Dashboard Remediation
 - 1. `src/components/invoices/InvoiceCreator.tsx`
-- Vyoma ScanServe Dashboard — Agent Quickstart
+- .test_add_all_components_dry_run
 - .test_default_content_paths_react
 - Music Cues: happy-beats-business-moves-vol-9-by-ende-dot-app
 - SFX library — approved files
@@ -350,19 +350,19 @@
 - Handoff Report - Milestone M2 (Database Schema Consolidation & Documentation)
 - Security Policy
 - music/README.md
-- logo/generate.py
+- .test_list_installed_empty
 - sync-expense-to-sheets/index.ts
-- render-html.py
-- sys
+- .test_get_installed_components_empty
+- .test_add_components_no_components
 - .test_add_fonts
 - .test_add_breakpoints
 - .test_recommend_plugins
 - 2. Requirement-by-Requirement Verification
 - .test_generate_typescript_config
 - brag
-- Orchestrator Final Handoff Report — Vyoma ScanServe Dashboard Remediation
+- Orchestrator Final Handoff Report — VyomaPOS - Xtra Rooftop Dashboard Remediation
 - validateGSTIN
-- Progress — Vyoma ScanServe Dashboard Remediation
+- Progress — VyomaPOS - Xtra Rooftop Dashboard Remediation
 - BRIEFING — 2026-10-06T05:15:00Z
 - BRIEFING — 2026-10-06T05:14:00Z
 - .test_validate_config_no_content
@@ -389,10 +389,10 @@
 - button
 - BRIEFING — 2026-10-06T05:14:15Z
 - Handoff Report — reviewer_2
-- os
+- generate-reality-seed-pdf.cjs
 - 2. Repository Configuration & Build Tooling Analysis
 - @supabase/supabase-js
-- _resolve_color_mode
+- dynoHandler.ts
 - input
 - Handoff Report: Forensic Integrity Audit (R1–R5)
 - Handoff Report — Build Integrity & Edge-Case Stress Challenge
@@ -409,9 +409,9 @@
 - radius
 - lg
 - Handoff Report: Adversarial Verification (challenger_1)
-- lib/dyno-inbound-status.ts
+- Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)
 - E2E Test Suite Ready
-- _filter_anti_patterns_for_mode
+- Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)
 - padding-y
 - none
 - Progress — challenger_2
@@ -431,30 +431,8 @@
 - Progress Log - reviewer_1
 - Progress — reviewer_2
 - victory_auditor_1/DISPATCH.md
-- Handoff Report — Project Sentinel
+- beyondseo-reputation-checks.md
 - Reporting a security issue
-- Independent Victory Audit Handoff Report
-- Review, improve and check again
-- normalize_url
-- check_release.py
-- backlink-quality-scoring.md
-- competitor-discovery.md
-- .test_list_installed_with_components
-- challenger_2/DISPATCH.md
-- reviewer_1/DISPATCH.md
-- reviewer_2/DISPATCH.md
-- validate_data.py
-- .test_check_shadcn_config_exists
-- .test_get_installed_components_with_files
-- Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)
-- Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)
-- .__init__
-- capacitor.config.ts
-- .test_add_components_no_config
-- .test_list_installed_no_config
-- .test_init_custom_project_root
-- .test_check_shadcn_config_not_exists
-- .test_get_installed_components_no_config
 - .test_add_colors_multiple_times
 - .test_init_default_typescript
 - .test_write_config
@@ -462,6 +440,9 @@
 - .test_init_framework
 - .test_custom_output_path
 - .test_default_content_paths_vue
+- challenger_2/DISPATCH.md
+- reviewer_1/DISPATCH.md
+- reviewer_2/DISPATCH.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `TailwindConfigGenerator` - 58 edges
@@ -484,33 +465,33 @@
   .agents/teamwork/explorer_survey_1/survey_report.md → server/orderStore.ts
 - `Challenge 2: Dyno Inbound Webhook Failure String Compatibility` --references--> `processWebhookPayload()`  [INFERRED]
   .agents/teamwork/challenger_2/challenge_report.md → server/processWebhook.ts
-- `Checklist` --references--> `processWebhookPayload()`  [INFERRED]
-  .agents/teamwork/explorer_survey_1/progress.md → server/processWebhook.ts
+- `Features` --references--> `ServerConnectionModal()`  [INFERRED]
+  README.md → src/components/ServerConnectionModal.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (453 total, 82 thin omitted)
+## Communities (434 total, 78 thin omitted)
 
-### Community 0 - "Comprehensive Business Case: Vyoma ScanServe"
+### Community 0 - "Comprehensive Business Case: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.06
 Nodes (31): 10.1 Allocation of Proceeds, 10. Funding Request & Use of Proceeds, 11. Conclusion & Investment Summary, 1.1 Company Overview, 1.2 The Problem, 1.3 The Solution, 1.4 Market Sizing Snapshot, 1.5 3-Year Financial Snapshot (+23 more)
 
 ### Community 1 - "app.ts"
-Cohesion: 0.13
-Nodes (17): handler(), handler(), handler(), handler(), express, jspdf, app, getSupabaseClient() (+9 more)
+Cohesion: 0.15
+Nodes (15): handler(), handler(), handler(), handler(), express, jspdf, app, getSupabaseClient() (+7 more)
 
 ### Community 2 - "CaptainDashboard.tsx"
-Cohesion: 0.12
-Nodes (35): Cards & Tiles, 4.1 Floor Service (Dine-In) State Machine, ref_motion_react, A. Front-of-House (Floor Staff), OrderCard(), CaptainDashboardProps, DEFAULT_TABLES, getStationRouting() (+27 more)
+Cohesion: 0.15
+Nodes (28): 4.1 Floor Service (Dine-In) State Machine, ref_motion_react, sonner, A. Front-of-House (Floor Staff), CaptainDashboardProps, DEFAULT_TABLES, getStationRouting(), KNOWN_VIP_PATRONS (+20 more)
 
 ### Community 3 - "gray"
 Cohesion: 0.05
 Nodes (53): $type, $value, $type, $value, $type, $value, $type, $value (+45 more)
 
-### Community 4 - "cip/core.py"
-Cohesion: 0.16
-Nodes (19): detect_domain(), get_cip_brief(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection, Search across all domains and combine results (+11 more)
+### Community 4 - "cip/generate.py"
+Cohesion: 0.07
+Nodes (42): detect_domain(), get_cip_brief(), _load_csv(), Load CSV and return list of dicts, Core search function using BM25, Auto-detect the most relevant domain from query, Main search function with auto-domain detection, Search across all domains and combine results (+34 more)
 
 ### Community 5 - "color"
 Cohesion: 0.11
@@ -518,15 +499,15 @@ Nodes (19): $type, $value, background, foreground, muted-foreground, primary, pr
 
 ### Community 6 - "App.tsx"
 Cohesion: 0.09
-Nodes (37): Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle(), DialogOverlay() (+29 more)
+Nodes (37): Badge(), badgeVariants, Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader() (+29 more)
 
 ### Community 7 - "card"
 Cohesion: 0.20
 Nodes (12): $type, $value, bg, bg, padding, shadow, card, bg (+4 more)
 
 ### Community 8 - "slide_search_core.py"
-Cohesion: 0.05
-Nodes (49): log(), BM25, BM25 ranking algorithm for text search, Lowercase, split, remove punctuation, filter short words, Build BM25 index from documents, Score all documents against query, BM25, BM25 ranking algorithm for text search (+41 more)
+Cohesion: 0.08
+Nodes (38): format_context(), format_result(), main(), Format a single search result for display, Slide Search CLI - Search slide design databases for strategies, layouts, copy,…, Format contextual recommendations for display., BM25, calculate_pattern_break() (+30 more)
 
 ### Community 9 - "spacing"
 Cohesion: 0.09
@@ -536,7 +517,7 @@ Nodes (22): $type, $value, $type, $value, $type, $value, $type, $value (+14 more
 Cohesion: 0.07
 Nodes (15): Test adding full color palette., Test TailwindConfigGenerator class., Test that adding same plugin twice doesn't duplicate., Test generating JavaScript configuration., Test generating config with custom colors., Test generating config with plugins., Test validating valid configuration., Test validating config with empty theme extensions. (+7 more)
 
-### Community 11 - "Market Opportunity Analysis: Vyoma ScanServe (POS & KDS)"
+### Community 11 - "Market Opportunity Analysis: VyomaPOS - Xtra Rooftop (POS & KDS)"
 Cohesion: 0.09
 Nodes (22): 10. Summary & Recommendation, 1. Executive Summary, 2.1 The Core Problems Solved, 2.2 Customer Segmentation & Pricing Tiers, 2. Market Definition & Target Segments, 3.1 Segment Counts & ACV Assumptions (India Base), 3. Bottom-Up TAM Analysis, 4.1 Industry Sizing Data Points (+14 more)
 
@@ -564,17 +545,17 @@ Nodes (12): 2.1 Problem Analysis & Current Bug, 2.2 Invoicing API Flow & Expecte
 Cohesion: 0.10
 Nodes (20): 1.1 Acceptance of Agreement, 1.2 License Grant & Scope of Deployment, 1.3 Operational Tiers & Feature Entitlements, 1.4 Service Level Agreement (SLA) & Offline Mesh Guarantee, 1.5 Limitation of Liability, 1. Terms of Service & Master SaaS Agreement, 2.1 Legislative Compliance Framework, 2.2 Categories of Personal Data Collected (+12 more)
 
-### Community 18 - "onsite.py"
-Cohesion: 0.09
-Nodes (28): draft_html(), execute(), metadata(), plan_html(), Conservative static-HTML drafts and sitemap drafts; never deploy automatically.…, Only explicitly verified, indexable, canonical 200 URLs enter the draft., short_text(), single() (+20 more)
+### Community 18 - "cli.py"
+Cohesion: 0.07
+Nodes (37): OutputLock, parser(), BeyondSEO: inspect, improve and review your website's search foundations., draft_html(), execute(), metadata(), plan_html(), Conservative static-HTML drafts and sitemap drafts; never deploy automatically.… (+29 more)
 
 ### Community 19 - "fetch-background.py"
 Cohesion: 0.16
 Nodes (18): generate_css_for_background(), get_background_image(), get_curated_images(), get_overlay_css(), get_pexels_search_url(), load_backgrounds_config(), load_brand_colors(), main() (+10 more)
 
 ### Community 20 - "scripts/core.py"
-Cohesion: 0.13
-Nodes (17): _domain_keywords(), _get_bm25(), _load_csv(), _load_product_keywords(), Load CSV and return list of dicts, with mtime-based caching., Fitted BM25 index for this file+columns, with mtime-based caching., Core search function using BM25. Returns (results, bm25_or_none)., Nearest known vocabulary terms for a query that returned 0 hits, so the caller… (+9 more)
+Cohesion: 0.10
+Nodes (22): detect_domain(), _domain_keywords(), _get_bm25(), _load_csv(), _load_product_keywords(), Load CSV and return list of dicts, with mtime-based caching., Fitted BM25 index for this file+columns, with mtime-based caching., Core search function using BM25. Returns (results, bm25_or_none). (+14 more)
 
 ### Community 21 - "fontSize"
 Cohesion: 0.12
@@ -582,15 +563,15 @@ Nodes (16): $type, $value, $type, $value, $type, $value, $type, $value (+8 more)
 
 ### Community 22 - "TestShadcnInstaller"
 Cohesion: 0.12
-Nodes (10): Test adding components that are already installed., Test ShadcnInstaller class., Test adding all components without config., Test adding all components in dry run mode., Create temporary project structure., Test initialization with dry run mode., Test getting installed components when none exist., Test adding components with empty list. (+2 more)
+Nodes (9): Test adding components with overwrite flag., Test ShadcnInstaller class., Test listing installed components without config., Test listing installed components when they exist., Test initialization with custom project root., Test initialization with dry run mode., Test checking for existing shadcn config., Test getting installed components when files exist. (+1 more)
 
-### Community 23 - "cli.py"
-Cohesion: 0.10
-Nodes (35): Compare and repeat audits, Review and implementation commands, check_sources(), main(), OutputLock, parser(), BeyondSEO: inspect, improve and review your website's search foundations., compare_reputation() (+27 more)
-
-### Community 24 - "argparse"
+### Community 23 - "normalize_url"
 Cohesion: 0.16
-Nodes (20): build(), main(), Build a complete beyondseo/ upload ZIP from reviewed source, with a SHA-256…, bundle_files(), host_destination(), install(), main(), Copy a clean BeyondSEO skill folder to an explicit destination. No network or… (+12 more)
+Nodes (28): check_sources(), mention_evidence(), Verify discovered pages, preserving access and rendering limits., source_rows(), target_links(), verify_source(), main(), compare_reputation() (+20 more)
+
+### Community 24 - "pathlib"
+Cohesion: 0.07
+Nodes (25): Classify a supplied CSV's user-assessed relevance/risk; does not measure…, Compatibility entry point for the environment check., check_files(), check_history(), main(), Read-only release hygiene check. Does not stage, commit, zip or publish files., Run BeyondSEO directly from a source checkout., Compatibility entrypoint: regenerate evidence reports from a local crawl. (+17 more)
 
 ### Community 25 - ".check_shadcn_config"
 Cohesion: 0.21
@@ -614,7 +595,7 @@ Nodes (33): 1. Database Schema Verification:, 1. Executive Summary, 1. Extension
 
 ### Community 30 - "16-Chapter Curriculum"
 Cohesion: 0.20
-Nodes (9): 16-Chapter Curriculum, ACT I: CULINARY FRICTION & THE VISION (0s – 30s), ACT II: FLOOR CAPTAIN INTELLIGENCE (30s – 60s), ACT III: KITCHEN KDS SYMPHONY & COURSING (60s – 100s), ACT IV: OMNICHANNEL & WHATSAPP BILLING (100s – 130s), ACT V: ENTERPRISE RESILIENCE & FINALE (130s – 160s), Brag Plan: Vyoma ScanServe (16-Chapter Keynote Film — 2m 40s), Video Specifications (+1 more)
+Nodes (9): 16-Chapter Curriculum, ACT I: CULINARY FRICTION & THE VISION (0s – 30s), ACT II: FLOOR CAPTAIN INTELLIGENCE (30s – 60s), ACT III: KITCHEN KDS SYMPHONY & COURSING (60s – 100s), ACT IV: OMNICHANNEL & WHATSAPP BILLING (100s – 130s), ACT V: ENTERPRISE RESILIENCE & FINALE (130s – 160s), Brag Plan: VyomaPOS - Xtra Rooftop (16-Chapter Keynote Film — 2m 40s), Video Specifications (+1 more)
 
 ### Community 31 - "dependencies"
 Cohesion: 0.05
@@ -633,12 +614,12 @@ Cohesion: 0.24
 Nodes (10): COOKIE_POLICY, DATA_PROCESSING_AGREEMENT, GST_DISCLAIMER, LEGAL_DISCLAIMER_NOTICE, LegalDocument, LegalSection, PRIVACY_POLICY, TERMS_OF_SERVICE (+2 more)
 
 ### Community 35 - "projects.py"
-Cohesion: 0.20
-Nodes (27): utcnow(), add_jobs(), configure(), connection(), dashboard_html(), esc(), verification_html(), event() (+19 more)
+Cohesion: 0.18
+Nodes (27): add_jobs(), configure(), connection(), dashboard_html(), esc(), verification_html(), event(), execute() (+19 more)
 
 ### Community 36 - "lib/dispatch-status.ts"
-Cohesion: 0.19
-Nodes (10): dispatchOrderStatus(), DispatchOrderStatusParams, DispatchResult, DynoMappedStatus, getEnvVar(), mapStatusToDyno(), OrderStatus, src_lib_dispatch_status_mapstatustodyno (+2 more)
+Cohesion: 0.17
+Nodes (12): dispatchOrderStatus(), DispatchOrderStatusParams, DispatchResult, DynoMappedStatus, getEnvVar(), mapStatusToDyno(), OrderStatus, App() (+4 more)
 
 ### Community 37 - "ErrorBoundary"
 Cohesion: 0.22
@@ -649,16 +630,16 @@ Cohesion: 0.20
 Nodes (6): Generate configuration file content. Returns: Configuration file as string, Generate TypeScript configuration., Generate JavaScript configuration., Format plugins array for config. Validates each plugin name against a strict…, Add indentation to JSON string., Write configuration to file. Returns: Tuple of (success, message)
 
 ### Community 39 - "icon/generate.py"
-Cohesion: 0.18
-Nodes (16): apply_color(), apply_viewbox_size(), extract_svgs(), generate_batch(), generate_icon(), generate_sizes(), load_env(), main() (+8 more)
+Cohesion: 0.08
+Nodes (31): apply_color(), apply_viewbox_size(), extract_svgs(), generate_batch(), generate_icon(), generate_sizes(), load_env(), main() (+23 more)
 
 ### Community 40 - "lib/dyno-adapter.ts"
 Cohesion: 0.33
 Nodes (3): DynoCustomer, DynoItem, NormalizedDynoOrder
 
 ### Community 41 - "react"
-Cohesion: 0.12
-Nodes (37): Badge(), badgeVariants, Button(), buttonVariants, Dialog(), DialogContent(), DialogDescription(), DialogFooter() (+29 more)
+Cohesion: 0.08
+Nodes (46): Button(), buttonVariants, Dialog(), DialogContent(), DialogDescription(), DialogHeader(), DialogOverlay(), DialogTitle() (+38 more)
 
 ### Community 42 - "Brand Guidelines v1.0"
 Cohesion: 0.05
@@ -685,8 +666,8 @@ Cohesion: 0.06
 Nodes (32): Accordion, Alert, Alert Dialog, Avatar, Badge, Button, Card, Checkbox (+24 more)
 
 ### Community 48 - "package.json"
-Cohesion: 0.05
-Nodes (38): main, name, private, type, version, autoprefixer, @base-ui/react, @capacitor/android (+30 more)
+Cohesion: 0.04
+Nodes (50): config, Toaster(), main, name, private, type, version, autoprefixer (+42 more)
 
 ### Community 49 - "Color Semantics"
 Cohesion: 0.11
@@ -696,9 +677,9 @@ Nodes (17): Accent, Applying Semantic Tokens, Background & Foreground, Border & 
 Cohesion: 0.83
 Nodes (3): gradlew script, die(), warn()
 
-### Community 51 - "dyno-integration.test.ts"
-Cohesion: 0.12
-Nodes (23): acceptSwiggyOrder(), baseHeaders(), cleanBase(), doRequest(), DynoClientConfig, DynoResult, getSwiggyActiveOrders(), getZomatoCurrentOrders() (+15 more)
+### Community 51 - "discovery.py"
+Cohesion: 0.09
+Nodes (24): Actual search methods and fallbacks, Browser-assisted Google search, Deliver checkable findings, Search discovery that keeps its evidence, Use the assistant's available search tool, Verify candidates and select competitors, Work when live search is unavailable, Write searches the customer would use (+16 more)
 
 ### Community 52 - "app.json"
 Cohesion: 0.09
@@ -706,7 +687,7 @@ Nodes (21): capabilities, cef, auto_install, dir, description, display_name, act
 
 ### Community 53 - "electron.cjs"
 Cohesion: 0.15
-Nodes (10): c_users_anay0216_documents_coding_scanserve_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, appPath, { startServer }, fs, { startServer } (+2 more)
+Nodes (10): c_users_anay0216_documents_coding_vyomapos_dashboard_main_dist_server_startserver, dist_server, { app, BrowserWindow }, { app, BrowserWindow, shell }, appPath, { startServer }, fs, { startServer } (+2 more)
 
 ### Community 54 - "extract-colors.cjs"
 Cohesion: 0.22
@@ -717,8 +698,8 @@ Cohesion: 0.25
 Nodes (13): checkManifest(), formatBytes(), formatOutput(), fs, main(), parseFilename(), path, RULES (+5 more)
 
 ### Community 56 - "ShadcnInstaller"
-Cohesion: 0.20
-Nodes (8): main(), Handle shadcn/ui component installation., shadcn/ui Component Installer Add shadcn/ui components to project with…, ShadcnInstaller, Tests for shadcn_add.py, Test adding components with overwrite flag., Test listing installed components when none exist., unittest_mock
+Cohesion: 0.17
+Nodes (8): main(), Path, Handle shadcn/ui component installation., Initialize installer. Args: project_root: Project root directory (default:…, ShadcnInstaller, Test adding all components without config., Test checking for non-existent shadcn config., Test getting installed components without config.
 
 ### Community 57 - "reel.js"
 Cohesion: 0.12
@@ -734,7 +715,7 @@ Nodes (6): { execSync }, ref_child_process, adbPath, { execSync, spawn }, fs, pa
 
 ### Community 62 - "verifyAdminPassword"
 Cohesion: 0.09
-Nodes (34): Attack Surface, 3. Caveats, 1. Observation, 2. Logic Chain, 1.1 Problem Analysis & Current Vulnerability, 1.2 Authentication Entry Points & Usage Across the App, 1.3 Server-Side & Supabase Schema Verification Flow, 1.4 Environment Mode Handling (`import.meta.env.DEV`) (+26 more)
+Nodes (33): Attack Surface, 3. Caveats, 1. Observation, 2. Logic Chain, 1.1 Problem Analysis & Current Vulnerability, 1.2 Authentication Entry Points & Usage Across the App, 1.3 Server-Side & Supabase Schema Verification Flow, 1.4 Environment Mode Handling (`import.meta.env.DEV`) (+25 more)
 
 ### Community 63 - "1. AGENT SWARM TOPOLOGY & PERSONA ROLES"
 Cohesion: 0.14
@@ -744,13 +725,13 @@ Nodes (13): 1. AGENT SWARM TOPOLOGY & PERSONA ROLES, 2. MULTI-PHASE PEAK-HOUR SC
 Cohesion: 0.15
 Nodes (12): Categories, Dark Mode, File Organization, Layer 1: Primitive Tokens, Layer 2: Semantic Tokens, Layer 3: Component Tokens, Layer Overview, Migration from Flat Tokens (+4 more)
 
-### Community 65 - "Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase)"
+### Community 65 - "Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase)"
 Cohesion: 0.29
-Nodes (6): Audio, Creative Direction, Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase), Objective, Output, Source Material
+Nodes (6): Audio, Creative Direction, Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase), Objective, Output, Source Material
 
 ### Community 66 - "ref_path"
-Cohesion: 0.15
-Nodes (13): ref_fs, ref_path, ref_vitest_config, fs, generatePdf(), checkPageBreak(), drawHeaderFooter(), { jsPDF } (+5 more)
+Cohesion: 0.18
+Nodes (10): ref_fs, ref_path, @tailwindcss/vite, vite, @vitejs/plugin-react, ref_vitest_config, resolveDistPath(), startServer() (+2 more)
 
 ### Community 67 - "hyperframes.json"
 Cohesion: 0.22
@@ -777,8 +758,8 @@ Cohesion: 0.10
 Nodes (12): main(), Add custom font families. Args: fonts: Dict of font_type: [font_names] e.g.,…, Add custom spacing values. Args: spacing: Dict of name: value e.g., {'18':…, Add custom breakpoints. Args: breakpoints: Dict of name: width e.g., {'3xl':…, Add plugin requirements. Args: plugins: List of plugin names e.g.,…, Get plugin recommendations based on configuration. Returns: List of recommended…, Tailwind CSS Configuration Generator Generate tailwind.config.js/ts with custom…, Generate Tailwind CSS configuration files. (+4 more)
 
 ### Community 73 - "Crawler"
-Cohesion: 0.09
-Nodes (14): Use the Python interface, Ask for the whole engagement, Use it in your assistant, SearchTransport, Crawler, __getattr__(), BeyondSEO — website crawling, readable content and SEO evidence., addresses() (+6 more)
+Cohesion: 0.13
+Nodes (10): Crawler, addresses(), origin(), RateLimiter, Connect to a verified resolved IP, retaining the original host for TLS SNI., RobotsCache, Transport, render_page() (+2 more)
 
 ### Community 74 - "design-tokens-starter.json"
 Cohesion: 0.15
@@ -793,8 +774,8 @@ Cohesion: 0.05
 Nodes (31): Brand, Brand Sync Workflow, Quick Start, References, Routing, Scripts, Subcommands, Templates (+23 more)
 
 ### Community 77 - "beyondseo/README.md"
-Cohesion: 0.06
-Nodes (29): How BeyondSEO works, Interpretation boundaries, Python usage, Source layout, Try BeyondSEO locally, A score you can explain, About the creator, Ask BeyondSEO to do the work (+21 more)
+Cohesion: 0.07
+Nodes (27): How BeyondSEO works, Interpretation boundaries, Python usage, Source layout, A score you can explain, About the creator, Ask BeyondSEO to do the work, Contributors (+19 more)
 
 ### Community 78 - "inject-brand-context.cjs"
 Cohesion: 0.31
@@ -812,17 +793,17 @@ Nodes (9): Alert Tokens, Badge Tokens, Button Tokens, Card Tokens, Component Tok
 Cohesion: 0.04
 Nodes (45): 1. Purpose, 1. Purpose, 1. Report Purpose, 2. Proposal Structure, 2. Required Report Sections, 2. Required Sections, 3. Client Language Rules, 3. KPI Table (+37 more)
 
-### Community 82 - "test_design_system_mode.py"
-Cohesion: 0.18
-Nodes (9): _palette_is_dark(), WCAG relative luminance of a #RRGGBB string, or None if unparseable., True when a colors.csv row's Background is a dark surface., Pick the highest-ranked palette matching the resolved mode. Only the dark case…, _relative_luminance(), _select_palette_for_mode(), Regression tests for color-mode coherence in design_system.py (issue #428).…, TestLuminance (+1 more)
+### Community 82 - "research.py"
+Cohesion: 0.24
+Nodes (19): comparison_from_manifest(), read_relative(), write_json(), audit_report(), material_findings(), Material audit findings with capture evidence, impact and acceptance checks., execute(), Command wiring for discovery and evidence-based research. (+11 more)
 
 ### Community 83 - "Survey Report: Automated Testing Suite Setup (Requirement R5)"
 Cohesion: 0.18
 Nodes (10): 1. Executive Summary, 3.1 Recommended Packages (DevDependencies), 3.2 Recommended `vitest.config.ts`, 3.3 Test Environment Setup (`src/__tests__/setup.ts`), 3. Recommended Vitest Packages & Configuration, 5. Detailed Test Suite Architecture & File Layout, 6.1 `npm run lint` (`tsc --noEmit`) Safety, 6.2 `npm run build` (`vite build && node build.js`) Safety (+2 more)
 
-### Community 90 - "test_core.py"
-Cohesion: 0.25
-Nodes (6): detect_domain(), Auto-detect the most relevant domain from query. Matches are weighted by…, Stdlib-only regression tests for core.py / design_system.py (unittest, not…, TestDomainDetection, core, unittest
+### Community 90 - "json"
+Cohesion: 0.11
+Nodes (27): build(), main(), Build a complete beyondseo/ upload ZIP from reviewed source, with a SHA-256…, bundle_files(), host_destination(), install(), main(), Copy a clean BeyondSEO skill folder to an explicit destination. No network or… (+19 more)
 
 ### Community 91 - "generate-tokens.cjs"
 Cohesion: 0.36
@@ -844,7 +825,7 @@ Nodes (28): Alert, Anatomy, Anatomy, Anatomy, Anatomy, Anatomy, Badge, Button (+
 Cohesion: 0.07
 Nodes (28): Accordion, Alert, ARIA Labels, Checkbox and Radio, Color Contrast, Command Palette Navigation, Component-Specific Patterns, Dialog/Modal Navigation (+20 more)
 
-### Community 96 - "Vyoma ScanServe Dashboard"
+### Community 96 - "VyomaPOS - Xtra Rooftop Dashboard"
 Cohesion: 0.13
 Nodes (15): API Routes, Crawlers & robots.txt, Design System, Environment Variables, Features, Getting Started, License, Overview (+7 more)
 
@@ -885,8 +866,8 @@ Cohesion: 0.09
 Nodes (22): @apply Directive, Best Practices, Color Customization, Complete Tailwind Config, Configuration Examples, Content Configuration, Custom Color Palette, Custom Font Sizes (+14 more)
 
 ### Community 106 - "DesignSystemGenerator"
-Cohesion: 0.10
-Nodes (14): DesignSystemGenerator, Generates design system recommendations from aggregated searches., Load reasoning rules from CSV., Execute searches across multiple domains., Find matching reasoning rule for a category., Apply reasoning rules to search results., Select best matching result based on priority keywords., Extract results list from search result dict. (+6 more)
+Cohesion: 0.05
+Nodes (34): DesignSystemGenerator, _filter_anti_patterns_for_mode(), _palette_is_dark(), _query_wants_dark(), WCAG relative luminance of a #RRGGBB string, or None if unparseable., True when a colors.csv row's Background is a dark surface., True when a styles.csv row describes itself as dark-first., True when the query explicitly asks for a dark theme. (+26 more)
 
 ### Community 107 - "Routing by Task Type"
 Cohesion: 0.10
@@ -896,9 +877,9 @@ Nodes (19): Banner Design Tasks, Brand Identity Tasks, Component Creation, Corpo
 Cohesion: 0.08
 Nodes (20): Base Color Presets, Best Practices, Color Customization, Color Format, Component Customization, CSS Variable System, Customize Styles, Customize Variants (+12 more)
 
-### Community 109 - "whatsapp.ts"
-Cohesion: 0.32
-Nodes (13): PaymentsView(), createWhatsAppReceiptLink(), downloadReceiptPDF(), formatPhoneNumber(), generateReceiptPDF(), generateWhatsAppReceiptText(), getWhatsAppLink(), getWhatsAppPhoneNumber() (+5 more)
+### Community 109 - "PaymentsView.tsx"
+Cohesion: 0.24
+Nodes (17): GroupedInvoice, groupOrdersByCustomerAndTable(), PaymentsView(), SettledInvoiceRecord, createWhatsAppReceiptLink(), downloadReceiptPDF(), formatPhoneNumber(), generateReceiptPDF() (+9 more)
 
 ### Community 110 - "Asset Organization Guide"
 Cohesion: 0.11
@@ -922,7 +903,7 @@ Nodes (17): Apparel (Polo/T-Shirt), Base Prompt Structure, Business Card, CIP Mo
 
 ### Community 115 - "reports.py"
 Cohesion: 0.07
-Nodes (48): escape(), walk(), asset(), _e(), export_report(), finding_fields(), html_report(), block_html() (+40 more)
+Nodes (50): escape(), walk(), asset(), _e(), export_report(), finding_fields(), from_audit(), html_report() (+42 more)
 
 ### Community 116 - "Design System Master File"
 Cohesion: 0.12
@@ -1008,10 +989,6 @@ Nodes (9): Common Structures, Duarte Sparkline Pattern, Matching Strategy to Con
 Cohesion: 0.20
 Nodes (9): Common Structures, Duarte Sparkline Pattern, Matching Strategy to Context, Product Demo (6 slides), Sales Pitch (9 slides), Search Commands, Slide Strategies, Strategy Selection (+1 more)
 
-### Community 137 - "pathlib"
-Cohesion: 0.09
-Nodes (24): Check local Markdown links and embedded asset paths without network requests., challenge_signal(), classify_access(), Explain access failures without mistaking crawler limits for website blocking., summarize_access(), csv_value(), parse_sitemap(), Persistent bounded crawl, sitemap discovery, evidence export, and link analysis. (+16 more)
-
 ### Community 138 - "Slides Reference"
 Cohesion: 0.29
 Nodes (6): Key Features, Knowledge Base, Slides Reference, Usage, When to Use, Workflow
@@ -1028,9 +1005,9 @@ Nodes (6): Animation Classes, Background Images, Base Structure, Chart.js Integr
 Cohesion: 0.18
 Nodes (10): Artifact Index, BRIEFING — 2026-10-06T05:05:00Z, Current Parent, 🔒 Key Constraints, Key Decisions Made, Loaded Skills, Mission, 🔒 My Identity (+2 more)
 
-### Community 142 - "authService.ts"
-Cohesion: 0.09
-Nodes (26): Capacitor / Native Platform Quirks, @capacitor/app, @capacitor/core, @capacitor/status-bar, ref_react_dom_client, react-router-dom, ServerConnectionModal(), src_index (+18 more)
+### Community 142 - "ServerConnectionModal.tsx"
+Cohesion: 0.20
+Nodes (16): @capacitor/core, ServerConnectionModal(), ServerConnectionModalProps, getApiBaseUrl(), normalizeServerUrl(), POS_SERVER_DEFAULT_PORT, POS_SERVER_STORAGE_KEY, setApiBaseUrl() (+8 more)
 
 ### Community 143 - "Slides"
 Cohesion: 0.33
@@ -1045,8 +1022,8 @@ Cohesion: 0.19
 Nodes (14): $type, $value, $type, $value, $type, $value, primitive, radius (+6 more)
 
 ### Community 146 - "render.mjs"
-Cohesion: 0.05
-Nodes (31): Actual search methods and fallbacks, Browser-assisted Google search, Deliver checkable findings, Search discovery that keeps its evidence, Start with the business, Use the assistant's available search tool, Verify candidates and select competitors, dependencies (+23 more)
+Cohesion: 0.06
+Nodes (25): Start with the business, dependencies, puppeteer-core, three, description, name, private, scripts (+17 more)
 
 ### Community 147 - "build"
 Cohesion: 0.25
@@ -1073,24 +1050,24 @@ Cohesion: 0.14
 Nodes (13): Acceptance Criteria, Database Schema Verification, Initial Request — 2026-10-06T04:29:47Z, Invoicing Reliability, Original User Request, Quality Assurance & Automated Tests, R1. Authentication Security Hardening, R2. Database Schema Consolidation & Documentation (+5 more)
 
 ### Community 157 - "orderStore.ts"
-Cohesion: 0.13
-Nodes (29): handler(), safeUUID(), sanitizeStatus(), handler(), ref_crypto, broadcastEvent(), clearInboundLogs(), formatIST() (+21 more)
+Cohesion: 0.14
+Nodes (14): ref_crypto, clearInboundLogs(), getAllMemoryOrders(), getInboundLogs(), getMemoryOrder(), inboundLogs, InboundWebhookLog, memoryOrders (+6 more)
 
 ### Community 158 - "scripts"
 Cohesion: 0.22
 Nodes (8): name, private, scripts, check, dev, publish, render, type
 
-### Community 159 - "dyno-verify.cjs"
-Cohesion: 0.20
-Nodes (14): ref_http, ref_url, buildOutbound(), eq(), http, logCase(), posInsertOrders(), posUpdateStatus() (+6 more)
+### Community 159 - "seo-house-workflow.md"
+Cohesion: 0.24
+Nodes (4): Free article and posting-site catalog, A practical reputation prospect directory, Free posting workflow, Competitor crawl and comparison
 
 ### Community 160 - "Config"
-Cohesion: 0.29
-Nodes (7): Read pages that use JavaScript, Robots policy, Scroll and capture, Three modes, Understand a failed capture, Wait for something meaningful, Website dependencies
+Cohesion: 0.12
+Nodes (14): Read pages that use JavaScript, Robots policy, Scroll and capture, Three modes, Understand a failed capture, Wait for something meaningful, Website dependencies, Try BeyondSEO locally (+6 more)
 
-### Community 161 - "Design System: Vyoma ScanServe"
+### Community 161 - "Design System: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.14
-Nodes (12): Design System: Vyoma ScanServe, Do:, Do's and Don'ts, Don't:, Hierarchy, Layout, Named Rules, Named Rules (+4 more)
+Nodes (12): Design System: VyomaPOS - Xtra Rooftop, Do:, Do's and Don'ts, Don't:, Hierarchy, Layout, Named Rules, Named Rules (+4 more)
 
 ### Community 162 - "BRIEFING — 2026-10-06T04:32:00Z"
 Cohesion: 0.17
@@ -1113,8 +1090,8 @@ Cohesion: 0.17
 Nodes (11): Artifact Index, BRIEFING — 2026-10-06T04:49:00Z, Change Tracker, Current Parent, 🔒 Key Constraints, Key Decisions Made, Loaded Skills, Mission (+3 more)
 
 ### Community 167 - "BM25"
-Cohesion: 0.15
-Nodes (9): BM25, _normalize(), Apply synonym substitution before tokenizing., BM25 ranking algorithm for text search, Lowercase, normalize synonyms, split, remove punctuation, filter stopwords, Build BM25 index from documents, Score all documents against query, All indexed terms, for suggestion/typo-recovery purposes. (+1 more)
+Cohesion: 0.07
+Nodes (20): log(), BM25, BM25 ranking algorithm for text search, Lowercase, split, remove punctuation, filter short words, Build BM25 index from documents, Score all documents against query, BM25, BM25 ranking algorithm for text search (+12 more)
 
 ### Community 168 - "1. Summary of Actions Executed"
 Cohesion: 0.18
@@ -1125,16 +1102,16 @@ Cohesion: 0.13
 Nodes (14): 1. Review Summary, 3. Requirement-by-Requirement Technical Audit, 4. Empirical Verification Results, 5. Architectural Insights & Recommendations (Non-Blocking), 6. Final Verdict, Comprehensive Code Review & Adversarial Stress-Test Report, Git Cleanliness Verification, Production Build: `npm run build` (+6 more)
 
 ### Community 170 - "docs/README.md"
-Cohesion: 0.15
-Nodes (8): BeyondSEO brand assets, Contributing to BeyondSEO, Release hygiene, Free article and posting-site catalog, A practical reputation prospect directory, Free posting workflow, Competitor crawl and comparison, BeyondSEO reputation checks
+Cohesion: 0.20
+Nodes (5): BeyondSEO brand assets, Contributing to BeyondSEO, Release hygiene, Backlink quality and opportunities, Competitor discovery
 
 ### Community 171 - "HyperFrames Composition Project"
 Cohesion: 0.25
 Nodes (7): Commands, Documentation, HyperFrames Composition Project, Key Rules, Linting — ALWAYS RUN AFTER CHANGES, Project Structure, Skills — USE THESE FIRST
 
-### Community 172 - "backlinks.py"
+### Community 172 - "review.py"
 Cohesion: 0.11
-Nodes (42): mention_evidence(), Verify discovered pages, preserving access and rendering limits., source_rows(), target_links(), verify_source(), comparison_from_manifest(), read_relative(), host_attempts() (+34 more)
+Nodes (27): markdown_from_html(), Small, deterministic HTML-to-Markdown conversion for readable crawl exports., capture_quality(), combined_index_signals(), missing_content(), Choose a captured representation and preserve evidence across rendering., Conservative English missing-content candidate, not an indexing diagnosis., Positive observations can survive a partial capture; absence claims cannot. (+19 more)
 
 ### Community 173 - "HyperFrames Composition Project"
 Cohesion: 0.25
@@ -1144,9 +1121,9 @@ Nodes (7): Commands, Documentation, HyperFrames Composition Project, Key Rules, 
 Cohesion: 0.07
 Nodes (30): Artifact Index, BRIEFING — 2026-10-06T04:56:00Z, Change Tracker, Current Parent, 🔒 Key Constraints, Loaded Skills, Mission, 🔒 My Identity (+22 more)
 
-### Community 175 - "discovery.py"
-Cohesion: 0.10
-Nodes (26): Work when live search is unavailable, Write searches the customer would use, failure_detail(), Classify observed evidence, without attributing a generic failure to a provider., consolidate(), discover(), add_attempt(), NativeSearch (+18 more)
+### Community 175 - "doctor.py"
+Cohesion: 0.13
+Nodes (18): check_environment(), environment_report(), installed_browsers(), prepare_browser(), Report installation, runtime and optional network probes separately., Filesystem/PATH detection only; presence does not grant host UI control., Explicit, idempotent setup in the selected virtual environment., Path (+10 more)
 
 ### Community 176 - "BRIEFING — 2026-10-06T04:30:00Z"
 Cohesion: 0.22
@@ -1184,9 +1161,9 @@ Nodes (4): First, understand the gap, Measure and continue, Reputation and posti
 Cohesion: 0.08
 Nodes (25): Ask Work to install from GitHub, ChatGPT Work, Check model access separately, Claude Code, Claude website and desktop Skills, Codex, Crawler setup in a hosted environment, Cursor (+17 more)
 
-### Community 187 - "json"
-Cohesion: 0.11
-Nodes (24): group_rows(), main(), parse_pages(), Import visible posting-site rows from a supplied PDF, retaining unverified…, site_key(), detect_domain(), _load_csv(), Load CSV and return list of dicts (+16 more)
+### Community 187 - "engine.py"
+Cohesion: 0.06
+Nodes (42): Check local Markdown links and embedded asset paths without network requests., group_rows(), main(), parse_pages(), Import visible posting-site rows from a supplied PDF, retaining unverified…, site_key(), challenge_signal(), classify_access() (+34 more)
 
 ### Community 189 - "Audio reference"
 Cohesion: 0.18
@@ -1208,9 +1185,9 @@ Nodes (22): AEO/GEO Gap Mapping, Common Mistakes, Competitor Page Comparison, Co
 Cohesion: 0.18
 Nodes (11): Bake the poster as frame 0, Example: Taxi for Taxis, Final output structure, Pick the poster frame, Preview, Render, Share copy by tone, Step 4: Validate, render, and deliver (+3 more)
 
-### Community 194 - "Share Copy Variants: Vyoma ScanServe"
+### Community 194 - "Share Copy Variants: VyomaPOS - Xtra Rooftop"
 Cohesion: 0.40
-Nodes (4): Discord / Dev Communities, LinkedIn, Share Copy Variants: Vyoma ScanServe, Twitter / X
+Nodes (4): Discord / Dev Communities, LinkedIn, Share Copy Variants: VyomaPOS - Xtra Rooftop, Twitter / X
 
 ### Community 195 - "Keyword Discovery"
 Cohesion: 0.09
@@ -1336,9 +1313,13 @@ Nodes (10): 90-Day Plan, Audit Mode, Data Sources Used, Executive Summary, Main 
 Cohesion: 0.18
 Nodes (10): 1. Reputation Layers, 2. Website Proof Pages, 3. Review Platforms by Type, 4. Third-Party Authority Article Rules, 5. Free Sources, 6. Paid / PR Sources, 7. Evidence Workflow, 8. Reputation SEO Report Template (+2 more)
 
+### Community 226 - "processWebhook.ts"
+Cohesion: 0.26
+Nodes (11): Checklist, Progress Tracker - explorer_survey_1, handler(), safeUUID(), sanitizeStatus(), broadcastEvent(), recordInboundLog(), saveMemoryOrder() (+3 more)
+
 ### Community 227 - "utcnow"
-Cohesion: 0.25
-Nodes (8): Apply an authorised website goal, BeyondSEO, Build reputation, Capability-first execution, Explain and improve, Keep improving, Run in the available host, Understand and inspect
+Cohesion: 0.12
+Nodes (21): A readable readiness review, Check supplied backlinks, Compare and repeat audits, Connect to hosting, Draft and apply website text, Project-based website improvements, Review, improve and check again, Keep improving (+13 more)
 
 ### Community 228 - "AEO Content Writing Persona"
 Cohesion: 0.20
@@ -1420,10 +1401,6 @@ Nodes (5): Apply website work and monitor it, BeyondSEO in Lovable, Crawl and in
 Cohesion: 0.29
 Nodes (7): Avoid unnecessary interruptions, Choose the working browser, Different agents, different browsers, Do we need another browser project?, Google in the host's browser, Search through an available browser, What a successful browser search proves
 
-### Community 248 - "InvoiceCreator.tsx"
-Cohesion: 0.20
-Nodes (9): InvoiceCreator(), InvoiceCreatorProps, InvoiceItemLine, InvoiceHistory(), InvoiceHistoryProps, InvoiceReceiptModal(), SavedInvoiceData, InvoicesView() (+1 more)
-
 ### Community 249 - "SEO roadmap generator"
 Cohesion: 0.29
 Nodes (6): Convert each finding into work, Inputs, Keep the full practice represented, Output, SEO roadmap generator, Sequence work by dependencies
@@ -1438,7 +1415,7 @@ Nodes (9): Audio asset preparation, Audio-reactive extraction (when music is pre
 
 ### Community 252 - "2. In-Depth Adversarial Challenges"
 Cohesion: 0.15
-Nodes (12): 1. Executive Summary, 2. In-Depth Adversarial Challenges, 3. Empirical Stress-Test Results Matrix, 4. Unchallenged Areas, 5. Final Verdict, Adversarial Challenge & Verification Report: Vyoma ScanServe Dashboard, Challenge 1: Non-String / Undefined Inputs in `authService.ts`, Challenge 2: 0 Quantity Handling in `calculateGst` (+4 more)
+Nodes (12): 1. Executive Summary, 2. In-Depth Adversarial Challenges, 3. Empirical Stress-Test Results Matrix, 4. Unchallenged Areas, 5. Final Verdict, Adversarial Challenge & Verification Report: VyomaPOS - Xtra Rooftop Dashboard, Challenge 1: Non-String / Undefined Inputs in `authService.ts`, Challenge 2: 0 Quantity Handling in `calculateGst` (+4 more)
 
 ### Community 253 - "Deep research that explains where a business stands"
 Cohesion: 0.33
@@ -1656,10 +1633,6 @@ Nodes (8): `app-store`, `chaotic`, `cinematic`, `deadpan`, `default`, `polished`
 Cohesion: 0.29
 Nodes (6): Family Summary, Lower-Risk Picks By Use Case, Safest General Picks, Selection Rules, SFX Analysis Summary, Signal Guide
 
-### Community 308 - "subprocess"
-Cohesion: 0.17
-Nodes (12): Regression test for sync-brand-to-tokens.cjs. The color parser required a…, Path, Regression tests for validate-tokens.cjs. The validator used to skip any line…, A hardcoded hex on the same line as a var() token is still a violation., A line that references only tokens produces no false positives., _run(), test_flags_hardcoded_hex_sharing_line_with_token(), test_token_only_line_reports_no_violation() (+4 more)
-
 ### Community 309 - "BRIEFING — 2026-10-06T04:40:00Z"
 Cohesion: 0.22
 Nodes (8): Artifact Index, BRIEFING — 2026-10-06T04:40:00Z, Current Parent, Investigation State, 🔒 Key Constraints, Key Decisions Made, Mission, 🔒 My Identity
@@ -1680,10 +1653,6 @@ Nodes (5): Music Cues: happy-beats-business-moves-vol-10-by-ende-dot-app, Reveal
 Cohesion: 0.33
 Nodes (5): Music Cues: happy-beats-business-moves-vol-11-by-ende-dot-app, Reveal Candidates, Strong Cues In Window, Use Policy, Useful Beat Grid
 
-### Community 326 - "cip/generate.py"
-Cohesion: 0.21
-Nodes (14): build_cip_prompt(), check_logo_required(), generate_cip_set(), generate_with_nano_banana(), load_env(), load_logo_image(), main(), Generate image using Gemini Nano Banana (native image generation) Supports two… (+6 more)
-
 ### Community 327 - "Music Cues: happy-beats-business-moves-vol-12-by-ende-dot-app"
 Cohesion: 0.33
 Nodes (5): Music Cues: happy-beats-business-moves-vol-12-by-ende-dot-app, Reveal Candidates, Strong Cues In Window, Use Policy, Useful Beat Grid
@@ -1692,17 +1661,13 @@ Nodes (5): Music Cues: happy-beats-business-moves-vol-12-by-ende-dot-app, Reveal
 Cohesion: 0.33
 Nodes (5): Music Cues: happy-beats-business-moves-vol-1-by-ende-dot-app, Reveal Candidates, Strong Cues In Window, Use Policy, Useful Beat Grid
 
-### Community 329 - "Project: Vyoma ScanServe Dashboard Remediation"
+### Community 329 - "Project: VyomaPOS - Xtra Rooftop Dashboard Remediation"
 Cohesion: 0.25
-Nodes (7): Architecture, Code Layout, Interface Contracts, Milestones, Project: Vyoma ScanServe Dashboard Remediation, `src/lib/authService.ts` ↔ Login & Captain UI, `src/utils/gst.ts` ↔ Invoicing & Testing Components
+Nodes (7): Architecture, Code Layout, Interface Contracts, Milestones, Project: VyomaPOS - Xtra Rooftop Dashboard Remediation, `src/lib/authService.ts` ↔ Login & Captain UI, `src/utils/gst.ts` ↔ Invoicing & Testing Components
 
 ### Community 330 - "1. `src/components/invoices/InvoiceCreator.tsx`"
 Cohesion: 0.25
 Nodes (7): 1. `src/components/invoices/InvoiceCreator.tsx`, 2. Verification Summary, A. Dynamic API Endpoint Resolution, B. Transaction Failure Gating & Halting, C. Receipt Modal & Callback Gating, Code Changes — Milestone M4 / Requirement R3 (Invoicing Transaction Integrity), D. Submitting State Resilience
-
-### Community 331 - "Vyoma ScanServe Dashboard — Agent Quickstart"
-Cohesion: 0.14
-Nodes (13): API Routes (mounted under `/api`), Auth Password Gate, Build Artifacts & Infra, Critical Workflow Order, Developer Commands (exact, non-obvious), Environment Setup (critical gotchas), Project Structure, Questions? (only if repo can't answer) (+5 more)
 
 ### Community 333 - "Music Cues: happy-beats-business-moves-vol-9-by-ende-dot-app"
 Cohesion: 0.33
@@ -1724,37 +1689,25 @@ Nodes (6): 1. Observation, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verific
 Cohesion: 0.50
 Nodes (3): Reporting a Vulnerability, Security Policy, Supported Versions
 
-### Community 341 - "logo/generate.py"
-Cohesion: 0.21
-Nodes (12): enhance_prompt(), generate_batch(), generate_logo(), load_env(), main(), Enhance the logo prompt with style and industry modifiers, Generate a logo using Gemini models with image generation Args: aspect_ratio:…, Generate multiple logo variants with different styles (+4 more)
-
 ### Community 342 - "sync-expense-to-sheets/index.ts"
 Cohesion: 0.38
 Nodes (6): base64UrlEncode(), corsHeaders, ExpenseRecord, getGoogleAccessToken(), pemToArrayBuffer(), NOTE: only the sheet title is URL-encoded — `!` and `:` must stay literal
-
-### Community 343 - "render-html.py"
-Cohesion: 0.31
-Nodes (8): generate_html(), get_deliverable_info(), get_image_base64(), main(), Convert image to base64 for embedding in HTML, Extract deliverable type from filename and get info, Generate HTML presentation from CIP images, CIP HTML Presentation Renderer Generates a professional HTML presentation from…
-
-### Community 344 - "sys"
-Cohesion: 0.12
-Nodes (9): Classify a supplied CSV's user-assessed relevance/risk; does not measure…, Compatibility entry point for the environment check., Run BeyondSEO directly from a source checkout., Compatibility entrypoint: regenerate evidence reports from a local crawl., Heuristic URL-label helper; URL tokens do not establish page intent., main(), Slide Token Validator (Legacy Wrapper) Now delegates to html-token-validator.py…, Delegate to unified html-token-validator.py with --type slides. (+1 more)
 
 ### Community 348 - "2. Requirement-by-Requirement Verification"
 Cohesion: 0.18
 Nodes (10): 1. Integrity Violation Checks, 2. Requirement-by-Requirement Verification, 3. Adversarial Stress-Testing & Attack Surface Analysis, 4. Final Verdict, R1. Authentication Security Hardening, R2. Database Schema Consolidation & Documentation, R3. Invoicing Transaction Integrity & Error Handling, R4. Repository Cleanliness & CI/CD Organization (+2 more)
 
-### Community 351 - "Orchestrator Final Handoff Report — Vyoma ScanServe Dashboard Remediation"
+### Community 351 - "Orchestrator Final Handoff Report — VyomaPOS - Xtra Rooftop Dashboard Remediation"
 Cohesion: 0.25
-Nodes (7): Active Subagents, Key Artifacts, Milestone State, Orchestrator Final Handoff Report — Vyoma ScanServe Dashboard Remediation, Pending Decisions, Quality Gate Verdicts, Remaining Work
+Nodes (7): Active Subagents, Key Artifacts, Milestone State, Orchestrator Final Handoff Report — VyomaPOS - Xtra Rooftop Dashboard Remediation, Pending Decisions, Quality Gate Verdicts, Remaining Work
 
 ### Community 352 - "validateGSTIN"
 Cohesion: 0.12
 Nodes (26): 2026-10-06T05:06:44Z, 1. Observation, Status, Verification & Adversarial Testing Progress, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verification Method (+18 more)
 
-### Community 353 - "Progress — Vyoma ScanServe Dashboard Remediation"
+### Community 353 - "Progress — VyomaPOS - Xtra Rooftop Dashboard Remediation"
 Cohesion: 0.33
-Nodes (5): Active Dispatches, Checklist, Current Status, Iteration Status, Progress — Vyoma ScanServe Dashboard Remediation
+Nodes (5): Active Dispatches, Checklist, Current Status, Iteration Status, Progress — VyomaPOS - Xtra Rooftop Dashboard Remediation
 
 ### Community 354 - "BRIEFING — 2026-10-06T05:15:00Z"
 Cohesion: 0.17
@@ -1824,21 +1777,21 @@ Nodes (9): Artifact Index, BRIEFING — 2026-10-06T05:14:15Z, Current Parent, �
 Cohesion: 0.29
 Nodes (6): 1. Observation, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verification Method, Handoff Report — reviewer_2
 
-### Community 380 - "os"
-Cohesion: 0.25
-Nodes (4): Run the bundled CLI from any working directory, without shell activation., asyncio, edge_tts, os
+### Community 380 - "generate-reality-seed-pdf.cjs"
+Cohesion: 0.33
+Nodes (6): fs, generatePdf(), checkPageBreak(), drawHeaderFooter(), { jsPDF }, path
 
 ### Community 381 - "2. Repository Configuration & Build Tooling Analysis"
-Cohesion: 0.20
-Nodes (9): 2.1 `package.json` Inspection, 2.2 `vite.config.ts` Inspection, 2.3 `tsconfig.json` Inspection, 2.4 `.gitignore` Inspection, 2. Repository Configuration & Build Tooling Analysis, @tailwindcss/vite, vite, @vitejs/plugin-react (+1 more)
+Cohesion: 0.33
+Nodes (6): 2.1 `package.json` Inspection, 2.2 `vite.config.ts` Inspection, 2.3 `tsconfig.json` Inspection, 2.4 `.gitignore` Inspection, 2. Repository Configuration & Build Tooling Analysis, manualChunks()
 
 ### Community 382 - "@supabase/supabase-js"
 Cohesion: 0.33
 Nodes (7): formatIST(), getSupabaseClient(), handler(), formatIST(), getSupabaseClient(), handler(), @supabase/supabase-js
 
-### Community 383 - "_resolve_color_mode"
-Cohesion: 0.24
-Nodes (7): _query_wants_dark(), True when a styles.csv row describes itself as dark-first., True when the query explicitly asks for a dark theme., Resolve the mode the rest of the output has to agree with., _resolve_color_mode(), _style_is_dark_primary(), TestModeResolution
+### Community 383 - "dynoHandler.ts"
+Cohesion: 0.36
+Nodes (7): handler(), formatIST(), ServerOrder, handler(), isUUID(), NormalizedDynoOrder, normalizeDynoPayload()
 
 ### Community 384 - "input"
 Cohesion: 0.29
@@ -1880,17 +1833,17 @@ Nodes (5): lg, $type, $value, lg, lg
 Cohesion: 0.40
 Nodes (4): 2. Logic Chain, 4. Conclusion, 5. Verification Method, Handoff Report: Adversarial Verification (challenger_1)
 
-### Community 400 - "lib/dyno-inbound-status.ts"
-Cohesion: 0.28
-Nodes (7): DYNO_STATUS_CODE_MAP, DynoStatusUpdateRequest, DynoStatusUpdateResponse, DynoStatusValidationError, handleDynoStatusUpdate(), mapDynoStatusCodeToPosStatus(), validateDynoStatusBody()
+### Community 400 - "Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)"
+Cohesion: 0.40
+Nodes (4): 3. Caveats, 4. Conclusion, 5. Verification Method, Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)
 
 ### Community 401 - "E2E Test Suite Ready"
 Cohesion: 0.40
 Nodes (4): Coverage Summary, E2E Test Suite Ready, Feature Checklist, Test Runner
 
-### Community 402 - "_filter_anti_patterns_for_mode"
-Cohesion: 0.43
-Nodes (3): _filter_anti_patterns_for_mode(), Drop "avoid dark mode" advice once dark mode is the resolved answer., TestAntiPatternGating
+### Community 402 - "Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)"
+Cohesion: 0.40
+Nodes (4): 2. Logic Chain, 3. Caveats, 4. Conclusion, Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)
 
 ### Community 403 - "padding-y"
 Cohesion: 0.67
@@ -1944,57 +1897,25 @@ Nodes (3): ring, $type, $value
 Cohesion: 0.67
 Nodes (3): secondary-foreground, $type, $value
 
-### Community 422 - "Handoff Report — Project Sentinel"
-Cohesion: 0.29
-Nodes (6): Caveats, Conclusion, Handoff Report — Project Sentinel, Logic Chain, Observation, Verification Method
-
-### Community 424 - "Independent Victory Audit Handoff Report"
-Cohesion: 0.29
-Nodes (6): 1. Observation, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verification Method, Independent Victory Audit Handoff Report
-
-### Community 425 - "Review, improve and check again"
-Cohesion: 0.33
-Nodes (6): A readable readiness review, Check supplied backlinks, Connect to hosting, Draft and apply website text, Project-based website improvements, Review, improve and check again
-
-### Community 426 - "normalize_url"
-Cohesion: 0.11
-Nodes (20): markdown_from_html(), Small, deterministic HTML-to-Markdown conversion for readable crawl exports., clean(), extract(), absolute(), content(), invalid_json_constant(), DOM extraction with BeautifulSoup; findings retain their underlying… (+12 more)
-
-### Community 427 - "check_release.py"
-Cohesion: 0.60
-Nodes (4): check_files(), check_history(), main(), Read-only release hygiene check. Does not stage, commit, zip or publish files.
-
-### Community 434 - "validate_data.py"
-Cohesion: 0.60
-Nodes (4): _check_file(), main(), Data integrity guardrail for ui-ux-pro-max. Stdlib-only, no pytest dependency,…, _read_rows()
-
-### Community 437 - "Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)"
-Cohesion: 0.40
-Nodes (4): 3. Caveats, 4. Conclusion, 5. Verification Method, Handoff Report: Survey of R1 (Auth Security) & R3 (Invoicing Transaction Integrity)
-
-### Community 438 - "Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)"
-Cohesion: 0.40
-Nodes (4): 2. Logic Chain, 3. Caveats, 4. Conclusion, Handoff Report: Milestone M3 / Requirement R1 (Authentication Security Hardening)
-
 ## Knowledge Gaps
-- **2783 isolated node(s):** `beyondseo`, `Response`, `brag`, `fs`, `path` (+2778 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3495 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **82 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2754 isolated node(s):** `beyondseo`, `Response`, `brag`, `fs`, `path` (+2749 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 3448 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **78 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Vyoma ScanServe Dashboard` connect `Vyoma ScanServe Dashboard` to `Design System: Vyoma ScanServe`, `App.tsx`, `normalize_url`, `Deployment`, `Database`, `Google Sheets Sync (Expense Ledger)`?**
-  _High betweenness centrality (0.059) - this node is a cross-community bridge._
-- **Why does `NPM Scripts` connect `normalize_url` to `argparse`, `Vyoma ScanServe Dashboard`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **Why does `Use it in your assistant` connect `Crawler` to `beyondseo/README.md`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+- **Why does `VyomaPOS - Xtra Rooftop Dashboard` connect `VyomaPOS - Xtra Rooftop Dashboard` to `Design System: VyomaPOS - Xtra Rooftop`, `App.tsx`, `review.py`, `Deployment`, `Database`, `Google Sheets Sync (Expense Ledger)`?**
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+- **Why does `NPM Scripts` connect `review.py` to `VyomaPOS - Xtra Rooftop Dashboard`, `json`?**
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
+- **Why does `Challenge 3: Transport / Network Disconnect (Offline Failure)` connect `2. Empirical Challenges & Stress Tests` to `Crawler`?**
+  _High betweenness centrality (0.034) - this node is a cross-community bridge._
 - **Are the 2 inferred relationships involving `TailwindConfigGenerator` (e.g. with `TestGeneratedConfigIsValidJs` and `TestTailwindConfigGenerator`) actually correct?**
   _`TailwindConfigGenerator` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `beyondseo`, `Response`, `brag` to the rest of the system?**
-  _2783 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Comprehensive Business Case: Vyoma ScanServe` be split into smaller, more focused modules?**
+  _2754 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Comprehensive Business Case: VyomaPOS - Xtra Rooftop` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `app.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.12923076923076923 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14624505928853754 - nodes in this community are weakly interconnected._

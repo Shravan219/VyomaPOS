@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { MenuItem } from '@/src/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +24,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 import { InvoiceReceiptModal, SavedInvoiceData } from './InvoiceReceiptModal';
 import { resolveApiUrl } from '@/src/lib/apiConfig';
+import { getGSTIN, getGSTAMT, SETTINGS_CHANGED_EVENT } from '@/src/lib/restaurantSettings';
 
 export interface InvoiceItemLine {
   id: string;
@@ -61,9 +62,18 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
     }
   ]);
 
-  // Billing Configuration State
-  const [applyGst, setApplyGst] = useState(true);
-  const [gstRate, setGstRate] = useState<number>(5);
+  // Billing Configuration State (GST % locked to stored outlet GSTAMT)
+  const [gstRate, setGstRate] = useState<number>(() => getGSTAMT());
+  const [outletGstin, setOutletGstin] = useState(() => getGSTIN());
+
+  useEffect(() => {
+    const syncOutlet = () => {
+      setGstRate(getGSTAMT());
+      setOutletGstin(getGSTIN());
+    };
+    window.addEventListener(SETTINGS_CHANGED_EVENT, syncOutlet);
+    return () => window.removeEventListener(SETTINGS_CHANGED_EVENT, syncOutlet);
+  }, []);
   const [discountType, setDiscountType] = useState<'flat' | 'percent'>('flat');
   const [discountValue, setDiscountValue] = useState<string>('0');
 
@@ -93,9 +103,9 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
   const taxableAmount = Math.max(0, subtotal - discountAmount);
 
   const gstAmount = useMemo(() => {
-    if (!applyGst || gstRate <= 0) return 0;
+    if (gstRate <= 0) return 0;
     return taxableAmount * (gstRate / 100);
-  }, [applyGst, gstRate, taxableAmount]);
+  }, [gstRate, taxableAmount]);
 
   const grandTotal = useMemo(() => {
     return Math.round((taxableAmount + gstAmount) * 100) / 100;
@@ -253,7 +263,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
       order_items: formattedItems,
       subtotal,
       discount: discountAmount,
-      tax_rate: applyGst ? gstRate : 0,
+      tax_rate: gstRate,
       tax_amount: gstAmount,
       total: grandTotal,
       grand_total: grandTotal,
@@ -312,7 +322,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
         items: formattedItems,
         subtotal,
         tax_amount: gstAmount,
-        tax_rate: applyGst ? gstRate : 0,
+        tax_rate: gstRate,
         discount: discountAmount,
         total: grandTotal,
         payment_mode: paymentMode,
@@ -357,12 +367,12 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
           <Button
             type="button"
             variant="outline"
             onClick={handleResetForm}
-            className="border-white/10 hover:border-white/20 text-white/60 hover:text-white rounded-full text-[10px] uppercase tracking-[0.2em] font-bold h-11 px-5 bg-white/5 transition-all"
+            className="border-white/10 hover:border-white/20 text-white/60 hover:text-white rounded-full text-[10px] uppercase tracking-[0.2em] font-bold h-11 px-5 bg-white/5 transition-all w-full sm:w-auto"
           >
             <RotateCcw size={13} className="mr-2" />
             Reset Form
@@ -372,7 +382,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
             type="button"
             onClick={handleGenerateInvoice}
             disabled={isSubmitting}
-            className="bg-primary text-black hover:bg-primary/90 rounded-full text-[10px] uppercase tracking-[0.3em] font-bold h-11 px-8 shadow-[0_0_25px_rgba(197,160,89,0.3)] transition-all hover:scale-105"
+            className="bg-primary text-black hover:bg-primary/90 rounded-full text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold h-11 px-5 sm:px-8 shadow-[0_0_25px_rgba(197,160,89,0.3)] transition-all hover:scale-105 w-full sm:w-auto"
           >
             {isSubmitting ? (
               <span className="flex items-center gap-2">
@@ -472,7 +482,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
                   <CreditCard size={12} className="text-primary/70" />
                   Payment Mode
                 </span>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: 'UPI', label: 'UPI', icon: <QrCode size={13} /> },
                     { id: 'CASH', label: 'Cash', icon: <Banknote size={13} /> },
@@ -517,7 +527,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
               {/* Optional GSTIN for India Tax Invoicing */}
               <div className="space-y-1.5">
                 <label htmlFor="invoice-gstin" className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1 flex items-center justify-between cursor-pointer">
-                  <span>GSTIN (B2B Tax Invoice)</span>
+                  <span>Customer GSTIN (B2B buyer, optional)</span>
                   <span className="text-[8px] text-white/50 normal-case">Optional</span>
                 </label>
                 <Input
@@ -696,7 +706,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
                         </div>
 
                         {/* Price Input (2 cols) */}
-                        <div className="col-span-4 sm:col-span-2">
+                        <div className="col-span-6 sm:col-span-2">
                           <span className="text-[9px] uppercase tracking-[0.2em] text-white/50 font-bold block mb-1">
                             Price (₹)
                           </span>
@@ -712,7 +722,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
                         </div>
 
                         {/* Quantity Controls (3 cols) */}
-                        <div className="col-span-5 sm:col-span-2">
+                        <div className="col-span-6 sm:col-span-2">
                           <span className="text-[9px] uppercase tracking-[0.2em] text-white/60 font-bold block mb-1 text-center">
                             Quantity
                           </span>
@@ -742,7 +752,7 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
                         </div>
 
                         {/* Line Total & Remove Action (2 cols) */}
-                        <div className="col-span-3 sm:col-span-2 flex items-center justify-between sm:justify-end gap-2 pt-4 sm:pt-0">
+                        <div className="col-span-12 sm:col-span-2 flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t border-white/5 sm:border-t-0 mt-1 sm:mt-0">
                           <div className="text-right">
                             <span className="text-[8px] uppercase tracking-wider text-white/30 block sm:hidden">Total</span>
                             <span className="text-sm font-serif font-bold text-primary block">
@@ -878,32 +888,24 @@ export function InvoiceCreator({ menuItems, onOrderCreated }: InvoiceCreatorProp
                 </div>
               </div>
 
-              {/* 5% GST Tax Toggle & Rate */}
+              {/* Outlet GST (locked to GST / Outlet settings — not editable per bill) */}
               <div className="space-y-2 bg-black/40 p-3 rounded-2xl border border-white/5">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="applyGstCheck"
-                      checked={applyGst}
-                      onChange={(e) => setApplyGst(e.target.checked)}
-                      className="accent-primary h-4 w-4 rounded cursor-pointer"
-                    />
-                    <label htmlFor="applyGstCheck" className="text-[10px] uppercase tracking-wider text-white font-bold cursor-pointer">
-                      GST Tax ({gstRate}%)
-                    </label>
-                  </div>
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-[10px] uppercase tracking-wider text-white font-bold">
+                    GST Tax ({gstRate}%)
+                  </span>
                   <span className="font-mono text-primary font-bold">
                     ₹{gstAmount.toFixed(2)}
                   </span>
                 </div>
+                <p className="text-[9px] font-mono text-white/40 truncate">
+                  Outlet GSTIN: {outletGstin || 'not set'}
+                </p>
 
-                {applyGst && (
-                  <div className="flex justify-between text-[8px] uppercase tracking-wider text-white/60 pt-1 border-t border-white/5 font-mono">
-                    <span>CGST ({gstRate / 2}%): ₹{(gstAmount / 2).toFixed(2)}</span>
-                    <span>SGST ({gstRate / 2}%): ₹{(gstAmount / 2).toFixed(2)}</span>
-                  </div>
-                )}
+                <div className="flex justify-between text-[8px] uppercase tracking-wider text-white/60 pt-1 border-t border-white/5 font-mono">
+                  <span>CGST ({gstRate / 2}%): ₹{(gstAmount / 2).toFixed(2)}</span>
+                  <span>SGST ({gstRate / 2}%): ₹{(gstAmount / 2).toFixed(2)}</span>
+                </div>
               </div>
 
               {/* Grand Total */}

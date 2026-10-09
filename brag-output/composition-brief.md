@@ -1,7 +1,7 @@
-# Hyperframes Composition Brief: Vyoma ScanServe (2.5-Minute Keynote Showcase)
+# Hyperframes Composition Brief: VyomaPOS - Xtra Rooftop (2.5-Minute Keynote Showcase)
 
 ## Objective
-Create a comprehensive 2.5-minute (150s) cinematic keynote showcase video for Vyoma ScanServe.
+Create a comprehensive 2.5-minute (150s) cinematic keynote showcase video for VyomaPOS - Xtra Rooftop.
 
 ## Output
 - Composition directory: `brag-output/composition/`
@@ -10,9 +10,9 @@ Create a comprehensive 2.5-minute (150s) cinematic keynote showcase video for Vy
 - Duration: 150 seconds (4,500 frames at 30 fps)
 
 ## Source Material
-- Project root: `c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main`
+- Project root: `c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main`
 - Primary files: `index.html`, `LandingPage.tsx`, `CaptainDashboard.tsx`, `InvoicesView.tsx`, `PaymentsView.tsx`, `package.json`
-- Product name: Vyoma ScanServe
+- Product name: VyomaPOS - Xtra Rooftop
 - Tagline: "Fine Dining Velocity. Flawless Floor & Kitchen Synchrony."
 
 ## Creative Direction

@@ -1,5 +1,20 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { calculateGst, validateGSTIN, normalizeGSTIN, GSTIN_REGEX } from '../utils/gst';
+
+// Mock Supabase as unconfigured so auth tests run offline-deterministically
+// (no 2s network timeouts, no dependency on real .env credentials).
+let mockIsSupabaseConfiguredStress = false;
+const mockFromStress = vi.fn();
+
+vi.mock('../lib/supabase', () => ({
+  get isSupabaseConfigured() {
+    return mockIsSupabaseConfiguredStress;
+  },
+  supabase: {
+    from: (...args: any[]) => mockFromStress(...args),
+  },
+}));
+
 import { verifyStaffPassword, verifyAdminPassword } from '../lib/authService';
 
 describe('Adversarial Stress Test: src/utils/gst.ts', () => {
@@ -125,26 +140,24 @@ describe('Adversarial Stress Test: validateGSTIN & GSTIN_REGEX', () => {
   });
 });
 
-describe('Adversarial Stress Test: src/lib/authService.ts', () => {
+describe('Adversarial Stress Test: src/lib/authService.ts (production)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockIsSupabaseConfiguredStress = false;
     vi.spyOn(globalThis, 'fetch').mockRejectedValue(new Error('Backend offline'));
   });
 
   afterEach(() => {
-    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
   it('handles empty and whitespace-only strings gracefully', async () => {
-    vi.stubEnv('DEV', true);
     const emptyStaff = await verifyStaffPassword('');
     expect(emptyStaff).toEqual({ success: false, message: 'Password cannot be empty' });
 
     const wsStaff = await verifyStaffPassword('   \t\n  ');
     expect(wsStaff).toEqual({ success: false, message: 'Password cannot be empty' });
 
-    vi.stubEnv('DEV', false);
     const emptyAdmin = await verifyAdminPassword('');
     expect(emptyAdmin).toEqual({ success: false, message: 'Password cannot be empty' });
 
@@ -152,55 +165,37 @@ describe('Adversarial Stress Test: src/lib/authService.ts', () => {
     expect(wsAdmin).toEqual({ success: false, message: 'Password cannot be empty' });
   });
 
-  it('empirically evaluates undefined or null inputs', async () => {
-    // Evaluating if input.trim() throws on undefined / null
-    let staffUndefinedThrew = false;
-    try {
-      await verifyStaffPassword(undefined as any);
-    } catch {
-      staffUndefinedThrew = true;
-    }
+  it('rejects undefined or null inputs gracefully (no throw)', async () => {
+    // Production hardening: non-string inputs are coerced and rejected cleanly.
+    const staffRes = await verifyStaffPassword(undefined as any);
+    expect(staffRes).toEqual({ success: false, message: 'Password cannot be empty' });
 
-    let adminNullThrew = false;
-    try {
-      await verifyAdminPassword(null as any);
-    } catch {
-      adminNullThrew = true;
-    }
-
-    // Notice: If input.trim() is not guarded against non-string types, it throws TypeError
-    expect(staffUndefinedThrew).toBe(true);
-    expect(adminNullThrew).toBe(true);
+    const adminRes = await verifyAdminPassword(null as any);
+    expect(adminRes).toEqual({ success: false, message: 'Password cannot be empty' });
   });
 
-  it('verifies invalid credentials in DEV mode', async () => {
-    vi.stubEnv('DEV', true);
+  it('rejects invalid credentials when offline', async () => {
     const res = await verifyStaffPassword('wrong_password_999');
     expect(res.success).toBe(false);
-    expect(res.message).toContain('Invalid Passcode. Use default (1234 / staff123)');
+    expect(res.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
   });
 
-  it('verifies invalid credentials in PROD mode', async () => {
-    vi.stubEnv('DEV', false);
+  it('rejects invalid credentials in production', async () => {
     const res = await verifyStaffPassword('wrong_password_999');
     expect(res.success).toBe(false);
+    expect(res.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
   });
 
-  it('allows demo passcodes in unconfigured offline mode', async () => {
-    vi.stubEnv('DEV', false);
+  it('strictly rejects former demo passcodes when offline (no bypass)', async () => {
     const demoCodes = ['1234', 'admin123', 'staff123', 'admin', 'staff', 'captain123', 'vyoma2026'];
     for (const code of demoCodes) {
       const staffRes = await verifyStaffPassword(code);
-      expect(staffRes.success).toBe(true);
-      expect(staffRes.message).toBe('Access Granted');
-    }
-  });
+      expect(staffRes.success).toBe(false);
+      expect(staffRes.message).toBe('Invalid Passcode. Credentials not found or invalid in database.');
 
-  it('allows demo passcodes in DEV mode', async () => {
-    vi.stubEnv('DEV', true);
-    expect((await verifyStaffPassword('1234')).success).toBe(true);
-    expect((await verifyStaffPassword('staff123')).success).toBe(true);
-    expect((await verifyAdminPassword('admin123')).success).toBe(true);
-    expect((await verifyAdminPassword('1234')).success).toBe(true);
+      const adminRes = await verifyAdminPassword(code);
+      expect(adminRes.success).toBe(false);
+      expect(adminRes.message).toBe('Invalid Admin Passcode. Credentials not found or invalid in database.');
+    }
   });
 });

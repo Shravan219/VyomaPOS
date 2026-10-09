@@ -6,7 +6,7 @@ Implement Automated Testing Suite (Milestone M5 / Requirement R5) including Vite
 ## 🔒 My Identity
 - Archetype: worker
 - Roles: implementer, qa, specialist
-- Working directory: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\worker_m5
+- Working directory: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\worker_m5
 - Original parent: 91cfa12b-48b4-4448-aaed-ed21828f0dbd
 - Milestone: M5
 
@@ -28,7 +28,7 @@ Implement Automated Testing Suite (Milestone M5 / Requirement R5) including Vite
 ## Task Summary
 - **What to build**: Vitest test runner configuration, GST calculation & GSTIN validation utilities, test suites for GST, GSTIN regex, order status mapping, and auth service.
 - **Success criteria**: `npm test` passes 100% (4 suites, 41 tests), `npm run lint` 0 errors, `npm run build` succeeds, handoff.md and changes.md delivered.
-- **Interface contracts**: c:\Users\Anay0216\Documents\Coding\ScanServe_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
+- **Interface contracts**: c:\Users\Anay0216\Documents\Coding\VyomaPOS_Dashboard-main\.agents\teamwork\orchestrator_1\PROJECT.md
 - **Code layout**: src/utils/gst.ts, vitest.config.ts, src/__tests__/*
 
 ## Key Decisions Made
