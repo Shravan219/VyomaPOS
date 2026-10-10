@@ -46,7 +46,9 @@ interface AddExpenseModalProps {
 
 export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpenseModalProps) {
   const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState<string>(EXPENSE_CATEGORIES[0]);
+  // Category selector removed from the logging form for now —
+  // every new expense is recorded under 'Other' (recategorizable via Edit).
+  const category = 'Other';
   const [notes, setNotes] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -55,7 +57,6 @@ export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpen
 
   const resetForm = () => {
     setAmount('');
-    setCategory(EXPENSE_CATEGORIES[0]);
     setNotes('');
     setFile(null);
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -75,10 +76,6 @@ export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpen
     const parsedAmount = parseFloat(amount);
     if (!amount || isNaN(parsedAmount) || parsedAmount <= 0) {
       toast.error('Enter a valid amount greater than 0');
-      return;
-    }
-    if (!category) {
-      toast.error('Select a category');
       return;
     }
 
@@ -161,25 +158,6 @@ export function AddExpenseModal({ open, onOpenChange, onExpenseAdded }: AddExpen
               disabled={isSaving}
               required
             />
-          </div>
-
-          <div className="grid gap-1.5">
-            <label htmlFor="expense-category" className="text-sm font-medium">
-              Category *
-            </label>
-            <select
-              id="expense-category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              disabled={isSaving}
-              className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring disabled:opacity-50 dark:bg-input/30"
-            >
-              {EXPENSE_CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
           </div>
 
           <div className="grid gap-1.5">
