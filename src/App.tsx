@@ -53,6 +53,7 @@ import { CaptainDashboard } from '@/src/components/captain/CaptainDashboard';
 import { OnlineOrdersView, getOrderPlatform } from '@/src/components/OnlineOrdersView';
 import { InvoicesView } from '@/src/components/invoices/InvoicesView';
 import { ExpensesView } from '@/src/components/expenses/ExpensesView';
+import { AnalyticsView } from '@/src/components/analytics/AnalyticsView';
 import { PaymentsView } from '@/src/components/payments/PaymentsView';
 import { MenuImporterModal } from '@/src/components/menu/MenuImporterModal';
 import { MenuEngineeringModal } from '@/src/components/menu/MenuEngineeringModal';
@@ -395,7 +396,7 @@ export default function App() {
   const activeTab = useMemo(() => {
     if (isKioskLocked) return 'captain';
     const path = location.pathname.split('/')[1];
-    const validTabs = ['captain', 'counter', 'kitchen', 'pickup', 'payments', 'menu', 'customers', 'online', 'invoices', 'expenses'];
+    const validTabs = ['captain', 'counter', 'kitchen', 'pickup', 'payments', 'menu', 'customers', 'online', 'invoices', 'expenses', 'analytics'];
     return validTabs.includes(path) ? path : 'captain';
   }, [location.pathname, isKioskLocked]);
 
@@ -415,21 +416,6 @@ export default function App() {
     if (isKioskLocked && tab !== 'captain') return;
     setMobileMenuOpen(false);
     navigate(`/${tab}`);
-  };
-
-  const ANALYTICS_URL = 'https://xtranalytics.vercel.app';
-
-  // External analytics dashboard — opens outside the POS shell so the
-  // terminal session is never unloaded. In Electron the main process
-  // intercepts this and opens the system browser instead.
-  const openAnalytics = () => {
-    if (isKioskLocked) return;
-    setMobileMenuOpen(false);
-    const popup = window.open(ANALYTICS_URL, '_blank', 'noopener,noreferrer');
-    // Fallback for strict popup blockers / embedded webviews: redirect in place.
-    if (!popup) {
-      window.location.href = ANALYTICS_URL;
-    }
   };
 
   const [stats, setStats] = useState({ preparedToday: 0, avgTime: '12m' });
@@ -1355,8 +1341,8 @@ export default function App() {
                 <NavItem 
                   icon={<BarChart3 size={16} strokeWidth={1.5} />} 
                   label="Analytics" 
-                  active={false} 
-                  onClick={openAnalytics}
+                  active={activeTab === 'analytics'} 
+                  onClick={() => setActiveTab('analytics')}
                 />
               </>
             )}
@@ -1599,8 +1585,12 @@ export default function App() {
                 Expenses
               </button>
               <button
-                onClick={openAnalytics}
-                className="shrink-0 min-w-max min-h-[36px] px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center justify-center active:scale-95 bg-white/5 border border-white/10 text-white/80 hover:text-white"
+                onClick={() => setActiveTab('analytics')}
+                className={`shrink-0 min-w-max min-h-[36px] px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center justify-center active:scale-95 ${
+                  activeTab === 'analytics'
+                    ? 'bg-primary text-black shadow-[0_0_12px_rgba(197,160,89,0.3)]'
+                    : 'bg-white/5 border border-white/10 text-white/80 hover:text-white'
+                }`}
               >
                 Analytics
               </button>
@@ -1710,8 +1700,10 @@ export default function App() {
                     <Wallet size={16} /> Expenses Ledger
                   </button>
                   <button
-                    onClick={openAnalytics}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all bg-white/5 text-white"
+                    onClick={() => setActiveTab('analytics')}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                      activeTab === 'analytics' ? 'bg-primary text-black' : 'bg-white/5 text-white'
+                    }`}
                   >
                     <BarChart3 size={16} /> Analytics Dashboard
                   </button>
@@ -2495,6 +2487,11 @@ export default function App() {
             <TabsContent value="expenses" className="m-0 h-full flex flex-col p-0 outline-none data-[state=inactive]:hidden overflow-y-auto custom-scrollbar">
               <ErrorBoundary>
                 <ExpensesView />
+              </ErrorBoundary>
+            </TabsContent>
+            <TabsContent value="analytics" className="m-0 h-full flex flex-col p-0 outline-none data-[state=inactive]:hidden overflow-y-auto custom-scrollbar">
+              <ErrorBoundary>
+                <AnalyticsView />
               </ErrorBoundary>
             </TabsContent>
           </div>

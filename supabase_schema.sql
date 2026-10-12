@@ -72,6 +72,11 @@ CREATE TABLE IF NOT EXISTS public.orders (
     customer_phone TEXT,
     table_id TEXT,
     gstin TEXT DEFAULT NULL,
+    order_type TEXT DEFAULT 'dine_in',
+    aggregator_platform TEXT,
+    notes TEXT,
+    custom_instructions TEXT,
+    placed_at_ist TEXT,
     CONSTRAINT orders_pkey PRIMARY KEY (id)
 );
 
@@ -79,6 +84,7 @@ CREATE TABLE IF NOT EXISTS public.orders (
 CREATE INDEX IF NOT EXISTS idx_orders_customer_phone ON public.orders (customer_phone) WHERE customer_phone IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_orders_status ON public.orders (status);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at_desc ON public.orders (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_orders_aggregator_platform ON public.orders (aggregator_platform) WHERE aggregator_platform IS NOT NULL;
 
 
 -- ====================================================================
