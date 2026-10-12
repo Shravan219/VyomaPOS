@@ -46,8 +46,10 @@ VyomaPOS - Xtra Rooftop is an all-in-one restaurant operations dashboard:
 | **Customers** | Customer CRM with phone masking and VIP/loyalty handling |
 | **Online** | Aggregator / online order feed (PetPooja, Dyno, and generic webhooks) |
 | **Invoices** | GSTIN-compliant invoice creation, history, PDF export, and thermal printing |
+| **Expenses** | Daily expense logging (amount, vendor notes, receipt photo), ledger, and Google Sheets sync |
+| **Analytics** | External analytics dashboard (opens `https://xtranalytics.vercel.app` outside the POS shell) |
 
-The app opens directly on a **password-entry screen** (no public landing page). A **kiosk lock mode** restricts terminals to the Captain view.
+The app opens directly on a **password-entry screen** (no public landing page), asked on **every fresh launch**. A **kiosk lock mode** restricts terminals to the Captain view.
 
 ---
 
@@ -63,7 +65,8 @@ The app opens directly on a **password-entry screen** (no public landing page). 
 - **POS terminal linking** — point the dashboard at a local POS server (`ServerConnectionModal`) or run standalone/cloud
 - **WhatsApp receipts** — optional outbound receipt sending (Baileys integration)
 - **Table QR codes** — generate Wi-Fi + menu QR sheets for tables
-- **Order simulation** — admin modal to inject test orders
+- **Expense logging** — amount, vendor notes, and receipt photo; new entries default to the `Other` category (recategorizable via Edit) and sync to Google Sheets
+- **Analytics tab** — one click opens the external analytics dashboard without unloading the POS session
 - **Responsive + safe-area aware** — desktop sidebar navigation, mobile top bar and bottom sheets
 - **Glassmorphism UI** — frosted panels, ambient aurora background, gold (`#C5A059`) luxury accents
 - **Reduced-motion support** — respects `prefers-reduced-motion`
@@ -367,6 +370,8 @@ Uses `electron-packager` with `assets/icon.ico`.
 npm run apk:build     # builds debug APK into apk/
 npm run apk:install   # install on a connected device
 ```
+
+Output: `apk/VyomaPOS_Dashboard_v1.0.apk` and `VyomaPOS.apk` (application ID `com.vyoma.vyomapos` — uninstall any old `com.vyoma.scanserve` build first, as both install side-by-side).
 
 Requires Android Studio SDK + JDK. Uses Capacitor 8.
 
