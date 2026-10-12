@@ -34,3 +34,4 @@ android/local.properties
 # Graphify cache & backups
 graphify-out/cache/
 graphify-out/20*/
+.vercel
