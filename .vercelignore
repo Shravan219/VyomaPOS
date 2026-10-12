@@ -1,0 +1,29 @@
+# Dependencies — Vercel installs these from package.json during the build
+node_modules
+
+# Native / desktop build outputs — never needed for the web deployment
+android
+apk
+release
+dist
+*.apk
+*.exe
+
+# Electron desktop shell (web build does not use it)
+electron.cjs
+electron.js
+pack-win.cjs
+assets/icon.ico
+
+# Separate legacy mobile project + local-only runtime state
+VyomPOS
+.whatsapp_auth
+.env
+
+# Docs, caches and agent workspace — not part of the web app
+.agents
+graphify-out
+brag-output
+design-system
+REALITY_SEED.pdf
+*.xlsx
