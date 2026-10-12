@@ -44,7 +44,8 @@ import {
   Sparkles,
   Filter,
   Server,
-  Wallet
+  Wallet,
+  BarChart3
 } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { Receipt } from '@/src/components/Receipt';
@@ -414,6 +415,21 @@ export default function App() {
     if (isKioskLocked && tab !== 'captain') return;
     setMobileMenuOpen(false);
     navigate(`/${tab}`);
+  };
+
+  const ANALYTICS_URL = 'https://xtranalytics.vercel.app';
+
+  // External analytics dashboard — opens outside the POS shell so the
+  // terminal session is never unloaded. In Electron the main process
+  // intercepts this and opens the system browser instead.
+  const openAnalytics = () => {
+    if (isKioskLocked) return;
+    setMobileMenuOpen(false);
+    const popup = window.open(ANALYTICS_URL, '_blank', 'noopener,noreferrer');
+    // Fallback for strict popup blockers / embedded webviews: redirect in place.
+    if (!popup) {
+      window.location.href = ANALYTICS_URL;
+    }
   };
 
   const [stats, setStats] = useState({ preparedToday: 0, avgTime: '12m' });
@@ -1336,6 +1352,12 @@ export default function App() {
                   active={activeTab === 'expenses'} 
                   onClick={() => setActiveTab('expenses')}
                 />
+                <NavItem 
+                  icon={<BarChart3 size={16} strokeWidth={1.5} />} 
+                  label="Analytics" 
+                  active={false} 
+                  onClick={openAnalytics}
+                />
               </>
             )}
 
@@ -1576,6 +1598,12 @@ export default function App() {
               >
                 Expenses
               </button>
+              <button
+                onClick={openAnalytics}
+                className="shrink-0 min-w-max min-h-[36px] px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center justify-center active:scale-95 bg-white/5 border border-white/10 text-white/80 hover:text-white"
+              >
+                Analytics
+              </button>
             </>
           )}
         </div>
@@ -1680,6 +1708,12 @@ export default function App() {
                     }`}
                   >
                     <Wallet size={16} /> Expenses Ledger
+                  </button>
+                  <button
+                    onClick={openAnalytics}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all bg-white/5 text-white"
+                  >
+                    <BarChart3 size={16} /> Analytics Dashboard
                   </button>
                   <button
                     onClick={() => {
