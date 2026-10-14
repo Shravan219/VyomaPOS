@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import {
   getSupabaseClient,
+  getMemoryOrder,
   saveMemoryOrder,
   formatIST,
   recordInboundLog,
@@ -519,13 +520,49 @@ export async function processWebhookPayload(
     notes: rawBody?.instructions || rawBody?.special_instructions || details?.notes || details?.special_instructions || `Ref: ${finalOrderId}`
   };
 
+  // Dedup guard: a redelivered webhook for a known live order must never
+  // regress its status (e.g. handed-over 'dispatched' back to inbound
+  // 'pending'), which resurrects the card + action button in every POS view
+  // and makes Handover look like it "repeats itself".
+  const STATUS_RANK: Record<string, number> = {
+    pending: 0,
+    preparing: 1,
+    ready: 2,
+    dispatched: 3,
+    out_for_delivery: 3,
+    completed: 4,
+    cancelled: 4
+  };
+  const prevLive = getMemoryOrder(finalOrderId);
+  const prevStatusLower = String(prevLive?.status || '').toLowerCase();
+  const isTerminalPrev = prevStatusLower === 'completed' || prevStatusLower === 'cancelled';
+  // A repeat delivery is a known order still in its live lifecycle.
+  // (Terminal orders reuse the full new-order path — aggregator ids are
+  // unique per order, so a post-terminal repeat is treated as a fresh cycle.)
+  const isRepeatDelivery = !!prevLive && !isTerminalPrev;
+  if (isRepeatDelivery && prevLive) {
+    const prevRank = STATUS_RANK[prevStatusLower] ?? 0;
+    const nextRank = STATUS_RANK[mappedStatus] ?? 0;
+    if (prevRank > nextRank) {
+      console.log(`[processWebhookPayload] Repeat delivery for ${finalOrderId}: keeping live status '${prevLive.status}' over inbound '${mappedStatus}'.`);
+      mappedStatus = prevLive.status as typeof mappedStatus;
+      orderRecord.status = prevLive.status as ServerOrder['status'];
+    }
+  }
+
   // Save to Memory Store
   saveMemoryOrder(orderRecord);
 
-  // Broadcast Real-time SSE
+  // Broadcast Real-time SSE — repeats sync quietly via 'order_updated';
+  // only genuinely new orders announce via 'order_created' (chime + toast).
+  // (No client listens to 'new_order'; kept for new orders for compatibility.)
   try {
-    broadcastEvent('new_order', orderRecord);
-    broadcastEvent('order_created', orderRecord);
+    if (isRepeatDelivery) {
+      broadcastEvent('order_updated', orderRecord);
+    } else {
+      broadcastEvent('new_order', orderRecord);
+      broadcastEvent('order_created', orderRecord);
+    }
   } catch (sseErr: any) {
     console.warn('[processWebhookPayload] SSE broadcast error:', sseErr);
   }
@@ -558,6 +595,46 @@ export async function processWebhookPayload(
   // 1. EXPLICIT DATABASE LOGGING & ERROR HANDLING
   const supabase = getSupabaseClient();
   if (supabase) {
+    // Repeat-delivery guard: redelivered webhooks must not create duplicate
+    // rows (each blind insert mints a fresh UUID → phantom duplicate cards).
+    // Webhook rows always carry `Ref: <aggregatorOrderId>` in notes unless
+    // the sender supplied custom instructions, so match on that reference.
+    if (isRepeatDelivery) {
+      try {
+        const escapedRef = finalOrderId.replace(/[%_\\]/g, (m) => `\\${m}`);
+        const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+        const { data: dupes } = await supabase
+          .from('orders')
+          .select('id,status,created_at')
+          .like('notes', `%Ref: ${escapedRef}%`)
+          .gte('created_at', twoHoursAgo)
+          .order('created_at', { ascending: false })
+          .limit(5);
+        const liveDupe = (dupes || []).find((d: any) => {
+          const s = String(d?.status || '').toLowerCase();
+          return s !== 'completed' && s !== 'cancelled';
+        });
+        if (liveDupe) {
+          console.log(`[processWebhookPayload] Repeat delivery for ${finalOrderId}: live DB row ${liveDupe.id} already exists — skipping duplicate insert.`);
+          return {
+            status: 200,
+            data: {
+              success: '1',
+              message: 'Duplicate delivery ignored; live order already tracked',
+              order_id: finalOrderId,
+              token: orderRecord.token,
+              customer: customerName,
+              total_amount: total,
+              items_count: items.length,
+              timestamp: new Date().toISOString()
+            }
+          };
+        }
+      } catch (dupeErr: any) {
+        console.warn('[processWebhookPayload] Duplicate check notice (proceeding with insert):', dupeErr?.message || dupeErr);
+      }
+    }
+
     console.log('ATTEMPTING_DB_PERSIST:', {
       orderId: finalOrderId,
       customerName: orderRecord.customer_name,

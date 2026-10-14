@@ -45,11 +45,13 @@ import {
   Filter,
   Server,
   Wallet,
-  BarChart3
+  BarChart3,
+  CalendarCheck
 } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { Receipt } from '@/src/components/Receipt';
 import { CaptainDashboard } from '@/src/components/captain/CaptainDashboard';
+import { ReservationsView } from '@/src/components/reservations/ReservationsView';
 import { OnlineOrdersView, getOrderPlatform } from '@/src/components/OnlineOrdersView';
 import { InvoicesView } from '@/src/components/invoices/InvoicesView';
 import { ExpensesView } from '@/src/components/expenses/ExpensesView';
@@ -66,7 +68,6 @@ import { Capacitor } from '@capacitor/core';
 import { soundService } from '@/src/lib/sound';
 import { verifyStaffPassword } from '@/src/lib/authService';
 import { syncOrderStatusToDyno } from '@/src/lib/orderSync';
-import { dispatchOrderStatus } from '@/lib/dispatch-status';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -396,7 +397,7 @@ export default function App() {
   const activeTab = useMemo(() => {
     if (isKioskLocked) return 'captain';
     const path = location.pathname.split('/')[1];
-    const validTabs = ['captain', 'counter', 'kitchen', 'pickup', 'payments', 'menu', 'customers', 'online', 'invoices', 'expenses', 'analytics'];
+    const validTabs = ['captain', 'counter', 'kitchen', 'pickup', 'payments', 'menu', 'customers', 'reservations', 'online', 'invoices', 'expenses', 'analytics'];
     return validTabs.includes(path) ? path : 'captain';
   }, [location.pathname, isKioskLocked]);
 
@@ -1006,26 +1007,25 @@ export default function App() {
 
     toast.success(`Order #${orderToUpdate?.token || realOrderId} updated to ${newStatus}`);
 
-    // 2. Dispatch to Backend Server & Dyno Webhooks
-    const platform = orderToUpdate ? getOrderPlatform(orderToUpdate) : 'online';
-    const sourceUpper = platform === 'swiggy' ? 'SWIGGY' : (platform === 'zomato' ? 'ZOMATO' : (orderToUpdate?.source || 'DYNO'));
+    // 2. Aggregator-only outbound dispatch (single path: server relay).
+    // Dine-in / takeaway orders NEVER leave the POS — the browser-direct
+    // dispatcher was removed to eliminate the duplicate Dyno POST.
+    if (orderToUpdate && isAggregatorOrder(orderToUpdate)) {
+      const platform = getOrderPlatform(orderToUpdate);
+      const sourceUpper = platform === 'swiggy' ? 'SWIGGY' : (platform === 'zomato' ? 'ZOMATO' : (orderToUpdate?.source || 'DYNO'));
 
-    dispatchOrderStatus({
-      orderId: realOrderId,
-      nextStatus: newStatus,
-      callbackUrl: orderToUpdate?.callback_url
-    }).catch(err => {
-      console.warn('[Outbound Dispatcher Warning]', err);
-    });
+      syncOrderStatusToDyno({
+        orderId: realOrderId,
+        token: orderToUpdate?.token,
+        status: newStatus,
+        source: sourceUpper,
+        callbackUrl: orderToUpdate?.callback_url
+      });
+    }
 
-    syncOrderStatusToDyno({
-      orderId: realOrderId,
-      token: orderToUpdate?.token,
-      status: newStatus,
-      source: sourceUpper
-    });
-
-    // 3. Sync to Supabase DB (Non-blocking)
+    // 3. Sync to Supabase DB (Non-blocking, but failures are surfaced —
+    // a rejected write (RLS / check constraint) resurrects the card on the
+    // next poll, so the operator must see it instead of a success toast).
     try {
       const { error: dbErr } = await supabase
         .from('orders')
@@ -1034,9 +1034,11 @@ export default function App() {
 
       if (dbErr) {
         console.warn('Supabase DB update warning:', dbErr.message);
+        toast.error('Status NOT saved to database', { description: dbErr.message });
       }
     } catch (dbErr: any) {
       console.warn('Supabase exception:', dbErr?.message || dbErr);
+      toast.error('Status NOT saved to database', { description: String(dbErr?.message || dbErr) });
     }
   };
 
@@ -1320,6 +1322,12 @@ export default function App() {
                   active={activeTab === 'customers'} 
                   onClick={() => setActiveTab('customers')}
                 />
+                <NavItem
+                  icon={<CalendarCheck size={16} strokeWidth={1.5} />}
+                  label="Reservations"
+                  active={activeTab === 'reservations'}
+                  onClick={() => setActiveTab('reservations')}
+                />
                 <NavItem 
                   icon={<Globe size={16} strokeWidth={1.5} />} 
                   label="Online" 
@@ -1555,6 +1563,16 @@ export default function App() {
                 Customers
               </button>
               <button
+                onClick={() => setActiveTab('reservations')}
+                className={`shrink-0 min-w-max min-h-[36px] px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center justify-center active:scale-95 ${
+                  activeTab === 'reservations'
+                    ? 'bg-primary text-black shadow-[0_0_12px_rgba(197,160,89,0.3)]'
+                    : 'bg-white/5 border border-white/10 text-white/80 hover:text-white'
+                }`}
+              >
+                Reservations
+              </button>
+              <button
                 onClick={() => setActiveTab('online')}
                 className={`shrink-0 min-w-max min-h-[36px] px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all flex items-center justify-center active:scale-95 ${
                   activeTab === 'online'
@@ -1674,6 +1692,14 @@ export default function App() {
                     }`}
                   >
                     <Users size={16} /> Customer Database
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('reservations')}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                      activeTab === 'reservations' ? 'bg-primary text-black' : 'bg-white/5 text-white'
+                    }`}
+                  >
+                    <CalendarCheck size={16} /> Table Reservations
                   </button>
                   <button
                     onClick={() => setActiveTab('online')}
@@ -2394,6 +2420,19 @@ export default function App() {
                         return prev.map(o => (o.id === newOrder.id || (o.token && o.token === newOrder.token)) ? newOrder : o);
                       }
                       return [newOrder, ...prev];
+                    });
+                  }}
+                />
+              </ErrorBoundary>
+            </TabsContent>
+
+            <TabsContent value="reservations" className="m-0 h-full flex flex-col p-0 outline-none data-[state=inactive]:hidden overflow-y-auto custom-scrollbar">
+              <ErrorBoundary>
+                <ReservationsView
+                  orders={orders}
+                  onSeatGuest={(reservation) => {
+                    toast.info(`${reservation.guest_name} seated — start their billing session from Captain or Invoices`, {
+                      description: `Table ${reservation.table_number} is now Occupied.`,
                     });
                   }}
                 />

@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS "public"."orders" (
     "notes" "text",
     "custom_instructions" "text",
     "aggregator_platform" "text",
-    CONSTRAINT "orders_status_check" CHECK (("status" = ANY (ARRAY['pending'::"text", 'preparing'::"text", 'ready'::"text", 'waiting for payment'::"text", 'completed'::"text", 'cancelled'::"text"])))
+    CONSTRAINT "orders_status_check" CHECK (("status" = ANY (ARRAY['pending'::"text", 'preparing'::"text", 'ready'::"text", 'dispatched'::"text", 'waiting for payment'::"text", 'waiting_for_payment'::"text", 'completed'::"text", 'cancelled'::"text", 'ACCEPTED'::"text", 'PREPARING'::"text", 'READY'::"text", 'OUT_FOR_DELIVERY'::"text", 'DELIVERED'::"text", 'CANCELLED'::"text"])))
 );
 
 

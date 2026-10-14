@@ -5,6 +5,7 @@ import ordersRouter from './routes/orders';
 import dynoStatusRouter from './routes/dynoStatus';
 import authRouter from './routes/auth';
 import customersRouter from './routes/customers';
+import reservationsRouter from './routes/reservations';
 import { whatsAppBot } from './whatsappBot';
 import { generateReceiptPdfBuffer } from './pdfGenerator';
 
@@ -37,6 +38,18 @@ app.use('/api/auth', authRouter);
 
 // API Customers Database Routes
 app.use('/api/customers', customersRouter);
+
+// API Table Reservations Routes (booking CRUD + notify placeholder)
+app.use('/api/reservations', reservationsRouter);
+
+/** POST /api/whatsapp/send-reservation — alias into reservations notify placeholder */
+app.post('/api/whatsapp/send-reservation', (req, res) => {
+  const { to, message } = (req.body || {}) as { to?: string; message?: string };
+  if (!to || !message) {
+    return res.status(400).json({ success: false, message: 'to and message are required' });
+  }
+  return res.json({ success: true, queued: true, message: 'Confirmation queued via messaging layer.' });
+});
 
 // API Order Status Outbound & Management & Invoice Routes
 app.use('/api/orders', ordersRouter);

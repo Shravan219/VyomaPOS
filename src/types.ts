@@ -2,6 +2,32 @@ export type OrderStatus = 'pending' | 'preparing' | 'ready' | 'dispatched' | 'wa
 
 export type TableStatus = 'available' | 'occupied' | 'reserved' | 'cleaning';
 
+export type ReservationStatus = 'booked' | 'seated' | 'cancelled' | 'completed';
+
+/** Floor sections for the reservation floor plan (indoor vs rooftop/lounge). */
+export type TableSection = 'Indoor' | 'Rooftop' | 'Lounge';
+
+export interface Reservation {
+  id: string;
+  guest_name: string;
+  phone: string;
+  party_size: number;
+  reservation_time: string; // ISO timestamp
+  table_number: string; // e.g. "T-04" or "Table 4"
+  status: ReservationStatus;
+  notes?: string | null;
+  created_at: string;
+}
+
+export interface CreateReservationInput {
+  guest_name: string;
+  phone: string;
+  party_size: number;
+  reservation_time: string;
+  table_number: string;
+  notes?: string;
+}
+
 export interface RestaurantTable {
   id: string | number;
   table_number: string;

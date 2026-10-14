@@ -17,8 +17,15 @@ export async function syncOrderStatusToDyno(params: {
   token?: string;
   status: 'pending' | 'preparing' | 'ready' | 'completed' | 'cancelled' | string;
   source?: string;
+  /** Per-order aggregator callback URL — forwarded so the server relay posts here instead of the global Dyno URL. */
+  callbackUrl?: string;
 }) {
-  const mappedStatus = (DYNO_STATUS_MAP as any)[params.status] || params.status.toUpperCase();
+  // Send the RAW internal status (e.g. 'dispatched'). The server relay maps
+  // to Dyno vocabulary only for the outbound payload, and persists the raw
+  // value to memory + Supabase — previously the mapped value
+  // ('OUT_FOR_DELIVERY', …) was written to the DB, violating the
+  // orders_status_check constraint and corrupting status semantics.
+  const rawStatus = String(params.status || '').toLowerCase().trim();
 
   try {
     const response = await fetch('/api/orders/update-status', {
@@ -29,8 +36,9 @@ export async function syncOrderStatusToDyno(params: {
       body: JSON.stringify({
         order_id: params.orderId || params.token,
         token: params.token || params.orderId,
-        status: mappedStatus,
-        source: params.source || 'DYNO'
+        status: rawStatus,
+        source: params.source || 'DYNO',
+        ...(params.callbackUrl ? { custom_target_url: params.callbackUrl } : {})
       })
     });
 

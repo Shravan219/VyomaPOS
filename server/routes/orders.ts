@@ -242,7 +242,7 @@ router.post('/test-ping', async (req: Request, res: Response) => {
  */
 router.post('/update-status', async (req: Request, res: Response) => {
   try {
-    const { order_id, token, status, source, restaurant_id } = req.body;
+    const { order_id, token, status, source, restaurant_id, custom_target_url, callback_url } = req.body;
 
     if (!order_id || !status) {
       return res.status(400).json({
@@ -252,17 +252,24 @@ router.post('/update-status', async (req: Request, res: Response) => {
     }
 
     // Update memory order if exists
-    const existing = getMemoryOrder(String(order_id)) || getMemoryOrder(String(token));
+    const existing = getMemoryOrder(String(order_id)) || (token ? getMemoryOrder(String(token)) : undefined);
     if (existing) {
       existing.status = status;
       saveMemoryOrder(existing);
       broadcastEvent('order_updated', existing);
     }
 
-    // Update Supabase if connected
+    // Update Supabase if connected (and fetch the row for the aggregator guard below)
     const supabase = getSupabaseClient();
+    let dbOrder: any = null;
     if (supabase) {
       try {
+        const { data } = await supabase
+          .from('orders')
+          .select('id,token,order_type,aggregator_platform')
+          .or(`id.eq.${order_id},token.eq.${token || order_id}`)
+          .limit(1);
+        dbOrder = data?.[0] || null;
         await supabase
           .from('orders')
           .update({ status })
@@ -272,15 +279,41 @@ router.post('/update-status', async (req: Request, res: Response) => {
       }
     }
 
+    // Server-side guard (defense-in-depth): relay to Dyno ONLY for aggregator
+    // orders. In-house dine-in / takeaway orders sync internally and stop here,
+    // no matter which client version (web, stale APK, Electron) called us.
+    // Every genuine aggregator intake path sets order_type='aggregator' plus
+    // aggregator_platform (see processWebhook.ts / dynoHandler.ts), so an
+    // order that is positively in-house can never be a relay candidate.
+    const candidate: any = existing || dbOrder || null;
+    const candidatePlatform = String(candidate?.aggregator_platform || '').trim();
+    const candidateType = String(candidate?.order_type || '').trim().toLowerCase();
+    const isInHouse = candidate !== null && !candidatePlatform &&
+      (candidateType === 'dine_in' || candidateType === 'takeaway' || candidateType === '');
+
+    if (isInHouse) {
+      console.log(`[Dyno Outbound Guard] Skipping Dyno relay for in-house order ${order_id} (order_type=${candidateType || 'unset'}). Internal sync complete.`);
+      return res.status(200).json({
+        success: true,
+        dyno_relayed: false,
+        message: 'Status synced internally; Dyno relay skipped (in-house dine-in/takeaway order)'
+      });
+    }
+
+    // Per-order aggregator callback URL takes precedence over the global Dyno URL.
+    const perOrderTarget = custom_target_url || callback_url || undefined;
+
     const webhookResult = await triggerOutboundWebhook({
       order_id: String(order_id),
       token: token ? String(token) : undefined,
       status: String(status),
-      source: source || 'DYNO'
+      source: source || 'DYNO',
+      ...(perOrderTarget ? { custom_target_url: String(perOrderTarget) } : {})
     });
 
     return res.status(200).json({
       success: true,
+      dyno_relayed: true,
       message: 'Status update processed and outbound webhook triggered',
       webhook_dispatch: webhookResult
     });

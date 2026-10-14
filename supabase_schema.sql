@@ -65,7 +65,11 @@ CREATE TABLE IF NOT EXISTS public.orders (
     id UUID DEFAULT uuid_generate_v4() NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     token TEXT NOT NULL,
-    status TEXT DEFAULT 'pending'::text NOT NULL,
+    -- Covers every status the POS writes: internal lifecycle values
+    -- ('dispatched' = aggregator handover, 'waiting for payment' = billing)
+    -- plus the legacy Dyno-mapped values the server relay persisted.
+    status TEXT DEFAULT 'pending'::text NOT NULL
+        CHECK (status IN ('pending', 'preparing', 'ready', 'dispatched', 'waiting for payment', 'waiting_for_payment', 'completed', 'cancelled', 'ACCEPTED', 'PREPARING', 'READY', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED')),
     total NUMERIC(10, 2) NOT NULL,
     items JSONB DEFAULT '[]'::jsonb NOT NULL,
     customer_name TEXT,
