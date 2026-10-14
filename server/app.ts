@@ -105,7 +105,7 @@ app.post('/api/whatsapp/send-receipt', async (req, res) => {
       return res.status(400).json({ success: false, message: 'No customer phone number provided' });
     }
 
-    // Generate PDF buffer on server
+    // Generate PDF buffer on server (embeds the client-supplied UPI QR, if any)
     const pdfBuffer = generateReceiptPdfBuffer(order);
     const fileName = `Receipt_${order.token || String(order.id || '').slice(-4)}.pdf`;
 

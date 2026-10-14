@@ -199,6 +199,90 @@ export function isAggregatorOrder(order: Order): boolean {
 }
 
 /**
+ * Collapse duplicate cards for the same logical order.
+ *
+ * The same order can reach the client under two different keys: the server
+ * memory copy is keyed by aggregator id (e.g. "SW-101") while its Supabase
+ * row carries a random UUID — but both share the token. Id-keyed merges
+ * (`map.set(o.id || o.token)`) then render the pair as two "dummy" cards.
+ * This folds same-token records into one, so Payments/Online never show
+ * ghosts.
+ *
+ * Safety: placeholder tokens (`#0000`) never collapse, and same-token pairs
+ * from different calendar days (token reuse) are kept separate.
+ */
+const PLACEHOLDER_TOKENS = new Set(['', '#', '#0000', 'nan', 'undefined']);
+
+function orderLifecycleRank(status: string | undefined): number {
+  switch ((status || '').toLowerCase().trim()) {
+    case 'pending': return 0;
+    case 'preparing': return 1;
+    case 'ready': return 2;
+    case 'dispatched':
+    case 'out_for_delivery':
+    case 'out for delivery': return 3;
+    case 'waiting for payment':
+    case 'waiting_for_payment': return 4;
+    case 'completed':
+    case 'cancelled': return 5;
+    default: return 0;
+  }
+}
+
+function sameCalendarDay(a: string | undefined, b: string | undefined): boolean {
+  if (!a || !b) return true; // missing timestamp → allow collapse
+  const da = new Date(a);
+  const db = new Date(b);
+  if (Number.isNaN(da.getTime()) || Number.isNaN(db.getTime())) return true;
+  return da.getFullYear() === db.getFullYear() &&
+    da.getMonth() === db.getMonth() &&
+    da.getDate() === db.getDate();
+}
+
+function preferOrderRecord(a: Order, b: Order): Order {
+  const rankDiff = orderLifecycleRank(b.status) - orderLifecycleRank(a.status);
+  if (rankDiff !== 0) return rankDiff > 0 ? b : a;
+  const score = (o: Order) =>
+    (o.aggregator_platform ? 4 : 0) +
+    (o.order_type === 'aggregator' || o.order_type === 'delivery' ? 2 : 0) +
+    (o.callback_url ? 1 : 0);
+  const scoreDiff = score(b) - score(a);
+  if (scoreDiff !== 0) return scoreDiff > 0 ? b : a;
+  const ta = new Date(a.created_at || 0).getTime();
+  const tb = new Date(b.created_at || 0).getTime();
+  return tb >= ta ? b : a;
+}
+
+export function dedupeOrders(list: Order[]): Order[] {
+  const byId = new Map<string, Order>();
+  for (const o of list) {
+    if (!o) continue;
+    const k = o.id || o.token;
+    if (!k) continue;
+    const prev = byId.get(k);
+    byId.set(k, prev ? preferOrderRecord(prev, o) : o);
+  }
+  const byToken = new Map<string, Order>();
+  const untokened: Order[] = [];
+  for (const o of byId.values()) {
+    const t = (o.token || '').trim().toLowerCase();
+    if (!t || PLACEHOLDER_TOKENS.has(t)) {
+      untokened.push(o);
+      continue;
+    }
+    const prev = byToken.get(t);
+    if (!prev) {
+      byToken.set(t, o);
+    } else if (sameCalendarDay(prev.created_at, o.created_at)) {
+      byToken.set(t, preferOrderRecord(prev, o));
+    } else {
+      untokened.push(o);
+    }
+  }
+  return [...byToken.values(), ...untokened];
+}
+
+/**
  * Active-list membership: completed/cancelled are out, and dispatched
  * aggregator orders leave the active views on Handover (the rider has the
  * order; completion arrives via webhook). In-house dispatched orders stay

@@ -24,6 +24,8 @@ export interface OrderReceiptData {
   gstin?: string;
   mergedCount?: number;
   notes?: string;
+  /** Pre-rendered UPI payment QR (PNG data URL) for the server PDF. */
+  upi_qr?: string;
 }
 
 /**
@@ -240,9 +242,11 @@ export function openExternalUrl(url: string): void {
  */
 export async function generateReceiptPDF(data: OrderReceiptData, restaurantName = 'XTRA ROOFTOP LOUNGE & CAFE'): Promise<any> {
   const { jsPDF } = await import('jspdf');
+  const { buildUpiPayUrl, getOutletUpiId } = await import('./upi');
   const lineCount = data.items.length;
-  // Dynamic height calculation (in mm)
-  const totalHeight = Math.max(130, 85 + (lineCount * 5.5));
+  // Dynamic height calculation (in mm) — plus room for the UPI payment QR.
+  const upiBlockHeight = Number(data.total) > 0 ? 52 : 0;
+  const totalHeight = Math.max(130, 85 + (lineCount * 5.5) + upiBlockHeight);
 
   const doc = new jsPDF({
     orientation: 'portrait',
@@ -405,6 +409,50 @@ export async function generateReceiptPDF(data: OrderReceiptData, restaurantName 
   y += 6;
   doc.setDrawColor(220, 220, 220);
   doc.line(6, y, pageWidth - 6, y);
+
+  // UPI payment QR — exact grand total, scannable by any UPI app.
+  if (Number(data.total) > 0) {
+    try {
+      const QRCode = (await import('qrcode')).default;
+      const tokenPart =
+        data.tokens && data.tokens.length > 0
+          ? data.tokens.join(',')
+          : (data.token ? String(data.token) : String(data.id).slice(-4));
+      const upiUrl = buildUpiPayUrl({
+        pa: getOutletUpiId(),
+        pn: restaurantName,
+        amount: Number(data.total),
+        note: `VyomaPOS Bill #${tokenPart}`,
+      });
+      const qrPng: string = await QRCode.toDataURL(upiUrl, {
+        width: 280,
+        margin: 1,
+        errorCorrectionLevel: 'M',
+      });
+      y += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(20, 20, 20);
+      doc.text('SCAN TO PAY VIA UPI', pageWidth / 2, y, { align: 'center' });
+      y += 3;
+      const qrSize = 32;
+      doc.addImage(qrPng, 'PNG', pageWidth / 2 - qrSize / 2, y, qrSize, qrSize);
+      y += qrSize + 3.5;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text(`Pay Rs. ${Number(data.total).toFixed(2)}`, pageWidth / 2, y, { align: 'center' });
+      y += 3.5;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(6.5);
+      doc.setTextColor(110, 110, 110);
+      doc.text(`to ${getOutletUpiId()}`, pageWidth / 2, y, { align: 'center' });
+      y += 2;
+      doc.setDrawColor(220, 220, 220);
+      doc.line(6, y, pageWidth - 6, y);
+    } catch (qrErr) {
+      console.warn('[Receipt PDF] UPI QR skipped:', qrErr);
+    }
+  }
 
   // Footer
   y += 5;

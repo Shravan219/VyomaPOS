@@ -24,9 +24,13 @@ import { supabase } from '@/src/lib/supabase';
 import {
   OrderReceiptData,
   formatPhoneNumber,
-  sendWhatsAppReceiptWithPDF
+  sendWhatsAppReceiptWithPDF,
+  generateReceiptPDF
 } from '@/src/lib/whatsapp';
 import { getGSTAMT, GOOGLE_REVIEW_URL, RESTAURANT_NAME } from '@/src/lib/restaurantSettings';
+import { Receipt } from '@/src/components/Receipt';
+import { getUpiQrDataUrl } from '@/src/lib/upi';
+import { universalPrintReceipt } from '@/src/lib/printReceipt';
 
 export interface GroupedInvoice {
   groupKey: string;
@@ -229,6 +233,68 @@ export function PaymentsView({
   const [settledInvoices, setSettledInvoices] = useState<Record<string, SettledInvoiceRecord>>({});
   const [customerPhoneInputs, setCustomerPhoneInputs] = useState<Record<string, string>>({});
 
+  // Thermal print pipeline — one hidden receipt node reused for every bill.
+  // printQrUrl: undefined = QR still generating; null = none; string = ready.
+  const [printTarget, setPrintTarget] = useState<GroupedInvoice | null>(null);
+  const [printQrUrl, setPrintQrUrl] = useState<string | null | undefined>(undefined);
+  const [printingKey, setPrintingKey] = useState<string | null>(null);
+  const printNodeRef = React.useRef<HTMLDivElement>(null);
+
+  const handlePrintBill = (invoice: GroupedInvoice) => {
+    if (printingKey) return;
+    setPrintingKey(invoice.groupKey);
+    setPrintQrUrl(undefined);
+    setPrintTarget(invoice);
+    getUpiQrDataUrl(Number(invoice.grand_total), {
+      note: `VyomaPOS Bill #${invoice.tokens[0] || invoice.groupKey}`,
+    })
+      .then((url) => setPrintQrUrl(url))
+      .catch(() => setPrintQrUrl(null));
+  };
+
+  // Fires once the hidden receipt (with QR) has rendered, then prints.
+  React.useEffect(() => {
+    if (!printTarget || printQrUrl === undefined || !printingKey) return;
+    let cancelled = false;
+    const run = async () => {
+      // Let React commit the hidden receipt node before snapshotting it.
+      await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 60)));
+      if (cancelled) return;
+      try {
+        const outcome = await universalPrintReceipt(printNodeRef.current, {
+          title: `Receipt ${(printTarget.tokens[0] || printTarget.groupKey).toString().slice(0, 24)}`,
+          buildPdfBlob: async () => {
+            const doc = await generateReceiptPDF(
+              buildReceiptData(printTarget, paymentMethods[printTarget.groupKey] || 'UPI'),
+              RESTAURANT_NAME,
+            );
+            return doc.output('blob') as Blob;
+          },
+        });
+        if (!cancelled) {
+          toast.success(
+            outcome === 'dialog' ? 'Print dialog opened' : 'Receipt shared — choose Print',
+          );
+        }
+      } catch (err: any) {
+        if (!cancelled) {
+          toast.error('Print failed', { description: String(err?.message || err) });
+        }
+      } finally {
+        if (!cancelled) {
+          setPrintTarget(null);
+          setPrintQrUrl(undefined);
+          setPrintingKey(null);
+        }
+      }
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [printTarget, printQrUrl, printingKey]);
+
   const pendingPaymentOrders = useMemo(() => {
     const map = new Map<string, Order>();
     [...(orders || []), ...(allOrders || [])].forEach(o => {
@@ -338,9 +404,9 @@ export function PaymentsView({
     };
   };
 
-  const handleSendWhatsApp = (invoice: GroupedInvoice, paymentMode?: string, phoneOverride?: string) => {
+  const handleSendWhatsApp = async (invoice: GroupedInvoice, paymentMode?: string, phoneOverride?: string) => {
     const targetPhone = phoneOverride || customerPhoneInputs[invoice.groupKey] || invoice.customer_phone;
-    
+
     if (!targetPhone || targetPhone.trim() === '') {
       toast.error('Please enter a customer phone number in the box to send the WhatsApp receipt.');
       return;
@@ -357,6 +423,17 @@ export function PaymentsView({
     const mode = paymentMode || paymentMethods[invoice.groupKey] || 'upi';
     const receiptPayload = buildReceiptData(invoice, mode);
     receiptPayload.customer_phone = targetPhone;
+
+    // Exact-amount UPI QR for the server PDF. Generated client-side because
+    // the server must not require 'qrcode' (breaks the packaged EXE boot).
+    try {
+      const qr = await getUpiQrDataUrl(Number(invoice.grand_total), {
+        note: `VyomaPOS Bill #${invoice.tokens[0] || invoice.groupKey}`,
+      });
+      if (qr) receiptPayload.upi_qr = qr;
+    } catch {
+      /* receipt sends without QR rather than not at all */
+    }
 
     const shareResult = sendWhatsAppReceiptWithPDF(receiptPayload, targetPhone);
     if (shareResult.success) {
@@ -923,6 +1000,16 @@ export function PaymentsView({
 
                             <button
                               type="button"
+                              onClick={() => handlePrintBill(invoice)}
+                              disabled={printingKey !== null}
+                              className="w-full min-h-[44px] flex items-center justify-center gap-2 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-95 touch-manipulation disabled:opacity-50"
+                            >
+                              <Printer size={14} />
+                              <span>{printingKey === invoice.groupKey ? 'Preparing…' : 'Print Receipt'}</span>
+                            </button>
+
+                            <button
+                              type="button"
                               onClick={() => handleDismissSettled(invoice.groupKey)}
                               className="w-full min-h-[44px] flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-95 touch-manipulation"
                             >
@@ -1013,6 +1100,16 @@ export function PaymentsView({
                               <MessageSquare size={14} />
                               <span>Send WhatsApp Receipt</span>
                             </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handlePrintBill(invoice)}
+                              disabled={printingKey !== null}
+                              className="w-full min-h-[44px] flex items-center justify-center gap-2 rounded-xl border border-primary/40 bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-95 touch-manipulation disabled:opacity-50"
+                            >
+                              <Printer size={14} />
+                              <span>{printingKey === invoice.groupKey ? 'Preparing…' : 'Print Receipt'}</span>
+                            </button>
                           </div>
                         </>
                       )}
@@ -1023,6 +1120,33 @@ export function PaymentsView({
               );
             })}
           </AnimatePresence>
+        </div>
+      )}
+
+      {/* Hidden off-screen thermal receipt used by the print pipeline.
+          Positioned off-canvas (never display:none) so the UPI QR image loads. */}
+      {printTarget && (
+        <div aria-hidden="true" style={{ position: 'fixed', left: -9999, top: 0, width: '80mm' }}>
+          <div ref={printNodeRef}>
+            <Receipt
+              orderId={printTarget.order_ids[0] || printTarget.groupKey}
+              table={printTarget.table_id?.toString() || 'Takeaway / Counter'}
+              items={printTarget.items.map((it) => ({
+                name: it.name,
+                price: it.price,
+                quantity: it.quantity,
+              }))}
+              subtotal={printTarget.subtotal}
+              discount={0}
+              taxRate={printTarget.tax_rate}
+              gstin={printTarget.gstin}
+              token={printTarget.tokens[0]}
+              customerName={printTarget.customer_name}
+              customerPhone={printTarget.customer_phone}
+              createdAt={printTarget.created_at}
+              upiQrUrl={printQrUrl === undefined ? null : printQrUrl}
+            />
+          </div>
         </div>
       )}
     </div>

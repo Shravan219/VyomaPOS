@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RESTAURANT_NAME, getGSTIN } from '@/src/lib/restaurantSettings';
+import { getOutletUpiId, getUpiQrDataUrl } from '@/src/lib/upi';
 
 export interface OrderItem {
   name: string;
@@ -24,6 +25,16 @@ export interface ReceiptProps {
   customerName?: string;
   customerPhone?: string;
   createdAt?: string;
+  /** Outlet UPI ID for the payment QR — defaults to the configured outlet ID. */
+  upiId?: string;
+  /** Show the scannable UPI payment QR (exact grand total). Defaults to true. */
+  showUpiQr?: boolean;
+  /**
+   * Pre-generated QR data URL. When `undefined` the receipt generates it
+   * itself; pass an explicit value (or null for none) when the parent needs
+   * the QR ready before an action like printing.
+   */
+  upiQrUrl?: string | null;
 }
 
 export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
@@ -39,7 +50,10 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
   token,
   customerName,
   customerPhone,
-  createdAt
+  createdAt,
+  upiId,
+  showUpiQr = true,
+  upiQrUrl: upiQrUrlProp
 }, ref) => {
   // Current date/time fallback
   const displayDate = React.useMemo(() => {
@@ -78,6 +92,30 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
   const cgstAmount = Math.round((taxAmount / 2) * 100) / 100;
   const sgstAmount = Math.round((taxAmount / 2) * 100) / 100;
   const grandTotal = Math.round((taxableAmount + taxAmount) * 100) / 100;
+
+  // Scannable UPI payment QR encoding the exact payable amount.
+  const outletUpiId = (upiId || getOutletUpiId()).trim();
+  const [selfQrUrl, setSelfQrUrl] = React.useState<string | null>(null);
+  // Parent-supplied QR wins (used when printing must not race generation).
+  const upiQrUrl = upiQrUrlProp === undefined ? selfQrUrl : upiQrUrlProp;
+  React.useEffect(() => {
+    if (upiQrUrlProp !== undefined) return; // parent owns the QR
+    if (!showUpiQr || grandTotal <= 0 || !outletUpiId) {
+      setSelfQrUrl(null);
+      return;
+    }
+    let cancelled = false;
+    getUpiQrDataUrl(grandTotal, {
+      upiId: outletUpiId,
+      payeeName: restaurantName,
+      note: `VyomaPOS Bill ${token ? `#${token}` : `#${orderId.slice(0, 12).toUpperCase()}`}`,
+    }).then((url) => {
+      if (!cancelled) setSelfQrUrl(url);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [upiQrUrlProp, showUpiQr, grandTotal, outletUpiId, restaurantName, token, orderId]);
 
   return (
     <div ref={ref} className="receipt-print-container relative bg-white text-black p-6 font-mono text-xs w-[80mm] mx-auto border border-gray-200 shadow-lg rounded-md select-none print:border-none print:shadow-none print:rounded-none">
@@ -246,6 +284,20 @@ export const Receipt = React.forwardRef<HTMLDivElement, ReceiptProps>(({
       </div>
 
 
+
+      {/* UPI Payment QR — scannable by any UPI app, exact amount prefilled */}
+      {upiQrUrl && (
+        <div className="text-center border-t border-dashed border-black/40 pt-3 mt-1">
+          <p className="text-[11px] font-bold uppercase tracking-wider">Scan to Pay via UPI</p>
+          <img
+            src={upiQrUrl}
+            alt={`Pay Rs.${grandTotal.toFixed(2)} via UPI`}
+            className="w-32 h-32 mx-auto my-2 border border-black/20 bg-white"
+          />
+          <p className="text-[10px] font-bold">Pay ₹{grandTotal.toFixed(2)}</p>
+          <p className="text-[9px] text-gray-600 break-all">to {outletUpiId}</p>
+        </div>
+      )}
 
       {/* Receipt Footer */}
       <div className="text-center text-[9px] text-gray-600 space-y-1 border-t border-dashed border-black/40 pt-3">

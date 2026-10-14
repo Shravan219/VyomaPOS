@@ -5,6 +5,10 @@
  */
 
 import { jsPDF } from 'jspdf';
+// NOTE: never statically import 'qrcode' here — build.js marks it external
+// and the packaged EXE prunes node_modules, which crashes the main process
+// at boot. The client generates the QR (it bundles qrcode for web) and sends
+// it as `upi_qr`; the server only embeds the image. See src/lib/upi.ts.
 
 export interface ReceiptItem {
   name: string;
@@ -27,11 +31,30 @@ export interface ReceiptData {
   table_id?: string | number;
   created_at?: string;
   gstin?: string;
+  /** Outlet UPI ID override — defaults to env UPI_ID, then the temporary ID. */
+  upi_id?: string;
+  /**
+   * Pre-rendered UPI payment QR (PNG data URL) for the exact grand total,
+   * generated client-side. Embedded when present; absent → block skipped.
+   */
+  upi_qr?: string;
+}
+
+/** Temporary outlet UPI ID (mirrors src/lib/upi.ts — replace with live VPA). */
+const TEMP_OUTLET_UPI_ID = '8788376667@postbank';
+
+function getServerUpiId(explicit?: string): string {
+  const envId = (process.env.UPI_ID || '').trim();
+  if (explicit && explicit.trim()) return explicit.trim();
+  if (envId) return envId;
+  return TEMP_OUTLET_UPI_ID;
 }
 
 /**
  * Generates a professional thermal-style PDF receipt on the server.
  * Returns the PDF as a Buffer ready to be sent via Baileys sendMessage.
+ * Synchronous — the UPI QR is supplied pre-rendered by the client
+ * (see `upi_qr`), so this function needs no async QR dependency.
  */
 export function generateReceiptPdfBuffer(
   data: ReceiptData,
@@ -39,7 +62,9 @@ export function generateReceiptPdfBuffer(
 ): Buffer {
   const baseHeight = 110;
   const itemHeight = Math.max(data.items.length * 6.5, 20);
-  const totalHeight = Math.max(160, baseHeight + itemHeight);
+  // +52mm reserved for the UPI payment QR block (rendered when total > 0).
+  const upiBlockHeight = Number(data.total) > 0 ? 52 : 0;
+  const totalHeight = Math.max(160, baseHeight + itemHeight + upiBlockHeight);
 
   const doc = new jsPDF({
     orientation: 'portrait',
@@ -195,6 +220,36 @@ export function generateReceiptPdfBuffer(
   y += 6;
   doc.setDrawColor(220, 220, 220);
   doc.line(6, y, pageWidth - 6, y);
+
+  // ── UPI Payment QR (exact grand total, any UPI app) ───────────────────────
+  // Client-supplied PNG data URL — no QR library needed server-side.
+  if (Number(data.total) > 0 && data.upi_qr && data.upi_qr.startsWith('data:image')) {
+    try {
+      const upiId = getServerUpiId(data.upi_id);
+      y += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.setTextColor(20, 20, 20);
+      doc.text('SCAN TO PAY VIA UPI', pageWidth / 2, y, { align: 'center' });
+      y += 3;
+      const qrSize = 32;
+      doc.addImage(data.upi_qr as string, 'PNG', pageWidth / 2 - qrSize / 2, y, qrSize, qrSize);
+      y += qrSize + 3.5;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text(`Pay Rs. ${Number(data.total).toFixed(2)}`, pageWidth / 2, y, { align: 'center' });
+      y += 3.5;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(6.5);
+      doc.setTextColor(110, 110, 110);
+      doc.text(`to ${upiId}`, pageWidth / 2, y, { align: 'center' });
+      y += 2;
+      doc.setDrawColor(220, 220, 220);
+      doc.line(6, y, pageWidth - 6, y);
+    } catch (qrErr: any) {
+      console.warn('[Receipt PDF] UPI QR skipped:', qrErr?.message || qrErr);
+    }
+  }
 
   // ── Footer ────────────────────────────────────────────────────────────────
   y += 5;

@@ -37,6 +37,15 @@ let baseUrl = '';
 let server: ReturnType<typeof app.listen> | null = null;
 
 beforeAll(async () => {
+  // These inbound tests must NEVER touch the live Supabase: intake writes
+  // real rows, which would surface as permanent "dummy" cards in Payments /
+  // Online. Blank the Supabase env so getSupabaseClient() returns null and
+  // the suite exercises the memory store only.
+  vi.stubEnv('VITE_SUPABASE_URL', '');
+  vi.stubEnv('SUPABASE_URL', '');
+  vi.stubEnv('VITE_SUPABASE_ANON_KEY', '');
+  vi.stubEnv('SUPABASE_ANON_KEY', '');
+  vi.stubEnv('SUPABASE_SERVICE_ROLE_KEY', '');
   await new Promise<void>((resolve) => {
     server = app.listen(0, '127.0.0.1', () => resolve());
   });
@@ -49,6 +58,7 @@ afterAll(async () => {
     if (!server) return resolve();
     server.close((err) => (err ? reject(err) : resolve()));
   });
+  vi.unstubAllEnvs();
 });
 
 async function postJson(path: string, body: any) {

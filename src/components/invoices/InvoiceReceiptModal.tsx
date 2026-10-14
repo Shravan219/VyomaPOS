@@ -13,6 +13,10 @@ import { Receipt } from '@/src/components/Receipt';
 import { toast } from 'sonner';
 import { downloadReceiptPDF, sendWhatsAppReceiptWithPDF } from '@/src/lib/whatsapp';
 import { RESTAURANT_NAME_WHATSAPP, getGSTIN } from '@/src/lib/restaurantSettings';
+import { getUpiQrDataUrl } from '@/src/lib/upi';
+import { universalPrintReceipt } from '@/src/lib/printReceipt';
+import { generateReceiptPDF } from '@/src/lib/whatsapp';
+import { RESTAURANT_NAME } from '@/src/lib/restaurantSettings';
 
 export interface SavedInvoiceData {
   id: string;
@@ -53,11 +57,75 @@ export function InvoiceReceiptModal({
   const printRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = React.useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = React.useState(false);
+  const [upiQrUrl, setUpiQrUrl] = React.useState<string | null>(null);
+
+  // Generate the exact-amount UPI QR up front so screen, print and
+  // Save-as-PDF never race (or miss) its async rendering.
+  React.useEffect(() => {
+    if (!invoice || Number(invoice.total) <= 0) {
+      setUpiQrUrl(null);
+      return;
+    }
+    let cancelled = false;
+    getUpiQrDataUrl(Number(invoice.total), {
+      note: `VyomaPOS Bill ${invoice.token ? `#${invoice.token}` : `#${invoice.id.slice(-4)}`}`,
+    }).then((url) => {
+      if (!cancelled) setUpiQrUrl(url);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [invoice]);
 
   if (!invoice) return null;
 
+  // PDF fallback for native Android (WebView has no print dialog) — the OS
+  // share sheet lists system print services, ending in the same print flow.
+  const buildModalPdfBlob = async (): Promise<Blob | null> => {
+    if (!invoice) return null;
+    const doc = await generateReceiptPDF(
+      {
+        id: invoice.id,
+        token: invoice.token,
+        tokens: invoice.token ? [invoice.token] : [],
+        customer_name: invoice.customer_name,
+        customer_phone: invoice.customer_phone,
+        items: invoice.items,
+        subtotal: invoice.subtotal,
+        tax_amount: invoice.tax_amount,
+        tax_rate: invoice.tax_rate,
+        discount: invoice.discount,
+        total: invoice.total,
+        payment_mode: invoice.payment_mode,
+        table_id: invoice.table_id,
+        created_at: invoice.created_at,
+        gstin: invoice.gstin,
+      },
+      RESTAURANT_NAME,
+    );
+    return doc.output('blob') as Blob;
+  };
+
+  const runUniversalPrint = async () => {
+    if (!invoice || isGeneratingPdf) return;
+    setIsGeneratingPdf(true);
+    try {
+      const outcome = await universalPrintReceipt(printRef.current, {
+        title: `Invoice ${invoice.token || invoice.id.slice(-4)}`,
+        buildPdfBlob: buildModalPdfBlob,
+      });
+      if (outcome === 'shared') {
+        toast.success('Receipt shared — choose Print to print it');
+      }
+    } catch (err: any) {
+      toast.error('Print failed', { description: String(err?.message || err) });
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  };
+
   const handlePrint = () => {
-    window.print();
+    void runUniversalPrint();
   };
 
   const handleCopySummary = () => {
@@ -89,12 +157,10 @@ Thank you for dining with us!`;
   };
 
   const handleDownloadPdf = () => {
-    setIsGeneratingPdf(true);
-    toast.info('Preparing print / PDF save dialog...');
-    setTimeout(() => {
-      window.print();
-      setIsGeneratingPdf(false);
-    }, 300);
+    if (!isGeneratingPdf) {
+      toast.info('Preparing receipt — choose Save as PDF in the dialog…');
+    }
+    void runUniversalPrint();
   };
 
   const handleSendWhatsApp = async () => {
@@ -109,7 +175,9 @@ Thank you for dining with us!`;
       const res = await fetch('/api/whatsapp/send-receipt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order: invoice, phone })
+        // upiQrUrl is the exact-amount QR generated on invoice open; the
+        // server embeds it (it must not require 'qrcode' — EXE boots without it).
+        body: JSON.stringify({ order: { ...invoice, upi_qr: upiQrUrl || undefined }, phone })
       });
       const result = await res.json();
       if (result.success) {
@@ -184,6 +252,7 @@ Thank you for dining with us!`;
               customerName={invoice.customer_name}
               customerPhone={invoice.customer_phone}
               createdAt={invoice.created_at}
+              upiQrUrl={upiQrUrl}
             />
           </div>
         </div>

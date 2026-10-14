@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/src/lib/supabase';
-import { Order, MenuItem, OrderStatus, normalizeOrder, normalizeOrderItems, isAggregatorOrder, isActiveOrder } from '@/src/types';
+import { Order, MenuItem, OrderStatus, normalizeOrder, normalizeOrderItems, isAggregatorOrder, isActiveOrder, dedupeOrders } from '@/src/types';
 import { 
   LayoutDashboard, 
   ChefHat, 
@@ -613,18 +613,11 @@ export default function App() {
             if (apiData.orders && Array.isArray(apiData.orders)) {
               const apiOrders: Order[] = apiData.orders;
               
-              // Merge with Supabase orders without duplicates
-              const mergedMap = new Map<string, Order>();
-              for (const o of dbAllOrders) {
-                mergedMap.set(o.id || o.token, o);
-              }
-              for (const o of apiOrders) {
-                mergedMap.set(o.id || o.token, o);
-              }
-              
-              dbAllOrders = Array.from(mergedMap.values())
-                .map(o => normalizeOrder(o))
-                .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+              // Merge Supabase + API orders, folding same-token twins
+              // (memory id "SW-101" vs Supabase UUID row) into single cards.
+              dbAllOrders = dedupeOrders(
+                [...dbAllOrders, ...apiOrders].map(o => normalizeOrder(o as Order)),
+              ).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
               dbActiveOrders = dbAllOrders.filter(isActiveOrder);
             }
           }
@@ -803,7 +796,9 @@ export default function App() {
                 }
               }
               if (!hasNew) return prev;
-              return Array.from(map.values()).sort(
+              // Fold same-token twins (memory id vs Supabase UUID) so no
+              // second "dummy" card can appear for one logical order.
+              return dedupeOrders(Array.from(map.values())).sort(
                 (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
               );
             });
@@ -837,7 +832,7 @@ export default function App() {
                 }
               }
               if (!hasChanges) return prev;
-              return Array.from(map.values()).sort(
+              return dedupeOrders(Array.from(map.values())).sort(
                 (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
               );
             });
