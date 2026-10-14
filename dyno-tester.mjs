@@ -1,7 +1,7 @@
 import express from 'express';
 
 const MOCK_DYNO_PORT = 4000;
-const SUPABASE_WEBHOOK_URL = 'https://orashnrwlkdsgkfmmwtw.supabase.co/functions/v1/order-webhook';
+const SUPABASE_WEBHOOK_URL = 'https://rivbdbewxbmzebqipjrl.supabase.co/functions/v1/order-webhook';
 const ZOMATO_RES_ID = '22826045';
 
 const app = express();
