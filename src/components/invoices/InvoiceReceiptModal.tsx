@@ -114,8 +114,12 @@ export function InvoiceReceiptModal({
         title: `Invoice ${invoice.token || invoice.id.slice(-4)}`,
         buildPdfBlob: buildModalPdfBlob,
       });
-      if (outcome === 'shared') {
+      if (outcome === 'dialog') {
+        toast.success('Print dialog opened');
+      } else if (outcome === 'shared') {
         toast.success('Receipt shared — choose Print to print it');
+      } else if (outcome === 'downloaded') {
+        toast.success('Receipt saved to Documents — open Files to print it');
       }
     } catch (err: any) {
       toast.error('Print failed', { description: String(err?.message || err) });

@@ -272,9 +272,14 @@ export function PaymentsView({
           },
         });
         if (!cancelled) {
-          toast.success(
-            outcome === 'dialog' ? 'Print dialog opened' : 'Receipt shared — choose Print',
-          );
+          if (outcome === 'dialog') {
+            toast.success('Print dialog opened');
+          } else if (outcome === 'shared') {
+            toast.success('Receipt shared — choose Print');
+          } else if (outcome === 'downloaded') {
+            toast.success('Receipt saved to Documents — open Files to print it');
+          }
+          // 'cancelled' (share sheet dismissed) stays silent by design.
         }
       } catch (err: any) {
         if (!cancelled) {

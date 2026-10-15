@@ -16,6 +16,8 @@
  *   same print dialog. No extra native plugins required.
  */
 import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 function waitForImages(root: Document, timeoutMs = 4000): Promise<void> {
   const imgs = Array.from(root.querySelectorAll('img'));
@@ -172,15 +174,35 @@ export async function printThermalReceipt(source: HTMLElement | null, title = 'R
   }
 }
 
-export type UniversalPrintOutcome = 'dialog' | 'shared';
+export type UniversalPrintOutcome = 'dialog' | 'shared' | 'downloaded' | 'cancelled';
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const text = String(reader.result || '');
+        const marker = 'base64,';
+        const idx = text.indexOf(marker);
+        resolve(idx >= 0 ? text.slice(idx + marker.length) : text);
+      };
+      reader.onerror = () => reject(new Error('Could not read the receipt file.'));
+      reader.readAsDataURL(blob);
+    } catch (err: any) {
+      reject(err instanceof Error ? err : new Error(String(err)));
+    }
+  });
+}
 
 /**
  * One print button for web, EXE and APK.
  *
  * - Web / Electron: opens the native print dialog (thermal printer, PDF…).
- * - Capacitor Android: WebView cannot open a print dialog, so a PDF of the
- *   same bill is handed to the OS share sheet (`buildPdfBlob`), where Android
- *   lists the system print services — ending in the same print dialog.
+ * - Capacitor Android: the WebView cannot open a print dialog, so the bill
+ *   goes through a fallback chain — OS share sheet with the receipt PDF
+ *   (Android lists system print services there) and, if sharing is
+ *   unavailable, a direct download to the device. Every stage reports
+ *   precisely, so a failure always names its cause instead of silence.
  */
 export async function universalPrintReceipt(
   source: HTMLElement | null,
@@ -190,6 +212,7 @@ export async function universalPrintReceipt(
   },
 ): Promise<UniversalPrintOutcome> {
   const title = opts?.title || 'Receipt';
+  const safeName = `${title.replace(/[^\w\- ]+/g, '').trim() || 'Receipt'}.pdf`;
   const isNative = (() => {
     try {
       return Capacitor.isNativePlatform();
@@ -203,19 +226,48 @@ export async function universalPrintReceipt(
     return 'dialog';
   }
 
-  const blob = opts?.buildPdfBlob ? await opts.buildPdfBlob().catch(() => null) : null;
-  if (blob) {
-    const file = new File([blob], `${title.replace(/[^\w\- ]+/g, '').trim() || 'Receipt'}.pdf`, {
-      type: 'application/pdf',
-    });
-    const nav = navigator as Navigator & {
-      share?: (data: { files?: File[]; title?: string; text?: string }) => Promise<void>;
-      canShare?: (data: { files?: File[] }) => boolean;
-    };
-    if (typeof nav.share === 'function' && (!nav.canShare || nav.canShare({ files: [file] }))) {
-      await nav.share({ files: [file], title });
-      return 'shared';
-    }
+  // ── Native (APK): the WebView has no print dialog and no working
+  // anchor-downloads, so the receipt travels over real native file APIs ──
+  let blob: Blob | null = null;
+  try {
+    blob = opts?.buildPdfBlob ? await opts.buildPdfBlob() : null;
+  } catch (err: any) {
+    throw new Error(`Receipt PDF could not be built: ${err?.message || err}`);
   }
-  throw new Error('Printing and sharing are unavailable on this device.');
+  if (!blob || blob.size === 0) {
+    throw new Error('Receipt PDF came out empty — try again.');
+  }
+
+  // ── Stage 1: native share sheet with the PDF (lists print targets) ─────
+  try {
+    const base64 = await blobToBase64(blob);
+    const cached = await Filesystem.writeFile({
+      path: safeName,
+      data: base64,
+      directory: Directory.Cache,
+      recursive: true,
+    });
+    await Share.share({ title, url: cached.uri });
+    return 'shared';
+  } catch (err: any) {
+    const msg = String(err?.message || err);
+    if (err?.name === 'AbortError' || /cancel/i.test(msg)) return 'cancelled';
+    // Fall through to Documents — share sheet failed, file still printable.
+    console.warn('[Print] Native share failed, saving to Documents:', msg);
+  }
+
+  // ── Stage 2: persist to Documents — always retrievable + printable ─────
+  try {
+    const base64 = await blobToBase64(blob);
+    const saved = await Filesystem.writeFile({
+      path: safeName,
+      data: base64,
+      directory: Directory.Documents,
+      recursive: true,
+    });
+    console.log('[Print] Receipt saved at', saved.uri);
+    return 'downloaded';
+  } catch (err: any) {
+    throw new Error(`Receipt could not be saved on this device: ${err?.message || err}`);
+  }
 }
